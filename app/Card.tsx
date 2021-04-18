@@ -40,7 +40,7 @@ const StyledCard = styled.div`
 `;
 
 type CardProps = {
-  cardData: CardObj,
+  cardData: CardObj;
 };
 
 export default function Card({ cardData }: CardProps) {
