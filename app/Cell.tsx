@@ -19,7 +19,7 @@ type CellProps = {
   index: number;
   gridId: GridId;
   setCardOrder: setCardOrderType;
-  children: React.ReactNode;
+  children: React.ReactChild;
 };
 
 export default function Cell({

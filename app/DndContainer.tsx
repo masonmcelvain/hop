@@ -3,7 +3,11 @@ import styled from "styled-components";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
-function DndContainer({ children }) {
+type DndContainerProps = {
+  children: React.ReactChild,
+};
+
+function DndContainer({ children }: DndContainerProps) {
   return <DndProvider backend={HTML5Backend}>{children}</DndProvider>;
 }
 
