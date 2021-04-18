@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Card from "./Card";
 import Cell from "./Cell";
+import { CardObj, GridId, setCardOrderType } from "./types";
 
 // The width of the grid measured in cells
 const cellsWide = 3;
@@ -29,7 +30,7 @@ const CellWrapper = styled.div`
  *
  * @param numCards The number of cards to go in this grid
  */
-function getNumCells(numCards) {
+function getNumCells(numCards: number) {
   if (!numCards) {
     return 0;
   }
@@ -38,15 +39,21 @@ function getNumCells(numCards) {
   return largestFactorOfWidth + cellsFromRemainder;
 }
 
-export default function Grid({ id, cards, setCardOrder }) {
+type GridProps = {
+  gridId: GridId,
+  cards: CardObj[],
+  setCardOrder: setCardOrderType,
+};
+
+export default function Grid({ gridId, cards, setCardOrder }: GridProps) {
   const numCells = getNumCells(cards.length);
 
-  function renderCell(i) {
+  function renderCell(i: number) {
     const cellHasACard = i < cards.length;
     const card = cellHasACard ? <Card cardData={cards[i]} /> : null;
     return (
       <CellWrapper key={i}>
-        <Cell index={i} gridId={id} setCardOrder={setCardOrder}>
+        <Cell index={i} gridId={gridId} setCardOrder={setCardOrder}>
           {card}
         </Cell>
       </CellWrapper>
