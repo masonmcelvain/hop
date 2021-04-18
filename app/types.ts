@@ -4,16 +4,11 @@ export interface CardData {
   url: string;
 }
 
-export enum GridId {
-  TOP,
-  BOTTOM,
-}
-
 export interface DragItem {
   id: number;
 }
 
-export type setCardOrderType = (
+export type updateCardsType = (
   sourceId: number,
   newIndex: number,
   newGridId: number

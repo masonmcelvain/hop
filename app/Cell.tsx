@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { ItemTypes } from "./ItemTypes";
 import { useDrop } from "react-dnd";
-import { GridId, DragItem, setCardOrderType } from "./types";
+import { DragItem, updateCardsType } from "./types";
 
 const StyledCell = styled.div`
   position: absolute;
@@ -17,26 +17,26 @@ const StyledCell = styled.div`
 
 type CellProps = {
   index: number;
-  gridId: GridId;
-  setCardOrder: setCardOrderType;
+  gridId: number;
+  updateCards: updateCardsType;
   children: React.ReactChild;
 };
 
 export default function Cell({
   index,
   gridId,
-  setCardOrder,
+  updateCards,
   children,
 }: CellProps) {
   const [{ isOver }, drop] = useDrop(
     () => ({
       accept: ItemTypes.CARD,
-      drop: (item: DragItem) => setCardOrder(item.id, index, gridId),
+      drop: (item: DragItem) => updateCards(item.id, index, gridId),
       collect: (monitor) => ({
         isOver: !!monitor.isOver(),
       }),
     }),
-    [index, gridId, setCardOrder]
+    [index, gridId, updateCards]
   );
 
   return (
