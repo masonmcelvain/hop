@@ -39,6 +39,14 @@ export default function App() {
   const [bottomCards, setBottomCards] = useState([]);
   const gridIds = { top: "top", bottom: "bottom" };
 
+  /**
+   * Modify the order of the cards by relocating a card. Relocation can be
+   * between grids.
+   *
+   * @param sourceId Id of the card being moved.
+   * @param newIndex Index to move the source card to.
+   * @param newGridId The id of the grid the card is being moved to.
+   */
   function setCardOrder(sourceId, newIndex, newGridId) {
     let sourceIndex, sourceGridId, oldCards;
     if (topCards.some((card) => card.id === sourceId)) {
