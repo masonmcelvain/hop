@@ -9,6 +9,10 @@ export enum GridId {
   BOTTOM,
 }
 
+export interface DragItem {
+  id: number,
+}
+
 export type setCardOrderType = (
   sourceId: number,
   newIndex: number,

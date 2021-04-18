@@ -40,9 +40,9 @@ function getNumCells(numCards: number) {
 }
 
 type GridProps = {
-  gridId: GridId,
-  cards: CardObj[],
-  setCardOrder: setCardOrderType,
+  gridId: GridId;
+  cards: CardObj[];
+  setCardOrder: setCardOrderType;
 };
 
 export default function Grid({ gridId, cards, setCardOrder }: GridProps) {
