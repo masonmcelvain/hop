@@ -4,7 +4,7 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 type DndContainerProps = {
-  children: React.ReactChild,
+  children: React.ReactChild[],
 };
 
 function DndContainer({ children }: DndContainerProps) {
