@@ -38,16 +38,22 @@ const StyledCard = styled.div`
   transform: translate(0, 0); // Prevents React DnD background color bug
 `;
 
-export default function Card({ name, url, image, x, y }) {
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: ItemTypes.CARD,
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
+export default function Card({ cardData }) {
+  let { id, name, url } = cardData;
+  const image = null; // TODO replace with real image data
+  const [{ isDragging }, drag] = useDrag(
+    () => ({
+      type: ItemTypes.CARD,
+      item: { id, name, url, image },
+      collect: (monitor) => ({
+        isDragging: !!monitor.isDragging(),
+      }),
     }),
-  }));
+    [cardData]
+  );
 
   return (
-    <StyledCard ref={drag}>
+    <StyledCard id={id} ref={drag}>
       <Link href={url} target="_blank" rel="noopener noreferrer">
         <IconContainer>
           <Icon image={image} />

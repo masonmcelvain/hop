@@ -38,19 +38,15 @@ function getNumCells(numCards) {
   return largestFactorOfWidth + cellsFromRemainder;
 }
 
-export default function Grid({ cards }) {
+export default function Grid({ id, cards, setCardOrder }) {
   const numCells = getNumCells(cards.length);
 
   function renderCell(i) {
-    const x = i % cellsWide;
-    const y = Math.floor(i / cellsWide);
     const cellHasACard = i < cards.length;
-    const card = cellHasACard ? (
-      <Card name={cards[i].name} url={cards[i].url} x={x} y={y} />
-    ) : null;
+    const card = cellHasACard ? <Card cardData={cards[i]} /> : null;
     return (
       <CellWrapper key={i}>
-        <Cell x={x} y={y}>
+        <Cell index={i} gridId={id} setCardOrder={setCardOrder}>
           {card}
         </Cell>
       </CellWrapper>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { ItemTypes } from "./ItemTypes";
 import { useDrop } from "react-dnd";
@@ -14,16 +14,16 @@ const StyledCell = styled.div`
   justify-content: center;
 `;
 
-export default function Cell({ x, y, children }) {
+export default function Cell({ index, gridId, setCardOrder, children }) {
   const [{ isOver }, drop] = useDrop(
     () => ({
       accept: ItemTypes.CARD,
-      drop: () => null, // TODO: commit position to card on drop
+      drop: (item) => setCardOrder(item.id, index, gridId),
       collect: (monitor) => ({
         isOver: !!monitor.isOver(),
       }),
     }),
-    [x, y]
+    [index, gridId, setCardOrder]
   );
 
   return (

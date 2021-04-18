@@ -37,24 +37,61 @@ export default function App() {
   });
   const [topCards, setTopCards] = useState([]);
   const [bottomCards, setBottomCards] = useState([]);
+  const gridIds = { top: "top", bottom: "bottom" };
 
-  function renderTopGrid() {
-    return (
-      <TopGridContainer>
-        <Grid cards={topCards} />
-      </TopGridContainer>
-    );
-  }
+  function setCardOrder(sourceId, newIndex, newGridId) {
+    let sourceIndex, sourceGridId, oldCards;
+    if (topCards.some((card) => card.id === sourceId)) {
+      sourceIndex = topCards.findIndex((card) => card.id === sourceId);
+      sourceGridId = gridIds.top;
+      oldCards = [...topCards];
+    } else if (bottomCards.some((card) => card.id === sourceId)) {
+      sourceIndex = bottomCards.findIndex((card) => card.id === sourceId);
+      sourceGridId = gridIds.bottom;
+      oldCards = [...bottomCards];
+    } else {
+      // If source is unknown, do nothing.
+      console.log("Unkown sourceId in setCardOrder(): " + sourceId);
+      return;
+    }
 
-  function renderBottomGrid() {
-    return !bottomCards ? null : (
-      <>
-        <HorizontalRule />
-        <BottomGridContainer>
-          <Grid cards={bottomCards} />
-        </BottomGridContainer>
-      </>
-    );
+    if (sourceIndex === newIndex && sourceGridId === newGridId) {
+      // If there is no positional change, do nothing.
+      return;
+    }
+
+    // If dropped in an empty cell, put the card at the end of the array
+    if (newIndex >= oldCards.length) {
+      newIndex = oldCards.length - 1;
+    }
+
+    // Delete the card from the old cards
+    let [card] = oldCards.splice(sourceIndex, 1);
+
+    let newCards =
+      sourceGridId === newGridId
+        ? oldCards
+        : newGridId === gridIds.top
+        ? [...topCards]
+        : [...bottomCards];
+
+    // Insert the card into the new cards
+    newCards.splice(newIndex, 0, card);
+
+    if (sourceGridId === newGridId) {
+      // only update one grid if the card is staying in it
+      if (newGridId === gridIds.top) {
+        setTopCards(newCards);
+      } else if (newGridId === gridIds.bottom) {
+        setBottomCards(newCards);
+      }
+    } else {
+      // otherwise, update both grids
+      let [newTopCards, newBottomCards] =
+        newGridId === gridIds.top ? [newCards, oldCards] : [oldCards, newCards];
+      setTopCards(newTopCards);
+      setBottomCards(newBottomCards);
+    }
   }
 
   // Initialize the cards with stored (dummy) data
@@ -67,8 +104,25 @@ export default function App() {
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
       <StyledApp>
         <DndContainer>
-          {renderTopGrid()}
-          {renderBottomGrid()}
+          <TopGridContainer>
+            <Grid
+              id={gridIds.top}
+              cards={topCards}
+              setCardOrder={setCardOrder}
+            />
+          </TopGridContainer>
+          {!bottomCards ? null : (
+            <>
+              <HorizontalRule />
+              <BottomGridContainer>
+                <Grid
+                  id={gridIds.bottom}
+                  cards={bottomCards}
+                  setCardOrder={setCardOrder}
+                />
+              </BottomGridContainer>
+            </>
+          )}
         </DndContainer>
       </StyledApp>
     </ThemeProvider>
