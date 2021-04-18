@@ -5,6 +5,7 @@ import darkTheme from "../themes/dark";
 import DndContainer from "./DndContainer";
 import Grid from "./Grid";
 import sampleCards from "./sample_cards.json";
+import { Card, GridId } from "./types";
 
 const StyledApp = styled.div`
   width: 100%;
@@ -32,12 +33,12 @@ const HorizontalRule = styled.div`
 
 export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
+  // @ts-ignore
   chrome.storage.sync.get("isDarkMode", ({ isDarkModeSet }) => {
     setIsDarkMode(isDarkModeSet !== true);
   });
-  const [topCards, setTopCards] = useState([]);
-  const [bottomCards, setBottomCards] = useState([]);
-  const gridIds = { top: "top", bottom: "bottom" };
+  const [topCards, setTopCards] = useState<Card[]>([]);
+  const [bottomCards, setBottomCards] = useState<Card[]>([]);
 
   /**
    * Modify the order of the cards by relocating a card. Relocation can be
@@ -47,15 +48,15 @@ export default function App() {
    * @param newIndex Index to move the source card to.
    * @param newGridId The id of the grid the card is being moved to.
    */
-  function setCardOrder(sourceId, newIndex, newGridId) {
-    let sourceIndex, sourceGridId, oldCards;
+  function setCardOrder(sourceId: number, newIndex: number, newGridId: number) {
+    let sourceIndex: number, sourceGridId: number, oldCards: Card[];
     if (topCards.some((card) => card.id === sourceId)) {
       sourceIndex = topCards.findIndex((card) => card.id === sourceId);
-      sourceGridId = gridIds.top;
+      sourceGridId = GridId.TOP;
       oldCards = [...topCards];
     } else if (bottomCards.some((card) => card.id === sourceId)) {
       sourceIndex = bottomCards.findIndex((card) => card.id === sourceId);
-      sourceGridId = gridIds.bottom;
+      sourceGridId = GridId.BOTTOM;
       oldCards = [...bottomCards];
     } else {
       // If source is unknown, do nothing.
@@ -79,7 +80,7 @@ export default function App() {
     let newCards =
       sourceGridId === newGridId
         ? oldCards
-        : newGridId === gridIds.top
+        : newGridId === GridId.TOP
         ? [...topCards]
         : [...bottomCards];
 
@@ -88,15 +89,18 @@ export default function App() {
 
     if (sourceGridId === newGridId) {
       // only update one grid if the card is staying in it
-      if (newGridId === gridIds.top) {
-        setTopCards(newCards);
-      } else if (newGridId === gridIds.bottom) {
-        setBottomCards(newCards);
+      switch (newGridId) {
+        case GridId.TOP:
+          setTopCards(newCards);
+          break;
+        case GridId.BOTTOM:
+          setBottomCards(newCards);
+          break;
       }
     } else {
       // otherwise, update both grids
       let [newTopCards, newBottomCards] =
-        newGridId === gridIds.top ? [newCards, oldCards] : [oldCards, newCards];
+        newGridId === GridId.TOP ? [newCards, oldCards] : [oldCards, newCards];
       setTopCards(newTopCards);
       setBottomCards(newBottomCards);
     }
@@ -114,7 +118,7 @@ export default function App() {
         <DndContainer>
           <TopGridContainer>
             <Grid
-              id={gridIds.top}
+              id={GridId.TOP}
               cards={topCards}
               setCardOrder={setCardOrder}
             />
@@ -124,7 +128,7 @@ export default function App() {
               <HorizontalRule />
               <BottomGridContainer>
                 <Grid
-                  id={gridIds.bottom}
+                  id={GridId.BOTTOM}
                   cards={bottomCards}
                   setCardOrder={setCardOrder}
                 />
