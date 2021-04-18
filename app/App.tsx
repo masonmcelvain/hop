@@ -5,7 +5,7 @@ import darkTheme from "../themes/dark";
 import DndContainer from "./DndContainer";
 import Grid from "./Grid";
 import sampleCards from "./sample_cards.json";
-import { CardObj, GridId } from "./types";
+import { CardData, GridId } from "./types";
 
 const StyledApp = styled.div`
   width: 100%;
@@ -37,8 +37,8 @@ export default function App() {
   chrome.storage.sync.get("isDarkMode", ({ isDarkModeSet }) => {
     setIsDarkMode(isDarkModeSet !== true);
   });
-  const [topCards, setTopCards] = useState<CardObj[]>([]);
-  const [bottomCards, setBottomCards] = useState<CardObj[]>([]);
+  const [topCards, setTopCards] = useState<CardData[]>([]);
+  const [bottomCards, setBottomCards] = useState<CardData[]>([]);
 
   /**
    * Modify the order of the cards by relocating a card. Relocation can be
@@ -49,7 +49,7 @@ export default function App() {
    * @param newGridId The id of the grid the card is being moved to.
    */
   function setCardOrder(sourceId: number, newIndex: number, newGridId: number) {
-    let sourceIndex: number, sourceGridId: number, oldCards: CardObj[];
+    let sourceIndex: number, sourceGridId: number, oldCards: CardData[];
     if (topCards.some((card) => card.id === sourceId)) {
       sourceIndex = topCards.findIndex((card) => card.id === sourceId);
       sourceGridId = GridId.TOP;

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Card from "./Card";
 import Cell from "./Cell";
-import { CardObj, GridId, setCardOrderType } from "./types";
+import { CardData, GridId, setCardOrderType } from "./types";
 
 // The width of the grid measured in cells
 const cellsWide = 3;
@@ -41,7 +41,7 @@ function getNumCells(numCards: number) {
 
 type GridProps = {
   gridId: GridId;
-  cards: CardObj[];
+  cards: CardData[];
   setCardOrder: setCardOrderType;
 };
 

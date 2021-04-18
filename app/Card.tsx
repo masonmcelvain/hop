@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { ItemTypes } from "./ItemTypes";
 import { useDrag } from "react-dnd";
 import Icon from "./Icon";
-import { CardObj } from "./types";
+import { CardData } from "./types";
 
 const IconContainer = styled.div`
   flex: 1;
@@ -22,7 +22,7 @@ const Paragraph = styled.p`
   white-space: nowrap;
 `;
 
-const Link = styled.a`
+const Hyperlink = styled.a`
   display: inline-block;
   width: 100%;
   height: 100%;
@@ -40,7 +40,7 @@ const StyledCard = styled.div`
 `;
 
 type CardProps = {
-  cardData: CardObj;
+  cardData: CardData;
 };
 
 export default function Card({ cardData }: CardProps) {
@@ -59,12 +59,12 @@ export default function Card({ cardData }: CardProps) {
 
   return (
     <StyledCard ref={drag}>
-      <Link href={url} target="_blank" rel="noopener noreferrer">
+      <Hyperlink href={url} target="_blank" rel="noopener noreferrer">
         <IconContainer>
           <Icon image={image} />
         </IconContainer>
         <Paragraph>{name}</Paragraph>
-      </Link>
+      </Hyperlink>
     </StyledCard>
   );
 }
