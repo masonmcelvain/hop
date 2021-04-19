@@ -20,6 +20,7 @@
         "128": "/icons/get_started128.png"
     },
     "permissions": [
-        "storage"
+        "storage",
+        "tabs"
     ]
 }
