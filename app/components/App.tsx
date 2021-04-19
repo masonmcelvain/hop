@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
-import lightTheme from "../themes/light";
-import darkTheme from "../themes/dark";
+import lightTheme from "../../themes/light";
+import darkTheme from "../../themes/dark";
 import DndContainer from "./DndContainer";
 import Grid from "./Grid";
-import sampleCards from "./sample_cards.json";
-import { CardData } from "./types";
+import sampleCards from "../sample_cards.json";
+import { CardData } from "../modules/types";
 
 const StyledApp = styled.div`
   width: 100%;

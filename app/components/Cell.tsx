@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { ItemTypes } from "./ItemTypes";
+import { ItemTypes } from "../modules/ItemTypes";
 import { useDrop } from "react-dnd";
-import { DragItem, updateCardsType } from "./types";
+import { DragItem, updateCardsType } from "../modules/types";
 
 const StyledCell = styled.div`
   position: absolute;

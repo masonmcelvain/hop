@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { ItemTypes } from "./ItemTypes";
+import { ItemTypes } from "../modules/ItemTypes";
 import { useDrag } from "react-dnd";
 import Icon from "./Icon";
-import { CardData } from "./types";
+import { CardData } from "../modules/types";
 
 const IconContainer = styled.div`
   flex: 1;
