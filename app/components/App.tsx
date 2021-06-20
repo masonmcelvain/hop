@@ -28,7 +28,6 @@ const HorizontalRule = styled.div`
 
 export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
-  // @ts-ignore
   chrome.storage.sync.get("isDarkMode", ({ isDarkModeSet }) => {
     setIsDarkMode(isDarkModeSet !== true);
   });
