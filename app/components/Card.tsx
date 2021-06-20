@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import styled from "styled-components";
 import { ItemTypes } from "../modules/ItemTypes";
 import { useDrag } from "react-dnd";
@@ -39,6 +39,13 @@ const StyledCard = styled.div`
   transform: translate(0, 0); // Prevents React DnD background color bug
 `;
 
+function openLinkInThisTab(url: string): void {
+  chrome.tabs.query({ currentWindow: true, active: true }, (tab) => {
+    chrome.tabs.update(tab.id, { url });
+  });
+  window.close();
+}
+
 type CardProps = {
   cardData: CardData;
 };
@@ -59,7 +66,7 @@ export default function Card({ cardData }: CardProps) {
 
   return (
     <StyledCard ref={drag}>
-      <Hyperlink href={url} target="_blank" rel="noopener noreferrer">
+      <Hyperlink href={url} onClick={() => openLinkInThisTab(url)}>
         <IconContainer>
           <Icon image={image} />
         </IconContainer>
