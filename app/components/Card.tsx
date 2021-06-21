@@ -40,8 +40,8 @@ const StyledCard = styled.div`
 `;
 
 function openLinkInThisTab(url: string): void {
-  chrome.tabs.query({ currentWindow: true, active: true }, (tab) => {
-    chrome.tabs.update(tab.id, { url });
+  chrome.tabs.query({ currentWindow: true, active: true }, (tabs) => {
+    chrome.tabs.update(tabs[0].id, { url });
   });
   window.close();
 }

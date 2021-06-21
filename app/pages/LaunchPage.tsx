@@ -1,18 +1,11 @@
-import React, { useState } from "react";
-import styled, { ThemeProvider } from "styled-components";
-import lightTheme from "../../themes/light";
-import darkTheme from "../../themes/dark";
-import DndContainer from "./DndContainer";
-import Grid from "./Grid";
+import * as React from "react";
+import styled from "styled-components";
+import { StyledPage } from "../App";
+import DndContainer from "../components/DndContainer";
+import Grid from "../components/Grid";
+import ActionBar from "../components/ActionBar";
 import sampleCards from "../sample_cards.json";
 import { CardData } from "../modules/types";
-
-const StyledApp = styled.div`
-  width: 100%;
-  height: 100%;
-  background-color: ${(props) => props.theme.colors.background};
-  overflow-y: scroll;
-`;
 
 const GridContainer = styled.div`
   width: 100%;
@@ -26,12 +19,11 @@ const HorizontalRule = styled.div`
   background-color: ${(props) => props.theme.colors.accent};
 `;
 
-export default function App() {
-  const [isDarkMode, setIsDarkMode] = useState(true);
-  chrome.storage.sync.get("isDarkMode", ({ isDarkModeSet }) => {
-    setIsDarkMode(isDarkModeSet !== true);
-  });
-  const [cards, setCards] = useState<CardData[][]>(sampleCards);
+type LaunchPageProps = {
+  isDarkMode: boolean;
+};
+export default function LaunchPage({ isDarkMode }: LaunchPageProps) {
+  const [cards, setCards] = React.useState<CardData[][]>(sampleCards);
 
   /**
    * Modify the order of the cards by relocating a card. Relocation can be
@@ -111,13 +103,9 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-      <StyledApp>
-        <DndContainer>{renderGrids()}</DndContainer>
-      </StyledApp>
-    </ThemeProvider>
+    <StyledPage>
+      <DndContainer>{renderGrids()}</DndContainer>
+      <ActionBar />
+    </StyledPage>
   );
 }
-
-// TODO: add options.html in /static, and then create a new /options folder to
-// render a react library for it? Or just hard code in JS without react
