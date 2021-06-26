@@ -21,7 +21,12 @@ const HorizontalRule = styled.div`
 
 type LaunchPageProps = {};
 export default function LaunchPage({}: LaunchPageProps) {
-  const [cards, setCards] = React.useState<CardData[][]>(sampleCards);
+  const [cards, setCards] = React.useState<CardData[][]>([]);
+
+  // Set links from chrome storage
+  React.useEffect(() => {
+    setCards(sampleCards);
+  }, []);
 
   /**
    * Modify the order of the cards by relocating a card. Relocation can be

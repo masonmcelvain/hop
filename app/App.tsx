@@ -9,9 +9,14 @@ import AddLinkPage from "./pages/AddLinkPage";
 
 export default function App() {
   const [isDarkMode, setIsDarkMode] = React.useState(true);
-  chrome.storage.sync.get("isDarkMode", ({ isDarkModeSet }) => {
-    setIsDarkMode(isDarkModeSet !== true);
-  });
+
+  // Set color theme from chrome storage
+  React.useEffect(() => {
+    chrome.storage.sync.get("isDarkMode", ({ isDarkModeSet }) => {
+      setIsDarkMode(isDarkModeSet !== true);
+    });
+  }, []);
+
   return (
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
       <MemoryRouter>

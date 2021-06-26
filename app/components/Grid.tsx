@@ -46,7 +46,7 @@ type GridProps = {
 };
 
 export default function Grid({ gridId, cards, updateCards }: GridProps) {
-  const numCells = getNumCells(cards.length);
+  const numCells = getNumCells(cards ? cards.length : 0);
 
   function renderCell(i: number) {
     const cellHasACard = i < cards.length;
