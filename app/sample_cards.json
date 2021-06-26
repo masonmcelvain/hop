@@ -2,8 +2,8 @@
   [
     {
       "id": 122,
-      "url": "https://github.com/",
-      "name": "Github"
+      "url": "https://strava.com/",
+      "name": "Strava"
     },
     {
       "id": 123,
@@ -17,8 +17,8 @@
     },
     {
       "id": 125,
-      "url": "https://www.surfline.com/",
-      "name": "Surfline"
+      "url": "https://docs.google.com/document/u/0/",
+      "name": "Google Docs"
     },
     {
       "id": 126,
@@ -29,8 +29,8 @@
   [
     {
       "id": 128,
-      "url": "https://docs.google.com/spreadsheets/u/0/",
-      "name": "Google Sheets"
+      "url": "https://www.surfline.com/",
+      "name": "Surfline"
     },
     {
       "id": 129,
@@ -44,8 +44,8 @@
     },
     {
       "id": 131,
-      "url": "https://docs.google.com/forms/u/0/",
-      "name": "Google Forms"
+      "url": "https://youtube.com",
+      "name": "Youtube"
     },
     {
       "id": 132,
