@@ -16,13 +16,11 @@ const HorizontalRule = styled.div`
   width: 90%;
   height: 1px;
   margin: 10px auto;
-  background-color: ${(props) => props.theme.colors.accent};
+  background-color: ${(props) => props.theme.colors.icon_accent};
 `;
 
-type LaunchPageProps = {
-  isDarkMode: boolean;
-};
-export default function LaunchPage({ isDarkMode }: LaunchPageProps) {
+type LaunchPageProps = {};
+export default function LaunchPage({}: LaunchPageProps) {
   const [cards, setCards] = React.useState<CardData[][]>(sampleCards);
 
   /**

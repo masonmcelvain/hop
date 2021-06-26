@@ -17,7 +17,7 @@ export default function App() {
       <MemoryRouter>
         <Switch>
           <Route exact path="/">
-            <LaunchPage isDarkMode={isDarkMode} />
+            <LaunchPage />
           </Route>
           <Route path="/edit">
             <EditLinksPage />

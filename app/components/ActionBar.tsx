@@ -10,7 +10,7 @@ const ActionBarContainer = styled.div`
   border-radius: 12px;
   display: flex;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: ${props => props.theme.colors.overlay_10};
 `;
 
 type StyledLinkProps = {
@@ -27,12 +27,12 @@ const StyledLink = styled(Link)<StyledLinkProps>`
 
   @media (hover: hover) and (pointer: fine) {
     :hover {
-      background-color: rgba(255, 255, 255, 0.15);
+      background-color: ${props => props.theme.colors.overlay_15};
     }
   }
 
   :active {
-    background-color: rgba(255, 255, 255, 0.25);
+    background-color: ${props => props.theme.colors.overlay_25};
   }
 `;
 
