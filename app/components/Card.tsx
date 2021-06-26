@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { ItemTypes } from "../modules/ItemTypes";
 import { useDrag } from "react-dnd";
 import Icon from "./Icon";
-import { CardData } from "../modules/types";
+import { CardData } from "../types";
 
 const IconContainer = styled.div`
   flex: 1;

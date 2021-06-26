@@ -5,7 +5,7 @@ import DndContainer from "../components/DndContainer";
 import Grid from "../components/Grid";
 import ActionBar from "../components/ActionBar";
 import sampleCards from "../sample_cards.json";
-import { CardData } from "../modules/types";
+import { CardData } from "../types";
 
 const GridContainer = styled.div`
   width: 100%;

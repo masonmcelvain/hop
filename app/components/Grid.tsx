@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import Card from "./Card";
 import Cell from "./Cell";
-import { CardData, updateCardsType } from "../modules/types";
+import { CardData, updateCardsType } from "../types";
 
 // The width of the grid measured in cells
 const cellsWide = 3;

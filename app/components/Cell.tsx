@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import { ItemTypes } from "../modules/ItemTypes";
 import { useDrop } from "react-dnd";
-import { DragItem, updateCardsType } from "../modules/types";
+import { DragItem, updateCardsType } from "../types";
 
 const StyledCell = styled.div`
   position: absolute;
