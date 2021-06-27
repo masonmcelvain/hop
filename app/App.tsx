@@ -6,40 +6,41 @@ import darkTheme from "../themes/dark";
 import LaunchPage from "./pages/LaunchPage";
 import EditLinksPage from "./pages/EditLinksPage";
 import AddLinkPage from "./pages/AddLinkPage";
-import { setNextStoredLinkId, setStoredLinks } from "./lib/SyncStorageLib";
+import {
+  setNextStoredLinkId,
+  setStoredIsDarkMode,
+  setStoredLinks,
+} from "./lib/SyncStorageLib";
 import { LinkData } from "./types/CardTypes";
 import { STORAGE } from "./types/StorageEnum";
 
 export default function App() {
   const [isDarkMode, setIsDarkMode] = React.useState(true);
-  const [cards, setCards] = React.useState<LinkData[][]>([[]]);
   const [nextLinkId, setNextLinkId] = React.useState(0);
+  const [cards, setCards] = React.useState<LinkData[][]>([[]]);
 
+  // Initialize state from chrome storage
   React.useEffect(() => {
-    // Set color theme from chrome storage
-    chrome.storage.sync.get(STORAGE.IS_DARK_MODE_SET, (result) => {
+    chrome.storage.sync.get(null, (result) => {
+      // Set color theme
       if (STORAGE.IS_DARK_MODE_SET in result) {
         setIsDarkMode(result[STORAGE.IS_DARK_MODE_SET]);
       } else {
-        setIsDarkMode(true);
+        setStoredIsDarkMode(isDarkMode);
       }
-    });
 
-    // Set the next linkid from chrome storage
-    chrome.storage.sync.get(STORAGE.NEXT_LINK_ID, (result) => {
+      // Set the next linkid
       if (STORAGE.NEXT_LINK_ID in result) {
         setNextLinkId(result[STORAGE.NEXT_LINK_ID]);
       } else {
-        setNextLinkId(0);
+        setNextLinkId(nextLinkId);
       }
-    });
 
-    // Initialize links from chrome storage
-    chrome.storage.sync.get(STORAGE.STORED_LINKS, (result) => {
+      // Initialize links
       if (STORAGE.STORED_LINKS in result) {
         setCards(result[STORAGE.STORED_LINKS]);
       } else {
-        setStoredLinks([[]]);
+        setStoredLinks(cards);
       }
     });
   }, []);
@@ -58,7 +59,7 @@ export default function App() {
         `Trying to insert a link into section that does not exist: ${sectionIndex}`
       );
     }
-    const newLink: LinkData = {id: getAndIncrementLinkId(), name, url};
+    const newLink: LinkData = { id: getAndIncrementLinkId(), name, url };
     newCards[sectionIndex].push(newLink);
     setStoredLinks(newCards);
     setCards(newCards);
@@ -91,4 +92,8 @@ export const StyledPage = styled.div`
   overflow-y: scroll;
 `;
 
-export type addLinkType = (linkName: string, linkUrl: string, sectionIndex: number) => void;
+export type addLinkType = (
+  linkName: string,
+  linkUrl: string,
+  sectionIndex: number
+) => void;
