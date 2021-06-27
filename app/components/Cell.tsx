@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import { CardDragItem, DragItemTypes } from "../types/DragItemTypes";
 import { useDrop } from "react-dnd";
-import { updateOrderOfCardsType } from "../types/CardTypes";
+import { freezeCardsType, updateOrderOfCardsType } from "../types/CardTypes";
 
 const StyledCell = styled.div`
   position: absolute;
@@ -19,6 +19,7 @@ type CellProps = {
   index: number;
   gridId: number;
   updateOrderOfCards: updateOrderOfCardsType;
+  freezeCards: freezeCardsType;
   children: React.ReactChild;
 };
 
@@ -26,13 +27,14 @@ export default function Cell({
   index,
   gridId,
   updateOrderOfCards,
+  freezeCards,
   children,
 }: CellProps) {
   const [{ isOver }, drop] = useDrop(
     () => ({
       accept: DragItemTypes.CARD,
-      hover: (item: CardDragItem) => updateOrderOfCards(item.id, index, gridId, false),
-      drop: (item: CardDragItem) => updateOrderOfCards(item.id, index, gridId, true),
+      hover: (item: CardDragItem) => updateOrderOfCards(item.id, index, gridId),
+      drop: () => freezeCards(),
       collect: (monitor) => ({
         isOver: !!monitor.isOver(),
       }),
