@@ -136,7 +136,7 @@ function AddLinkPage({ addLink, theme }: AddLinkPageProps) {
             placeholder="url"
             maxLength={2048}
           />
-          <SubmitButton type="submit">Submit</SubmitButton>
+          <SubmitButton type="submit">Create</SubmitButton>
         </Form>
       </FlexFormContainer>
     </StyledPage>
