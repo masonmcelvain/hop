@@ -10,4 +10,4 @@ export type updateOrderOfCardsType = (
   newGridId: number
 ) => void;
 
-export type freezeCardsType = () => void;
+export type storeCurrentCardsType = () => void;

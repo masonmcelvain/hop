@@ -1,5 +1,5 @@
 import * as React from "react";
-import styled from "styled-components";
+import styled, { withTheme } from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 import { addLinkType, StyledPage } from "../App";
 import { ChevronLeft } from "react-feather";
@@ -60,7 +60,7 @@ const Input = styled.input`
   padding: 8px;
   margin: 8px;
   font-size: 20px;
-  border: none;
+  border: ${props => props.theme.borders.input};
   border-radius: 4px;
 `;
 
@@ -69,7 +69,7 @@ const TextArea = styled.textarea`
   padding: 8px;
   margin: 8px;
   font-size: 20px;
-  border: none;
+  border: ${props => props.theme.borders.input};
   border-radius: 4px;
 `;
 
@@ -98,8 +98,9 @@ const SubmitButton = styled.button`
 
 type AddLinkPageProps = {
   addLink: addLinkType;
+  theme;
 };
-export default function AddLinkPage({ addLink }: AddLinkPageProps) {
+function AddLinkPage({ addLink, theme }: AddLinkPageProps) {
   const [linkName, setLinkName] = React.useState("");
   const [linkUrl, setLinkUrl] = React.useState("");
   const [sectionIndex, setSectionUndex] = React.useState(0);
@@ -117,7 +118,7 @@ export default function AddLinkPage({ addLink }: AddLinkPageProps) {
   return (
     <StyledPage>
       <BackButtonLink to="/">
-        <ChevronLeft color="white" size={32} />
+        <ChevronLeft color={theme.colors.textColor} size={32} />
       </BackButtonLink>
       <Title>Create New Link</Title>
       <FlexFormContainer>
@@ -141,3 +142,5 @@ export default function AddLinkPage({ addLink }: AddLinkPageProps) {
     </StyledPage>
   );
 }
+
+export default withTheme(AddLinkPage);

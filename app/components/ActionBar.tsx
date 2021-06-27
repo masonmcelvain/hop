@@ -1,33 +1,25 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { Edit, Plus } from "react-feather";
-import { Direction } from "../types/DirectionEnum";
+import styled, { withTheme } from "styled-components";
+import { HorizontalRule } from "../components/HorizontalRule";
+import { Trash2, Plus, Moon, Sun } from "react-feather";
 
 const ActionBarContainer = styled.div`
   width: 100%;
+  margin: 8px 0;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-type ActionButtonProps = {
-  direction: Direction;
-};
-const ActionButton = styled.div<ActionButtonProps>`
-  flex-grow: 1;
-  height: 36px;
-  margin: ${(props) =>
-    Direction.withOptions(
-      props.direction,
-      "8px 4px 8px 8px",
-      "8px 8px 8px 4px"
-    )};
+const ActionButton = styled.div`
+  height: 40px;
+  width: 40px;
+  margin: 0 8px;
   border-radius: 8px;
-  background-color: ${(props) => props.theme.colors.overlay_10};
 `;
 
-const StyledLink = styled(Link)`
+const ActionButtonOverlay = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 8px;
@@ -48,19 +40,59 @@ const StyledLink = styled(Link)`
   }
 `;
 
-export default function ActionBar(): JSX.Element {
+const StyledLink = styled(Link)`
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+type ActionBarProps = {
+  setInDeleteMode: React.Dispatch<React.SetStateAction<boolean>>;
+  isDarkMode: boolean;
+  toggleDarkMode: () => void;
+  theme;
+};
+function ActionBar({
+  setInDeleteMode,
+  isDarkMode,
+  toggleDarkMode,
+  theme,
+}: ActionBarProps) {
   return (
-    <ActionBarContainer>
-      <ActionButton direction={Direction.Left}>
-        <StyledLink to="/edit">
-          <Edit color="white" size={24} />
-        </StyledLink>
-      </ActionButton>
-      <ActionButton direction={Direction.Right}>
-        <StyledLink to="/add">
-          <Plus color="white" size={32} />
-        </StyledLink>
-      </ActionButton>
-    </ActionBarContainer>
+    <>
+      <HorizontalRule />
+      <ActionBarContainer>
+        <ActionButton title="Choose Links to Delete">
+          <ActionButtonOverlay
+            onClick={() => setInDeleteMode((prevMode) => !prevMode)}
+          >
+            <Trash2 color={theme.colors.textColor} size={24} />
+          </ActionButtonOverlay>
+        </ActionButton>
+
+        <ActionButton title="Create New Link">
+          <ActionButtonOverlay>
+            <StyledLink to="/add">
+              <Plus color={theme.colors.textColor} size={32} />
+            </StyledLink>
+          </ActionButtonOverlay>
+        </ActionButton>
+
+        <ActionButton>
+          <ActionButtonOverlay onClick={() => toggleDarkMode()}>
+            {isDarkMode ? (
+              <Sun color={theme.colors.textColor} size={24} />
+            ) : (
+              <Moon color={theme.colors.textColor} size={24} />
+            )}
+          </ActionButtonOverlay>
+        </ActionButton>
+      </ActionBarContainer>
+    </>
   );
 }
+
+export default withTheme(ActionBar);

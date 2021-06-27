@@ -4,7 +4,6 @@ import styled, { ThemeProvider } from "styled-components";
 import lightTheme from "../themes/light";
 import darkTheme from "../themes/dark";
 import LaunchPage from "./pages/LaunchPage";
-import EditLinksPage from "./pages/EditLinksPage";
 import AddLinkPage from "./pages/AddLinkPage";
 import {
   setNextStoredLinkId,
@@ -18,6 +17,7 @@ export default function App() {
   const [isDarkMode, setIsDarkMode] = React.useState(true);
   const [nextLinkId, setNextLinkId] = React.useState(0);
   const [cards, setCards] = React.useState<LinkData[][]>([[]]);
+  const [inDeleteMode, setInDeleteMode] = React.useState(false);
 
   // Initialize state from chrome storage
   React.useEffect(() => {
@@ -65,15 +65,34 @@ export default function App() {
     setCards(newCards);
   }
 
+  function deleteLink(cellIndex: number, gridIndex: number) {
+    const newCards: LinkData[][] = JSON.parse(JSON.stringify(cards));
+    newCards[gridIndex].splice(cellIndex, 1);
+    setStoredLinks(newCards);
+    setCards(newCards);
+  }
+
+  function toggleDarkMode() {
+    setIsDarkMode((prevMode) => {
+      setStoredIsDarkMode(!prevMode);
+      return !prevMode;
+    });
+  }
+
   return (
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
       <MemoryRouter>
         <Switch>
           <Route exact path="/">
-            <LaunchPage cards={cards} setCards={setCards} />
-          </Route>
-          <Route path="/edit">
-            <EditLinksPage />
+            <LaunchPage
+              cards={cards}
+              setCards={setCards}
+              inDeleteMode={inDeleteMode}
+              setInDeleteMode={setInDeleteMode}
+              deleteLink={deleteLink}
+              isDarkMode={isDarkMode}
+              toggleDarkMode={toggleDarkMode}
+            />
           </Route>
           <Route path="/add">
             <AddLinkPage addLink={addLink} />

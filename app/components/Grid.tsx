@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Card from "./Card";
 import Cell from "./Cell";
 import {
-  freezeCardsType,
+  storeCurrentCardsType,
   LinkData,
   updateOrderOfCardsType,
 } from "../types/CardTypes";
@@ -44,17 +44,21 @@ function getNumCells(numCards: number) {
 }
 
 type GridProps = {
-  gridId: number;
+  gridIndex: number;
   cards: LinkData[];
   updateOrderOfCards: updateOrderOfCardsType;
-  freezeCards: freezeCardsType;
+  storeCurrentCards: storeCurrentCardsType;
+  inDeleteMode: boolean;
+  deleteLink: (cellIndex: number, gridIndex: number) => void;
 };
 
 export default function Grid({
-  gridId,
+  gridIndex,
   cards,
   updateOrderOfCards,
-  freezeCards,
+  storeCurrentCards,
+  inDeleteMode,
+  deleteLink,
 }: GridProps) {
   const numCells = getNumCells(cards ? cards.length : 0);
 
@@ -65,9 +69,11 @@ export default function Grid({
       <CellWrapper key={i}>
         <Cell
           index={i}
-          gridId={gridId}
+          gridIndex={gridIndex}
           updateOrderOfCards={updateOrderOfCards}
-          freezeCards={freezeCards}
+          storeCurrentCards={storeCurrentCards}
+          inDeleteMode={inDeleteMode}
+          deleteLink={deleteLink}
         >
           {card}
         </Cell>

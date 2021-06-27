@@ -6,24 +6,31 @@ import Grid from "../components/Grid";
 import ActionBar from "../components/ActionBar";
 import { LinkData } from "../types/CardTypes";
 import { setStoredLinks } from "../lib/SyncStorageLib";
+import { HorizontalRule } from "../components/HorizontalRule";
 
 const GridContainer = styled.div`
   width: 100%;
   height: min-content;
 `;
 
-const HorizontalRule = styled.div`
-  width: 90%;
-  height: 1px;
-  margin: 10px auto;
-  background-color: ${(props) => props.theme.colors.icon_accent};
-`;
-
 type LaunchPageProps = {
   cards: LinkData[][];
   setCards: (prevCallback: any) => void;
+  inDeleteMode: boolean;
+  setInDeleteMode: (prevCallback: any) => void;
+  deleteLink: (cellIndex: number, gridIndex: number) => void;
+  isDarkMode: boolean;
+  toggleDarkMode: () => void;
 };
-export default function LaunchPage({ cards, setCards }: LaunchPageProps) {
+export default function LaunchPage({
+  cards,
+  setCards,
+  inDeleteMode,
+  setInDeleteMode,
+  deleteLink,
+  isDarkMode,
+  toggleDarkMode,
+}: LaunchPageProps) {
   /**
    * Modify the order of the cards by relocating a card. Relocation can be
    * between grids.
@@ -79,7 +86,7 @@ export default function LaunchPage({ cards, setCards }: LaunchPageProps) {
     });
   }
 
-  function freezeCards() {
+  function storeCurrentCards() {
     setStoredLinks(cards);
   }
 
@@ -90,10 +97,12 @@ export default function LaunchPage({ cards, setCards }: LaunchPageProps) {
     const grids = [
       <GridContainer key={0}>
         <Grid
-          gridId={0}
+          gridIndex={0}
           cards={cards[0]}
           updateOrderOfCards={updateOrderOfCards}
-          freezeCards={freezeCards}
+          storeCurrentCards={storeCurrentCards}
+          inDeleteMode={inDeleteMode}
+          deleteLink={deleteLink}
         />
       </GridContainer>,
     ];
@@ -103,10 +112,12 @@ export default function LaunchPage({ cards, setCards }: LaunchPageProps) {
           <HorizontalRule />
           <GridContainer>
             <Grid
-              gridId={i}
+              gridIndex={i}
               cards={cards[i]}
               updateOrderOfCards={updateOrderOfCards}
-              freezeCards={freezeCards}
+              storeCurrentCards={storeCurrentCards}
+              inDeleteMode={inDeleteMode}
+              deleteLink={deleteLink}
             />
           </GridContainer>
         </React.Fragment>
@@ -118,7 +129,11 @@ export default function LaunchPage({ cards, setCards }: LaunchPageProps) {
   return (
     <StyledPage>
       <DndContainer>{renderGrids()}</DndContainer>
-      <ActionBar />
+      <ActionBar
+        setInDeleteMode={setInDeleteMode}
+        isDarkMode={isDarkMode}
+        toggleDarkMode={toggleDarkMode}
+      />
     </StyledPage>
   );
 }

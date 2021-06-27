@@ -10,5 +10,9 @@ export default {
     overlay_25: "rgba(0, 0, 0, 0.25)",
     white: "#fff",
     black: "#000",
-  }
+    delete: "#e01e37",
+  },
+  borders: {
+    input: "1px solid #676b71",
+  },
 };
