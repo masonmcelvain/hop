@@ -28,6 +28,13 @@ const BackButtonLink = styled(Link)`
   }
 `;
 
+const Title = styled.h1`
+  text-align: center;
+  margin: 8px;
+  font-weight: 400;
+  color: ${(props) => props.theme.colors.textColor};
+`;
+
 const FlexFormContainer = styled.div`
   position: absolute;
   top: 0;
@@ -49,6 +56,15 @@ const Form = styled.form`
 `;
 
 const Input = styled.input`
+  width: 80%;
+  padding: 8px;
+  margin: 8px;
+  font-size: 20px;
+  border: none;
+  border-radius: 4px;
+`;
+
+const TextArea = styled.textarea`
   width: 80%;
   padding: 8px;
   margin: 8px;
@@ -103,6 +119,7 @@ export default function AddLinkPage({ addLink }: AddLinkPageProps) {
       <BackButtonLink to="/">
         <ChevronLeft color="white" size={32} />
       </BackButtonLink>
+      <Title>Create New Link</Title>
       <FlexFormContainer>
         <Form onSubmit={onSubmit}>
           <Input
@@ -110,12 +127,13 @@ export default function AddLinkPage({ addLink }: AddLinkPageProps) {
             value={linkName}
             onChange={(event) => setLinkName(event.target.value)}
             placeholder="title"
+            maxLength={48}
           />
-          <Input
-            type="text"
+          <TextArea
             value={linkUrl}
             onChange={(event) => setLinkUrl(event.target.value)}
             placeholder="url"
+            maxLength={2048}
           />
           <SubmitButton type="submit">Submit</SubmitButton>
         </Form>
