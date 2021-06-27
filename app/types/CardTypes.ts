@@ -7,5 +7,6 @@ export interface LinkData {
 export type updateOrderOfCardsType = (
   sourceId: number,
   newIndex: number,
-  newGridId: number
+  newGridId: number,
+  isDrop: boolean,
 ) => void;

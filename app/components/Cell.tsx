@@ -31,7 +31,8 @@ export default function Cell({
   const [{ isOver }, drop] = useDrop(
     () => ({
       accept: DragItemTypes.CARD,
-      hover: (item: CardDragItem) => updateOrderOfCards(item.id, index, gridId),
+      hover: (item: CardDragItem) => updateOrderOfCards(item.id, index, gridId, false),
+      drop: (item: CardDragItem) => updateOrderOfCards(item.id, index, gridId, true),
       collect: (monitor) => ({
         isOver: !!monitor.isOver(),
       }),

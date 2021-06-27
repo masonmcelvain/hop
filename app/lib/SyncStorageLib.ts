@@ -12,6 +12,5 @@ export function setNextStoredLinkId(id: number) {
 function setStorageWithKey(key: string, value: any) {
   const storageObj = {};
   storageObj[key] = value;
-  debugger;
   chrome.storage.sync.set(storageObj);
 }
