@@ -9,11 +9,13 @@ const BackButtonLink = styled(Link)`
   z-index: 1;
   top: 0;
   left: 0;
+  width: 40px;
+  height: 40px;
   margin: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
 
@@ -30,7 +32,7 @@ const BackButtonLink = styled(Link)`
 
 const Title = styled.h1`
   text-align: center;
-  margin: 8px;
+  margin: 12px 0 0;
   font-weight: 400;
   color: ${(props) => props.theme.colors.textColor};
 `;
@@ -118,7 +120,7 @@ function AddLinkPage({ addLink, theme }: AddLinkPageProps) {
   return (
     <StyledPage>
       <BackButtonLink to="/">
-        <ChevronLeft color={theme.colors.textColor} size={32} />
+        <ChevronLeft color={theme.colors.textColor} size={34} />
       </BackButtonLink>
       <Title>Create New Link</Title>
       <FlexFormContainer>
