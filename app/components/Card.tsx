@@ -1,9 +1,9 @@
 import * as React from "react";
 import styled from "styled-components";
-import { ItemTypes } from "../modules/ItemTypes";
+import { DragItemTypes } from "../types/DragItemTypes";
 import { useDrag } from "react-dnd";
 import Icon from "./Icon";
-import { CardData } from "../types";
+import { LinkData } from "../types/CardTypes";
 
 const IconContainer = styled.div`
   flex: 1;
@@ -47,21 +47,21 @@ function openLinkInThisTab(url: string): void {
 }
 
 type CardProps = {
-  cardData: CardData;
+  linkData: LinkData;
 };
 
-export default function Card({ cardData }: CardProps) {
-  let { id, name, url } = cardData;
+export default function Card({ linkData }: CardProps) {
+  let { id, name, url } = linkData;
   const image = null; // TODO replace with real image data
   const [{ isDragging }, drag] = useDrag(
     () => ({
-      type: ItemTypes.CARD,
+      type: DragItemTypes.CARD,
       item: { id },
       collect: (monitor) => ({
         isDragging: !!monitor.isDragging(),
       }),
     }),
-    [cardData]
+    [linkData]
   );
 
   return (

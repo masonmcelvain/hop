@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import Card from "./Card";
 import Cell from "./Cell";
-import { CardData, updateCardsType } from "../types";
+import { LinkData, updateOrderOfCardsType } from "../types/CardTypes";
 
 // The width of the grid measured in cells
 const cellsWide = 3;
@@ -41,19 +41,19 @@ function getNumCells(numCards: number) {
 
 type GridProps = {
   gridId: number;
-  cards: CardData[];
-  updateCards: updateCardsType;
+  cards: LinkData[];
+  updateOrderOfCards: updateOrderOfCardsType;
 };
 
-export default function Grid({ gridId, cards, updateCards }: GridProps) {
+export default function Grid({ gridId, cards, updateOrderOfCards }: GridProps) {
   const numCells = getNumCells(cards ? cards.length : 0);
 
   function renderCell(i: number) {
     const cellHasACard = i < cards.length;
-    const card = cellHasACard ? <Card cardData={cards[i]} /> : null;
+    const card = cellHasACard ? <Card linkData={cards[i]} /> : null;
     return (
       <CellWrapper key={i}>
-        <Cell index={i} gridId={gridId} updateCards={updateCards}>
+        <Cell index={i} gridId={gridId} updateOrderOfCards={updateOrderOfCards}>
           {card}
         </Cell>
       </CellWrapper>

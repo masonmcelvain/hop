@@ -1,8 +1,8 @@
 import * as React from "react";
 import styled from "styled-components";
-import { ItemTypes } from "../modules/ItemTypes";
+import { CardDragItem, DragItemTypes } from "../types/DragItemTypes";
 import { useDrop } from "react-dnd";
-import { DragItem, updateCardsType } from "../types";
+import { updateOrderOfCardsType } from "../types/CardTypes";
 
 const StyledCell = styled.div`
   position: absolute;
@@ -18,30 +18,26 @@ const StyledCell = styled.div`
 type CellProps = {
   index: number;
   gridId: number;
-  updateCards: updateCardsType;
+  updateOrderOfCards: updateOrderOfCardsType;
   children: React.ReactChild;
 };
 
 export default function Cell({
   index,
   gridId,
-  updateCards,
+  updateOrderOfCards,
   children,
 }: CellProps) {
   const [{ isOver }, drop] = useDrop(
     () => ({
-      accept: ItemTypes.CARD,
-      hover: (item: DragItem) => updateCards(item.id, index, gridId),
+      accept: DragItemTypes.CARD,
+      hover: (item: CardDragItem) => updateOrderOfCards(item.id, index, gridId),
       collect: (monitor) => ({
         isOver: !!monitor.isOver(),
       }),
     }),
-    [index, gridId, updateCards]
+    [index, gridId, updateOrderOfCards]
   );
 
-  return (
-    <StyledCell ref={drop}>
-      {isOver ? null : children}
-    </StyledCell>
-  );
+  return <StyledCell ref={drop}>{isOver ? null : children}</StyledCell>;
 }

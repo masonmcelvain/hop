@@ -4,8 +4,7 @@ import { StyledPage } from "../App";
 import DndContainer from "../components/DndContainer";
 import Grid from "../components/Grid";
 import ActionBar from "../components/ActionBar";
-import sampleCards from "../sample_cards.json";
-import { CardData } from "../types";
+import { LinkData } from "../types/CardTypes";
 
 const GridContainer = styled.div`
   width: 100%;
@@ -19,15 +18,11 @@ const HorizontalRule = styled.div`
   background-color: ${(props) => props.theme.colors.icon_accent};
 `;
 
-type LaunchPageProps = {};
-export default function LaunchPage({}: LaunchPageProps) {
-  const [cards, setCards] = React.useState<CardData[][]>([]);
-
-  // Set links from chrome storage
-  React.useEffect(() => {
-    setCards(sampleCards);
-  }, []);
-
+type LaunchPageProps = {
+  cards: LinkData[][];
+  setCards: (prevCallback: any) => void;
+};
+export default function LaunchPage({ cards, setCards }: LaunchPageProps) {
   /**
    * Modify the order of the cards by relocating a card. Relocation can be
    * between grids.
@@ -36,7 +31,7 @@ export default function LaunchPage({}: LaunchPageProps) {
    * @param newCardIndex Index to move the source card to.
    * @param newGridIndex The index of the grid the card is being moved to.
    */
-  function updateCards(
+  function updateOrderOfCards(
     sourceId: number,
     newCardIndex: number,
     newGridIndex: number
@@ -89,7 +84,11 @@ export default function LaunchPage({}: LaunchPageProps) {
     }
     const grids = [
       <GridContainer key={0}>
-        <Grid gridId={0} cards={cards[0]} updateCards={updateCards} />
+        <Grid
+          gridId={0}
+          cards={cards[0]}
+          updateOrderOfCards={updateOrderOfCards}
+        />
       </GridContainer>,
     ];
     for (let i = 1; i < cards.length; i++) {
@@ -97,7 +96,11 @@ export default function LaunchPage({}: LaunchPageProps) {
         <React.Fragment key={i}>
           <HorizontalRule />
           <GridContainer>
-            <Grid gridId={i} cards={cards[i]} updateCards={updateCards} />
+            <Grid
+              gridId={i}
+              cards={cards[i]}
+              updateOrderOfCards={updateOrderOfCards}
+            />
           </GridContainer>
         </React.Fragment>
       );

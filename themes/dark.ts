@@ -9,5 +9,7 @@ export default {
     overlay_15: "rgba(255, 255, 255, 0.15)",
     overlay_20: "rgba(255, 255, 255, 0.2)",
     overlay_25: "rgba(255, 255, 255, 0.25)",
+    white: "#fff",
+    black: "#000",
   }
 };
