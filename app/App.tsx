@@ -53,14 +53,40 @@ export default function App() {
   }
 
   function addLink(name: string, url: string, sectionIndex: number) {
-    const newCards = [...cards];
+    const newCards: LinkData[][] = JSON.parse(JSON.stringify(cards));
     if (sectionIndex > newCards.length) {
       throw new Error(
         `Trying to insert a link into section that does not exist: ${sectionIndex}`
       );
     }
-    const newLink: LinkData = { id: getAndIncrementLinkId(), name, url };
+    const newLink: LinkData = {
+      id: getAndIncrementLinkId(),
+      name,
+      url,
+      imageUrl: "",
+    };
     newCards[sectionIndex].push(newLink);
+    setStoredLinks(newCards);
+    setCards(newCards);
+  }
+
+  function addImageUrl(url: string, id: number) {
+    const newCards: LinkData[][] = JSON.parse(JSON.stringify(cards));
+    let returnEarly = false;
+
+    newCards.forEach((section, i) => {
+      section.forEach((card, j) => {
+        if (card.id === id) {
+          newCards[i][j].imageUrl = url;
+          returnEarly = true;
+          return;
+        }
+      });
+      if (returnEarly) {
+        return;
+      }
+    });
+
     setStoredLinks(newCards);
     setCards(newCards);
   }
@@ -92,6 +118,7 @@ export default function App() {
               deleteLink={deleteLink}
               isDarkMode={isDarkMode}
               toggleDarkMode={toggleDarkMode}
+              addImageUrl={addImageUrl}
             />
           </Route>
           <Route path="/add">
@@ -115,4 +142,9 @@ export type addLinkType = (
   linkName: string,
   linkUrl: string,
   sectionIndex: number
+) => void;
+
+export type addImageUrlType = (
+  url: string,
+  id: number,
 ) => void;

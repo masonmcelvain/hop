@@ -22,5 +22,8 @@
     "permissions": [
         "storage",
         "tabs"
+    ],
+    "host_permissions": [
+        "http://favicongrabber.com/api/grab/*"
     ]
 }

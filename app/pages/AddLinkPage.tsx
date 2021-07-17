@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled, { withTheme } from "styled-components";
 import { Link, useHistory } from "react-router-dom";
+import * as psl from "psl";
 import { addLinkType, StyledPage } from "../App";
 import { ChevronLeft } from "react-feather";
 
@@ -62,7 +63,7 @@ const Input = styled.input`
   padding: 8px;
   margin: 8px;
   font-size: 20px;
-  border: ${props => props.theme.borders.input};
+  border: ${(props) => props.theme.borders.input};
   border-radius: 4px;
 `;
 
@@ -71,7 +72,7 @@ const TextArea = styled.textarea`
   padding: 8px;
   margin: 8px;
   font-size: 20px;
-  border: ${props => props.theme.borders.input};
+  border: ${(props) => props.theme.borders.input};
   border-radius: 4px;
 `;
 
@@ -113,8 +114,16 @@ function AddLinkPage({ addLink, theme }: AddLinkPageProps) {
     if (!linkName || !linkUrl) {
       return;
     }
-    addLink(linkName, linkUrl, sectionIndex);
-    history.push("/");
+    try {
+      const url = new URL(linkUrl);
+      if (!psl.isValid(url.hostname)) {
+        throw new Error(`Invalid URL Domain: ${url.hostname}`);
+      }
+      addLink(linkName, url.toString(), sectionIndex);
+      history.push("/");
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   return (

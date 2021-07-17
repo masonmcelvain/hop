@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import { StyledPage } from "../App";
+import { addImageUrlType, StyledPage } from "../App";
 import DndContainer from "../components/DndContainer";
 import Grid from "../components/Grid";
 import ActionBar from "../components/ActionBar";
@@ -21,6 +21,7 @@ type LaunchPageProps = {
   deleteLink: (cellIndex: number, gridIndex: number) => void;
   isDarkMode: boolean;
   toggleDarkMode: () => void;
+  addImageUrl: addImageUrlType;
 };
 export default function LaunchPage({
   cards,
@@ -30,6 +31,7 @@ export default function LaunchPage({
   deleteLink,
   isDarkMode,
   toggleDarkMode,
+  addImageUrl,
 }: LaunchPageProps) {
   /**
    * Modify the order of the cards by relocating a card. Relocation can be
@@ -103,6 +105,7 @@ export default function LaunchPage({
           storeCurrentCards={storeCurrentCards}
           inDeleteMode={inDeleteMode}
           deleteLink={deleteLink}
+          addImageUrl={addImageUrl}
         />
       </GridContainer>,
     ];
@@ -118,6 +121,7 @@ export default function LaunchPage({
               storeCurrentCards={storeCurrentCards}
               inDeleteMode={inDeleteMode}
               deleteLink={deleteLink}
+              addImageUrl={addImageUrl}
             />
           </GridContainer>
         </React.Fragment>

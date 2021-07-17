@@ -2,8 +2,9 @@ import * as React from "react";
 import styled from "styled-components";
 import { DragItemTypes } from "../types/DragItemTypes";
 import { useDrag } from "react-dnd";
-import Icon from "./Icon";
+import CardImage from "./CardImage";
 import { LinkData } from "../types/CardTypes";
+import { addImageUrlType } from "../App";
 
 const IconContainer = styled.div`
   flex: 1;
@@ -48,11 +49,11 @@ function openLinkInThisTab(url: string): void {
 
 type CardProps = {
   linkData: LinkData;
+  addImageUrl: addImageUrlType;
 };
 
-export default function Card({ linkData }: CardProps) {
-  let { id, name, url } = linkData;
-  const image = null; // TODO replace with real image data
+export default function Card({ linkData, addImageUrl }: CardProps) {
+  const { id, name, url } = linkData;
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: DragItemTypes.CARD,
@@ -66,9 +67,12 @@ export default function Card({ linkData }: CardProps) {
 
   return (
     <StyledCard ref={drag}>
-      <Hyperlink href={url} onClick={() => openLinkInThisTab(url)}>
+      <Hyperlink
+        href={url.toString()}
+        onClick={() => openLinkInThisTab(url.toString())}
+      >
         <IconContainer>
-          <Icon image={image} />
+          <CardImage linkData={linkData} addImageUrl={addImageUrl} />
         </IconContainer>
         <Paragraph>{name}</Paragraph>
       </Hyperlink>

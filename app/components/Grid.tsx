@@ -7,6 +7,7 @@ import {
   LinkData,
   updateOrderOfCardsType,
 } from "../types/CardTypes";
+import { addImageUrlType } from "../App";
 
 // The width of the grid measured in cells
 const cellsWide = 3;
@@ -50,6 +51,7 @@ type GridProps = {
   storeCurrentCards: storeCurrentCardsType;
   inDeleteMode: boolean;
   deleteLink: (cellIndex: number, gridIndex: number) => void;
+  addImageUrl: addImageUrlType;
 };
 
 export default function Grid({
@@ -59,12 +61,15 @@ export default function Grid({
   storeCurrentCards,
   inDeleteMode,
   deleteLink,
+  addImageUrl,
 }: GridProps) {
   const numCells = getNumCells(cards ? cards.length : 0);
 
   function renderCell(i: number) {
     const cellHasACard = i < cards.length;
-    const card = cellHasACard ? <Card linkData={cards[i]} /> : null;
+    const card = cellHasACard ? (
+      <Card linkData={cards[i]} addImageUrl={addImageUrl} />
+    ) : null;
     return (
       <CellWrapper key={i}>
         <Cell
