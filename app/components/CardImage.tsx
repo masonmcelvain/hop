@@ -8,13 +8,13 @@ import { addImageUrlType } from "../App";
 
 const DefaultImage = styled(Image)`
   width: 80%;
-  height: 80%;
+  height: auto;
   color: ${(props) => props.theme.colors.icon_accent};
 `;
 
 const StyledImage = styled.img`
   width: 80%;
-  height: 80%;
+  height: auto;
 `;
 
 /**
