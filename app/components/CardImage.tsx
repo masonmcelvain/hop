@@ -7,13 +7,13 @@ import { LinkData } from "../types/CardTypes";
 import { addImageUrlType } from "../App";
 
 const DefaultImage = styled(Image)`
-  width: 80%;
+  width: 50%;
   height: auto;
   color: ${(props) => props.theme.colors.icon_accent};
 `;
 
 const StyledImage = styled.img`
-  width: 80%;
+  width: 50%;
   height: auto;
 `;
 

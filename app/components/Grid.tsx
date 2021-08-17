@@ -20,9 +20,10 @@ const StyledGrid = styled.div`
 `;
 
 const CellWrapper = styled.div`
-  width: ${100 / cellsWide}%;
+  width: ${(100 / cellsWide) - 2}%;
   height: 0;
-  padding-top: ${100 / cellsWide}%;
+  margin: 1%;
+  padding-top: ${(100 / cellsWide) - 2}%;
   position: relative;
   display: flex;
   align-items: center;

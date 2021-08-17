@@ -23,15 +23,34 @@ const Paragraph = styled.p`
   white-space: nowrap;
 `;
 
-const Hyperlink = styled.a`
+type HyperLinkProps = {
+  isDragging: boolean;
+};
+const Hyperlink = styled.a<HyperLinkProps>`
   display: inline-block;
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
+  padding: 5%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   text-align: center;
+  border-radius: 8px;
+  transition: all 0.2s;
+
+  // TODO: make a custom hook to control this https://www.thisdot.co/blog/creating-a-global-state-with-react-hooks
+  @media (hover: hover) and (pointer: fine) {
+    :hover {
+      background-color: ${(props) =>
+        props.isDragging ? "transparent" : props.theme.colors.overlay_15};
+    }
+  }
+
+  :active {
+    background-color: ${(props) =>
+      props.isDragging ? "transparent" : props.theme.colors.overlay_25};
+  }
 `;
 
 const StyledCard = styled.div`
@@ -70,6 +89,7 @@ export default function Card({ linkData, addImageUrl }: CardProps) {
       <Hyperlink
         href={url.toString()}
         onClick={() => openLinkInThisTab(url.toString())}
+        isDragging={isDragging}
       >
         <IconContainer>
           <CardImage linkData={linkData} addImageUrl={addImageUrl} />
