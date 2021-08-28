@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import * as psl from "psl";
 import { addLinkType, StyledPage } from "../App";
 import { ChevronLeft } from "react-feather";
+import { getCurrentTabUrl } from "../lib/chrome/Tab";
 
 const BackButtonLink = styled(Link)`
   position: absolute;
@@ -108,6 +109,15 @@ function AddLinkPage({ addLink, theme }: AddLinkPageProps) {
   const [linkUrl, setLinkUrl] = React.useState("");
   const [sectionIndex, setSectionUndex] = React.useState(0);
   const history = useHistory();
+
+  const initLinkUrl = React.useCallback(async () => {
+    const url = await getCurrentTabUrl();
+    setLinkUrl(url);
+  }, []);
+
+  React.useEffect(() => {
+    initLinkUrl();
+  }, []);
 
   function onSubmit(event) {
     event.preventDefault();

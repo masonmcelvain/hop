@@ -1,5 +1,5 @@
-import { STORAGE } from "../types/StorageEnum";
-import { LinkData } from "../types/CardTypes";
+import { STORAGE } from "../../types/StorageEnum";
+import { LinkData } from "../../types/CardTypes";
 
 export function setStoredIsDarkMode(isDarkMode: boolean) {
   setStorageWithKey(STORAGE.IS_DARK_MODE_SET, isDarkMode);

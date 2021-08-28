@@ -5,7 +5,7 @@ import DndContainer from "../components/DndContainer";
 import Grid from "../components/Grid";
 import ActionBar from "../components/ActionBar";
 import { LinkData } from "../types/CardTypes";
-import { setStoredLinks } from "../lib/SyncStorageLib";
+import { setStoredLinks } from "../lib/chrome/SyncStorage";
 import { HorizontalRule } from "../components/HorizontalRule";
 
 const GridContainer = styled.div`

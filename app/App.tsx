@@ -9,7 +9,7 @@ import {
   setNextStoredLinkId,
   setStoredIsDarkMode,
   setStoredLinks,
-} from "./lib/SyncStorageLib";
+} from "./lib/chrome/SyncStorage";
 import { LinkData } from "./types/CardTypes";
 import { STORAGE } from "./types/StorageEnum";
 
