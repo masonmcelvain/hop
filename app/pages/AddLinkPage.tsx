@@ -2,6 +2,7 @@ import * as React from "react";
 import styled, { withTheme } from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 import * as psl from "psl";
+import { Input, Text } from "@chakra-ui/react"
 import { addLinkType, StyledPage } from "../App";
 import { ChevronLeft } from "react-feather";
 import { getCurrentTabUrl } from "../lib/chrome/Tab";
@@ -59,7 +60,7 @@ const Form = styled.form`
   align-items: center;
 `;
 
-const Input = styled.input`
+const StyledInput = styled.input`
   width: 80%;
   padding: 8px;
   margin: 8px;
@@ -107,7 +108,9 @@ type AddLinkPageProps = {
 function AddLinkPage({ addLink, theme }: AddLinkPageProps) {
   const [linkName, setLinkName] = React.useState("");
   const [linkUrl, setLinkUrl] = React.useState("");
-  const [sectionIndex, setSectionUndex] = React.useState(0);
+  const [imageUrl, setImageUrl] = React.useState("");
+  const [imageUrlError, setImageUrlError] = React.useState("");
+  const [sectionIndex, setSectionIndex] = React.useState(0);
   const history = useHistory();
 
   const initLinkUrl = React.useCallback(async () => {
@@ -119,6 +122,21 @@ function AddLinkPage({ addLink, theme }: AddLinkPageProps) {
     initLinkUrl();
   }, []);
 
+  function handleImageUrlChange(event) {
+    event.preventDefault();
+    const urlValue = event.target.value ? event.target.value : "";
+    setImageUrl(urlValue);
+    try {
+      urlValue && new URL(urlValue);
+      setImageUrlError("");
+    } catch (e) {
+      if (!(e instanceof TypeError)) {
+        throw e;
+      }
+      setImageUrlError("Please enter a valid image url");
+    }
+  }
+
   function onSubmit(event) {
     event.preventDefault();
     if (!linkName || !linkUrl) {
@@ -129,7 +147,7 @@ function AddLinkPage({ addLink, theme }: AddLinkPageProps) {
       if (!psl.isValid(url.hostname)) {
         throw new Error(`Invalid URL Domain: ${url.hostname}`);
       }
-      addLink(linkName, url.toString(), sectionIndex);
+      addLink(linkName, url.toString(), sectionIndex, imageUrl);
       history.push("/");
     } catch (e) {
       console.error(e);
@@ -144,7 +162,7 @@ function AddLinkPage({ addLink, theme }: AddLinkPageProps) {
       <Title>Create New Link</Title>
       <FlexFormContainer>
         <Form onSubmit={onSubmit}>
-          <Input
+          <StyledInput
             type="text"
             value={linkName}
             onChange={(event) => setLinkName(event.target.value)}
@@ -157,7 +175,20 @@ function AddLinkPage({ addLink, theme }: AddLinkPageProps) {
             placeholder="url"
             maxLength={2048}
           />
-          <SubmitButton type="submit">Create</SubmitButton>
+          <Text mb="8px" color={theme.colors.textColor}>{imageUrlError}</Text>
+          <Input
+            value={imageUrl}
+            onChange={handleImageUrlChange}
+            placeholder="Optional Custom Image Url"
+            isInvalid={!!imageUrlError}
+            size="md"
+            width={{ base: "80%" }}
+            margin="0 8px"
+            color={theme.colors.textColor}
+          />
+          <SubmitButton type="submit" disabled={!!imageUrlError}>
+            Create
+          </SubmitButton>
         </Form>
       </FlexFormContainer>
     </StyledPage>

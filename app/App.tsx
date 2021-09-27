@@ -52,7 +52,7 @@ export default function App() {
     return currentLinkId;
   }
 
-  function addLink(name: string, url: string, sectionIndex: number) {
+  function addLink(name: string, url: string, sectionIndex: number, imageUrl: string) {
     const newCards: LinkData[][] = JSON.parse(JSON.stringify(cards));
     if (sectionIndex > newCards.length) {
       throw new Error(
@@ -63,7 +63,7 @@ export default function App() {
       id: getAndIncrementLinkId(),
       name,
       url,
-      imageUrl: "",
+      imageUrl,
     };
     newCards[sectionIndex].push(newLink);
     setStoredLinks(newCards);
@@ -141,7 +141,8 @@ export const StyledPage = styled.div`
 export type addLinkType = (
   linkName: string,
   linkUrl: string,
-  sectionIndex: number
+  sectionIndex: number,
+  imageUrl: string
 ) => void;
 
 export type addImageUrlType = (
