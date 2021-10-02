@@ -8,6 +8,8 @@ export const Reducer = (state: StateType, action: LinkActionTypes): StateType =>
       return setNextLinkId(state, action.payload);
     case LinkAction.ADD_LINK:
       return addLink(state, action.payload);
+    case LinkAction.UPDATE_LINK_ORDER:
+      return updateLinkOrder(state, action.payload);
     case LinkAction.ADD_IMAGE_URL:
       return addImageUrl(state, action.payload);
     case LinkAction.DELETE_LINK:
@@ -61,7 +63,66 @@ function addLink(
   };
 }
 
-export function addImageUrl(
+/**
+ * Modify the order of the cards by relocating a card. Relocation can be
+ * between grids.
+ *
+ * @param sourceId Id of the card being moved.
+ * @param newLinkIndex Index to move the source link to.
+ * @param newGridIndex The index of the grid the card is being moved to.
+ */
+function updateLinkOrder(
+  prevState: StateType,
+  payload: UpdateLinkOrderPayload
+): StateType {
+  const { sourceId, newGridIndex } = payload;
+  let { newLinkIndex } = payload;
+
+  const removeFromGrid = prevState.links.find((grid) =>
+    grid.some((link) => link.id === sourceId)
+  );
+  if (!removeFromGrid) {
+    // If source is unknown, do nothing.
+    console.log("Unkown sourceId in updateLinkOrder(): " + sourceId);
+    return;
+  }
+  const oldGridIndex = prevState.links.findIndex((grid) => grid === removeFromGrid);
+  const oldLinkIndex = removeFromGrid.findIndex(
+    (link) => link.id === sourceId
+  );
+
+  if (oldLinkIndex === newLinkIndex && oldGridIndex === newGridIndex) {
+    // If there is no positional change, do nothing.
+    return;
+  }
+
+  // If dropped in an empty cell, put the card at the end of the array
+  if (newLinkIndex >= removeFromGrid.length) {
+    newLinkIndex = removeFromGrid.length - 1;
+  }
+
+  // Delete the card from the old cards
+  const [link] = removeFromGrid.splice(oldLinkIndex, 1);
+
+  const insertIntoGrid =
+    oldGridIndex === newGridIndex ? removeFromGrid : prevState.links[newGridIndex];
+
+  // Insert the card into the new cards
+  insertIntoGrid.splice(newLinkIndex, 0, link);
+
+  const newLinks = [...prevState.links];
+  if (oldGridIndex !== newGridIndex) {
+    newLinks.splice(oldGridIndex, 1, removeFromGrid);
+  }
+  newLinks.splice(newGridIndex, 1, insertIntoGrid);
+
+  return {
+    links: newLinks,
+    nextLinkId: prevState.nextLinkId,
+  };
+}
+
+function addImageUrl(
   prevState: StateType,
   payload: AddImageUrlPayload
 ): StateType {
@@ -89,7 +150,7 @@ export function addImageUrl(
   };
 }
 
-export function deleteLink(
+function deleteLink(
   prevState: StateType,
   payload: DeleteLinkPayload
 ): StateType {
@@ -102,20 +163,6 @@ export function deleteLink(
     nextLinkId: prevState.nextLinkId,
   };
 }
-
-// export type addLinkType = (
-//   linkName: string,
-//   linkUrl: string,
-//   sectionIndex: number,
-//   imageUrl: string
-// ) => void;
-
-// export type addImageUrlType = (
-//   url: string,
-//   id: number,
-// ) => void;
-
-// export type deleteLinkType = (cellIndex: number, gridIndex: number) => void;
 
 type SetLinksAction = {
   type: typeof LinkAction.SET_LINKS;
@@ -138,6 +185,16 @@ type AddLinkAction = {
   payload: AddLinkPayload;
 };
 
+type UpdateLinkOrderPayload = {
+  sourceId: number,
+  newLinkIndex: number,
+  newGridIndex: number
+};
+type UpdateLinkOrderAction = {
+  type: typeof LinkAction.UPDATE_LINK_ORDER;
+  payload: UpdateLinkOrderPayload;
+};
+
 type AddImageUrlPayload = {
   url: string;
   linkId: number;
@@ -156,7 +213,7 @@ type DeleteLinkAction = {
   payload: DeleteLinkPayload;
 };
 
-export type LinkActionTypes = SetLinksAction | SetNextLinkIdAction | AddLinkAction | AddImageUrlAction | DeleteLinkAction;
+export type LinkActionTypes = SetLinksAction | SetNextLinkIdAction | AddLinkAction | UpdateLinkOrderAction | AddImageUrlAction | DeleteLinkAction;
 
 export type StateType = {
   links: LinkData[][];
@@ -167,6 +224,7 @@ export enum LinkAction {
   SET_LINKS,
   SET_NEXT_LINK_ID,
   ADD_LINK,
+  UPDATE_LINK_ORDER,
   ADD_IMAGE_URL,
   DELETE_LINK,
 }

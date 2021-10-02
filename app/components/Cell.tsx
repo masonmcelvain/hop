@@ -6,7 +6,6 @@ import { XCircle } from "react-feather";
 import { setStoredLinks } from "../lib/chrome/SyncStorage";
 import { LinksContext } from "../contexts/Links";
 import { LinkAction } from "../contexts/Links/reducer";
-import { updateOrderOfCardsType } from "./Grid";
 
 const StyledCell = styled.div`
   position: absolute;
@@ -31,7 +30,6 @@ const StyledXCircle = styled(XCircle)`
 type CellProps = {
   index: number;
   gridIndex: number;
-  updateOrderOfCards: updateOrderOfCardsType;
   inDeleteMode: boolean;
   theme;
   children: React.ReactChild;
@@ -40,23 +38,30 @@ type CellProps = {
 function Cell({
   index,
   gridIndex,
-  updateOrderOfCards,
   inDeleteMode,
   theme,
   children,
 }: CellProps) {
   const {state, dispatch} = React.useContext(LinksContext);
+
   const [{ isOver }, drop] = useDrop(
     () => ({
       accept: DragItemTypes.CARD,
       hover: (item: CardDragItem) =>
-        updateOrderOfCards(item.id, index, gridIndex),
+        dispatch({
+          type: LinkAction.UPDATE_LINK_ORDER,
+          payload: {
+            sourceId: item.id,
+            newLinkIndex: index,
+            newGridIndex: gridIndex,
+          },
+        }),
       drop: () => setStoredLinks(state.links),
       collect: (monitor) => ({
         isOver: !!monitor.isOver(),
       }),
     }),
-    [index, gridIndex, updateOrderOfCards]
+    [index, gridIndex, state, dispatch]
   );
 
   return (

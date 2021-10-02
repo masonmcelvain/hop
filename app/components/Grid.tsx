@@ -43,14 +43,12 @@ function getNumCells(numCards: number) {
 type GridProps = {
   gridIndex: number;
   cards: LinkData[];
-  updateOrderOfCards: updateOrderOfCardsType;
   inDeleteMode: boolean;
 };
 
 export default function Grid({
   gridIndex,
   cards,
-  updateOrderOfCards,
   inDeleteMode,
 }: GridProps): JSX.Element {
   const numCells = getNumCells(cards ? cards.length : 0);
@@ -65,7 +63,6 @@ export default function Grid({
         <Cell
           index={i}
           gridIndex={gridIndex}
-          updateOrderOfCards={updateOrderOfCards}
           inDeleteMode={inDeleteMode}
         >
           {card}
@@ -81,9 +78,3 @@ export default function Grid({
 
   return <StyledGrid>{cells}</StyledGrid>;
 }
-
-export type updateOrderOfCardsType = (
-  sourceId: number,
-  newIndex: number,
-  newGridId: number
-) => void;
