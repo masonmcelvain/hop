@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { Image } from "react-feather";
 import * as psl from "psl";
 import * as axios from "axios";
-import { LinkData } from "../types/CardTypes";
-import { addImageUrlType } from "../App";
+import { LinkAction, LinkData } from "../contexts/Links/reducer";
+import { LinksContext } from "../contexts/Links";
 
 const DefaultImage = styled(Image)`
   width: 50%;
@@ -59,15 +59,21 @@ async function getHighestResFaviconUrl(cardUrl: string) {
 
 type CardImageProps = {
   linkData: LinkData;
-  addImageUrl: addImageUrlType;
 };
-export default function CardImage({ linkData, addImageUrl }: CardImageProps) {
+export default function CardImage({ linkData }: CardImageProps): JSX.Element {
+  const {state, dispatch} = React.useContext(LinksContext);
   const { id, name, url, imageUrl } = linkData;
   const faviconPromise = getHighestResFaviconUrl(url);
 
   if (!imageUrl) {
     faviconPromise.then((imageUrl) => {
-      addImageUrl(imageUrl.toString(), id);
+      dispatch({
+        type: LinkAction.ADD_IMAGE_URL,
+        payload: {
+          url: imageUrl.toString(),
+          linkId: id,
+        },
+      });
     });
   }
 

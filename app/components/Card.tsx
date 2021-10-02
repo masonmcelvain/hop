@@ -3,8 +3,7 @@ import styled from "styled-components";
 import { DragItemTypes } from "../types/DragItemTypes";
 import { useDrag } from "react-dnd";
 import CardImage from "./CardImage";
-import { LinkData } from "../types/CardTypes";
-import { addImageUrlType } from "../App";
+import { LinkData } from "../contexts/Links/reducer";
 
 const IconContainer = styled.div`
   flex: 1;
@@ -68,10 +67,9 @@ function openLinkInThisTab(url: string): void {
 
 type CardProps = {
   linkData: LinkData;
-  addImageUrl: addImageUrlType;
 };
 
-export default function Card({ linkData, addImageUrl }: CardProps) {
+export default function Card({ linkData }: CardProps): JSX.Element {
   const { id, name, url } = linkData;
   const [{ isDragging }, drag] = useDrag(
     () => ({
@@ -92,7 +90,7 @@ export default function Card({ linkData, addImageUrl }: CardProps) {
         isDragging={isDragging}
       >
         <IconContainer>
-          <CardImage linkData={linkData} addImageUrl={addImageUrl} />
+          <CardImage linkData={linkData} />
         </IconContainer>
         <Paragraph>{name}</Paragraph>
       </Hyperlink>

@@ -3,10 +3,10 @@ import styled, { withTheme } from "styled-components";
 import { CardDragItem, DragItemTypes } from "../types/DragItemTypes";
 import { useDrop } from "react-dnd";
 import { XCircle } from "react-feather";
-import {
-  storeCurrentCardsType,
-  updateOrderOfCardsType,
-} from "../types/CardTypes";
+import { setStoredLinks } from "../lib/chrome/SyncStorage";
+import { LinksContext } from "../contexts/Links";
+import { LinkAction } from "../contexts/Links/reducer";
+import { updateOrderOfCardsType } from "./Grid";
 
 const StyledCell = styled.div`
   position: absolute;
@@ -32,9 +32,7 @@ type CellProps = {
   index: number;
   gridIndex: number;
   updateOrderOfCards: updateOrderOfCardsType;
-  storeCurrentCards: storeCurrentCardsType;
   inDeleteMode: boolean;
-  deleteLink: (cellIndex: number, gridIndex: number) => void;
   theme;
   children: React.ReactChild;
 };
@@ -43,18 +41,17 @@ function Cell({
   index,
   gridIndex,
   updateOrderOfCards,
-  storeCurrentCards,
   inDeleteMode,
-  deleteLink,
   theme,
   children,
 }: CellProps) {
+  const {state, dispatch} = React.useContext(LinksContext);
   const [{ isOver }, drop] = useDrop(
     () => ({
       accept: DragItemTypes.CARD,
       hover: (item: CardDragItem) =>
         updateOrderOfCards(item.id, index, gridIndex),
-      drop: () => storeCurrentCards(),
+      drop: () => setStoredLinks(state.links),
       collect: (monitor) => ({
         isOver: !!monitor.isOver(),
       }),
@@ -68,7 +65,13 @@ function Cell({
         <StyledXCircle
           size={24}
           color={theme.colors.delete}
-          onClick={() => deleteLink(index, gridIndex)}
+          onClick={() => dispatch({
+            type: LinkAction.DELETE_LINK,
+            payload: {
+              cellIndex: index,
+              gridIndex,
+            }
+          })}
         />
       ) : null}
       <StyledCell ref={drop}>{isOver ? null : children}</StyledCell>

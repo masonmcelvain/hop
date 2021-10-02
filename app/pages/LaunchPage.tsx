@@ -1,12 +1,12 @@
 import * as React from "react";
 import styled from "styled-components";
-import { addImageUrlType, StyledPage } from "../App";
+import { StyledPage } from "../App";
 import DndContainer from "../components/DndContainer";
 import Grid from "../components/Grid";
 import ActionBar from "../components/ActionBar";
-import { LinkData } from "../types/CardTypes";
-import { setStoredLinks } from "../lib/chrome/SyncStorage";
 import { HorizontalRule } from "../components/HorizontalRule";
+import { LinksContext } from "../contexts/Links";
+import { LinkAction } from "../contexts/Links/reducer";
 
 const GridContainer = styled.div`
   width: 100%;
@@ -14,25 +14,19 @@ const GridContainer = styled.div`
 `;
 
 type LaunchPageProps = {
-  cards: LinkData[][];
-  setCards: (prevCallback: any) => void;
   inDeleteMode: boolean;
-  setInDeleteMode: (prevCallback: any) => void;
-  deleteLink: (cellIndex: number, gridIndex: number) => void;
+  setInDeleteMode: (prevCallback) => void;
   isDarkMode: boolean;
   toggleDarkMode: () => void;
-  addImageUrl: addImageUrlType;
 };
 export default function LaunchPage({
-  cards,
-  setCards,
   inDeleteMode,
   setInDeleteMode,
-  deleteLink,
   isDarkMode,
   toggleDarkMode,
-  addImageUrl,
-}: LaunchPageProps) {
+}: LaunchPageProps): JSX.Element {
+  const {state, dispatch} = React.useContext(LinksContext);
+
   /**
    * Modify the order of the cards by relocating a card. Relocation can be
    * between grids.
@@ -46,15 +40,15 @@ export default function LaunchPage({
     newCardIndex: number,
     newGridIndex: number
   ) {
-    let removeFromGrid = cards.find((grid) =>
+    const removeFromGrid = state.links.find((grid) =>
       grid.some((card) => card.id === sourceId)
     );
     if (!removeFromGrid) {
       // If source is unknown, do nothing.
-      console.log("Unkown sourceId in setCardOrder(): " + sourceId);
+      console.log("Unkown sourceId in updateOrderOfCards(): " + sourceId);
       return;
     }
-    const oldGridIndex = cards.findIndex((grid) => grid === removeFromGrid);
+    const oldGridIndex = state.links.findIndex((grid) => grid === removeFromGrid);
     const oldCardIndex = removeFromGrid.findIndex(
       (card) => card.id === sourceId
     );
@@ -70,58 +64,50 @@ export default function LaunchPage({
     }
 
     // Delete the card from the old cards
-    let [card] = removeFromGrid.splice(oldCardIndex, 1);
+    const [link] = removeFromGrid.splice(oldCardIndex, 1);
 
-    let insertIntoGrid =
-      oldGridIndex === newGridIndex ? removeFromGrid : cards[newGridIndex];
+    const insertIntoGrid =
+      oldGridIndex === newGridIndex ? removeFromGrid : state.links[newGridIndex];
 
     // Insert the card into the new cards
-    insertIntoGrid.splice(newCardIndex, 0, card);
+    insertIntoGrid.splice(newCardIndex, 0, link);
 
-    setCards((prevCards) => {
-      const newCards = [...prevCards];
-      if (oldGridIndex !== newGridIndex) {
-        newCards.splice(oldGridIndex, 1, removeFromGrid);
-      }
-      newCards.splice(newGridIndex, 1, insertIntoGrid);
-      return newCards;
+    const newCards = [...state.links];
+    if (oldGridIndex !== newGridIndex) {
+      newCards.splice(oldGridIndex, 1, removeFromGrid);
+    }
+    newCards.splice(newGridIndex, 1, insertIntoGrid);
+
+    dispatch({
+      type: LinkAction.SET_LINKS,
+      payload: newCards,
     });
   }
 
-  function storeCurrentCards() {
-    setStoredLinks(cards);
-  }
-
   function renderGrids() {
-    if (!cards) {
+    if (!state.links) {
       return null;
     }
     const grids = [
       <GridContainer key={0}>
         <Grid
           gridIndex={0}
-          cards={cards[0]}
+          cards={state.links[0]}
           updateOrderOfCards={updateOrderOfCards}
-          storeCurrentCards={storeCurrentCards}
           inDeleteMode={inDeleteMode}
-          deleteLink={deleteLink}
-          addImageUrl={addImageUrl}
         />
       </GridContainer>,
     ];
-    for (let i = 1; i < cards.length; i++) {
+    for (let i = 1; i < state.links.length; i++) {
       grids.push(
         <React.Fragment key={i}>
           <HorizontalRule />
           <GridContainer>
             <Grid
               gridIndex={i}
-              cards={cards[i]}
+              cards={state.links[i]}
               updateOrderOfCards={updateOrderOfCards}
-              storeCurrentCards={storeCurrentCards}
               inDeleteMode={inDeleteMode}
-              deleteLink={deleteLink}
-              addImageUrl={addImageUrl}
             />
           </GridContainer>
         </React.Fragment>

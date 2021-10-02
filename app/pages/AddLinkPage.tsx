@@ -3,9 +3,11 @@ import styled, { withTheme } from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 import * as psl from "psl";
 import { Input, Text } from "@chakra-ui/react"
-import { addLinkType, StyledPage } from "../App";
+import { StyledPage } from "../App";
 import { ChevronLeft } from "react-feather";
 import { getCurrentTabUrl } from "../lib/chrome/Tab";
+import { LinksContext } from "../contexts/Links";
+import { LinkAction } from "../contexts/Links/reducer";
 
 const BackButtonLink = styled(Link)`
   position: absolute;
@@ -102,10 +104,10 @@ const SubmitButton = styled.button`
 `;
 
 type AddLinkPageProps = {
-  addLink: addLinkType;
   theme;
 };
-function AddLinkPage({ addLink, theme }: AddLinkPageProps) {
+function AddLinkPage({ theme }: AddLinkPageProps) {
+  const {state, dispatch} = React.useContext(LinksContext);
   const [linkName, setLinkName] = React.useState("");
   const [linkUrl, setLinkUrl] = React.useState("");
   const [imageUrl, setImageUrl] = React.useState("");
@@ -147,7 +149,15 @@ function AddLinkPage({ addLink, theme }: AddLinkPageProps) {
       if (!psl.isValid(url.hostname)) {
         throw new Error(`Invalid URL Domain: ${url.hostname}`);
       }
-      addLink(linkName, url.toString(), sectionIndex, imageUrl);
+      dispatch({
+        type: LinkAction.ADD_LINK,
+        payload: {
+          name: linkName,
+          url: url.toString(),
+          sectionIndex,
+          imageUrl
+        }
+      });
       history.push("/");
     } catch (e) {
       console.error(e);

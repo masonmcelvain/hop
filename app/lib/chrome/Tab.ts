@@ -1,4 +1,4 @@
-export async function getCurrentTabUrl() {
+export async function getCurrentTabUrl(): Promise<string> {
   const tab = await getCurrentTab();
   return tab.url;
 }

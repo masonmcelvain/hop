@@ -2,12 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import Card from "./Card";
 import Cell from "./Cell";
-import {
-  storeCurrentCardsType,
-  LinkData,
-  updateOrderOfCardsType,
-} from "../types/CardTypes";
-import { addImageUrlType } from "../App";
+import { LinkData } from "../contexts/Links/reducer";
 
 // The width of the grid measured in cells
 const cellsWide = 3;
@@ -49,27 +44,21 @@ type GridProps = {
   gridIndex: number;
   cards: LinkData[];
   updateOrderOfCards: updateOrderOfCardsType;
-  storeCurrentCards: storeCurrentCardsType;
   inDeleteMode: boolean;
-  deleteLink: (cellIndex: number, gridIndex: number) => void;
-  addImageUrl: addImageUrlType;
 };
 
 export default function Grid({
   gridIndex,
   cards,
   updateOrderOfCards,
-  storeCurrentCards,
   inDeleteMode,
-  deleteLink,
-  addImageUrl,
-}: GridProps) {
+}: GridProps): JSX.Element {
   const numCells = getNumCells(cards ? cards.length : 0);
 
   function renderCell(i: number) {
     const cellHasACard = i < cards.length;
     const card = cellHasACard ? (
-      <Card linkData={cards[i]} addImageUrl={addImageUrl} />
+      <Card linkData={cards[i]} />
     ) : null;
     return (
       <CellWrapper key={i}>
@@ -77,9 +66,7 @@ export default function Grid({
           index={i}
           gridIndex={gridIndex}
           updateOrderOfCards={updateOrderOfCards}
-          storeCurrentCards={storeCurrentCards}
           inDeleteMode={inDeleteMode}
-          deleteLink={deleteLink}
         >
           {card}
         </Cell>
@@ -94,3 +81,9 @@ export default function Grid({
 
   return <StyledGrid>{cells}</StyledGrid>;
 }
+
+export type updateOrderOfCardsType = (
+  sourceId: number,
+  newIndex: number,
+  newGridId: number
+) => void;
