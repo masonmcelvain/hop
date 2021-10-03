@@ -1,8 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import styled, { withTheme } from "styled-components";
-import { useColorMode, useColorModeValue } from "@chakra-ui/react";
-import { HorizontalRule } from "../components/HorizontalRule";
+import { Divider, useColorMode, useColorModeValue } from "@chakra-ui/react";
 import { Trash2, Plus, Moon, Sun } from "react-feather";
 import { setStoredColorMode } from "../lib/chrome/SyncStorage";
 
@@ -65,7 +64,7 @@ function ActionBar({ setInDeleteMode, theme }: ActionBarProps) {
 
   return (
     <>
-      <HorizontalRule />
+      <Divider />
       <ActionBarContainer>
         <ActionButton title="Choose Links to Delete">
           <ActionButtonOverlay

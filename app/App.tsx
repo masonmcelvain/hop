@@ -1,6 +1,6 @@
 import * as React from "react";
 import { MemoryRouter, Switch, Route } from "react-router-dom";
-import styled, { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components";
 import { useColorMode, useColorModeValue } from "@chakra-ui/react";
 import darkTheme from "../themes/dark";
 import lightTheme from "../themes/light";
@@ -45,11 +45,3 @@ export default function App(): JSX.Element {
     </ThemeProvider>
   );
 }
-
-export const StyledPage = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background-color: ${(props) => props.theme.colors.background};
-  overflow-y: scroll;
-`;

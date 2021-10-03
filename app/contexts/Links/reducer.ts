@@ -151,6 +151,7 @@ function deleteLink(
   const { cellIndex, gridIndex } = payload;
   const newLinks: LinkData[][] = JSON.parse(JSON.stringify(prevState.links));
   newLinks[gridIndex].splice(cellIndex, 1);
+
   setStoredLinks(newLinks);
   return {
     links: newLinks,

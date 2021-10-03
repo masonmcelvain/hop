@@ -103,7 +103,7 @@ export default function AddLinkPage(): JSX.Element {
     });
   }
 
-  function onSubmit(event) {
+  function handleSubmit(event) {
     event.preventDefault();
     if (!formValues.linkName || !formValues.linkUrl) {
       return;
@@ -127,11 +127,14 @@ export default function AddLinkPage(): JSX.Element {
       console.error(e);
     }
   }
+  console.log(formValues);
 
   return (
     <VStack w="full" alignItems="flex-start">
       <HStack w="full" p={2} pos="relative" alignItems="center">
         <Center
+          as={RouterLink}
+          to="/"
           pos="absolute"
           left={0}
           w={10}
@@ -143,9 +146,7 @@ export default function AddLinkPage(): JSX.Element {
           _hover={{ bg: iconHoverOverlay }}
           _active={{ bg: iconActiveOverlay }}
         >
-          <RouterLink to="/">
-            <ChevronLeft color={textColor} size={34} />
-          </RouterLink>
+          <ChevronLeft color={textColor} size={34} />
         </Center>
         <Heading as="h3" size="lg" w="full" textAlign="center">
           Create New Link
@@ -201,7 +202,7 @@ export default function AddLinkPage(): JSX.Element {
             !!formValues.linkUrlError ||
             !!formValues.imageUrlError
           }
-          onSubmit={onSubmit}
+          onClick={handleSubmit}
           w="full"
           m={0}
         >
