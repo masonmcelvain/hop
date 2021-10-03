@@ -29,13 +29,13 @@ const StyledXCircle = styled(XCircle)`
 type CellProps = {
   index: number;
   gridIndex: number;
-  inDeleteMode: boolean;
+  isInEditMode: boolean;
   theme;
   children: React.ReactChild;
 };
 
-function Cell({ index, gridIndex, inDeleteMode, theme, children }: CellProps) {
-  const { state, dispatch } = React.useContext(LinksContext);
+function Cell({ index, gridIndex, isInEditMode, theme, children }: CellProps) {
+  const { dispatch } = React.useContext(LinksContext);
 
   const [{ isOver }, drop] = useDrop(
     () => ({
@@ -53,12 +53,12 @@ function Cell({ index, gridIndex, inDeleteMode, theme, children }: CellProps) {
         isOver: !!monitor.isOver(),
       }),
     }),
-    [index, gridIndex, state, dispatch]
+    [index, gridIndex, dispatch]
   );
 
   return (
     <>
-      {children && inDeleteMode ? (
+      {children && isInEditMode ? (
         <StyledXCircle
           size={24}
           color={theme.colors.delete}

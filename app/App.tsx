@@ -10,7 +10,6 @@ import { setStoredColorMode, StorageKey } from "./lib/chrome/SyncStorage";
 import { LinksProvider } from "./contexts/Links";
 
 export default function App(): JSX.Element {
-  const [inDeleteMode, setInDeleteMode] = React.useState(false);
   const { colorMode, toggleColorMode } = useColorMode();
 
   // Initialize color theme from chrome storage
@@ -31,10 +30,7 @@ export default function App(): JSX.Element {
         <MemoryRouter>
           <Switch>
             <Route exact path="/">
-              <LaunchPage
-                inDeleteMode={inDeleteMode}
-                setInDeleteMode={setInDeleteMode}
-              />
+              <LaunchPage />
             </Route>
             <Route path="/add">
               <AddLinkPage />

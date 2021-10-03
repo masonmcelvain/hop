@@ -1,9 +1,10 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import styled, { withTheme } from "styled-components";
+import styled from "styled-components";
 import { Divider, useColorMode, useColorModeValue } from "@chakra-ui/react";
 import { Trash2, Plus, Moon, Sun } from "react-feather";
 import { setStoredColorMode } from "../lib/chrome/SyncStorage";
+import themes from "../../themes/themes";
 
 const ActionBarContainer = styled.div`
   width: 100%;
@@ -51,11 +52,15 @@ const StyledLink = styled(Link)`
 `;
 
 type ActionBarProps = {
-  setInDeleteMode: React.Dispatch<React.SetStateAction<boolean>>;
-  theme;
+  toggleEditMode: () => void;
 };
-function ActionBar({ setInDeleteMode, theme }: ActionBarProps) {
+function ActionBar({ toggleEditMode }: ActionBarProps): JSX.Element {
   const { colorMode, toggleColorMode } = useColorMode();
+
+  const textColor = useColorModeValue(
+    themes.light.colors.textColor,
+    themes.dark.colors.textColor
+  );
 
   function toggleAndStoreColorMode(): void {
     setStoredColorMode(colorMode === "light" ? "dark" : "light");
@@ -67,17 +72,15 @@ function ActionBar({ setInDeleteMode, theme }: ActionBarProps) {
       <Divider />
       <ActionBarContainer>
         <ActionButton title="Choose Links to Delete">
-          <ActionButtonOverlay
-            onClick={() => setInDeleteMode((prevMode) => !prevMode)}
-          >
-            <Trash2 color={theme.colors.textColor} size={24} />
+          <ActionButtonOverlay onClick={toggleEditMode}>
+            <Trash2 color={textColor} size={24} />
           </ActionButtonOverlay>
         </ActionButton>
 
         <ActionButton title="Create New Link">
           <ActionButtonOverlay>
             <StyledLink to="/add">
-              <Plus color={theme.colors.textColor} size={32} />
+              <Plus color={textColor} size={32} />
             </StyledLink>
           </ActionButtonOverlay>
         </ActionButton>
@@ -85,8 +88,8 @@ function ActionBar({ setInDeleteMode, theme }: ActionBarProps) {
         <ActionButton>
           <ActionButtonOverlay onClick={toggleAndStoreColorMode}>
             {useColorModeValue(
-              <Moon color={theme.colors.textColor} size={24} />,
-              <Sun color={theme.colors.textColor} size={24} />
+              <Moon color={themes.light.colors.textColor} size={24} />,
+              <Sun color={themes.dark.colors.textColor} size={24} />
             )}
           </ActionButtonOverlay>
         </ActionButton>
@@ -95,4 +98,4 @@ function ActionBar({ setInDeleteMode, theme }: ActionBarProps) {
   );
 }
 
-export default withTheme(ActionBar);
+export default ActionBar;

@@ -42,23 +42,23 @@ function getNumCells(numCards: number) {
 
 type GridProps = {
   gridIndex: number;
-  cards: LinkData[];
-  inDeleteMode: boolean;
+  links: LinkData[];
+  isInEditMode: boolean;
 };
 
 export default function Grid({
   gridIndex,
-  cards,
-  inDeleteMode,
+  links,
+  isInEditMode,
 }: GridProps): JSX.Element {
-  const numCells = getNumCells(cards ? cards.length : 0);
+  const numCells = getNumCells(links ? links.length : 0);
 
   function renderCell(i: number) {
-    const cellHasACard = i < cards.length;
-    const card = cellHasACard ? <Card linkData={cards[i]} /> : null;
+    const cellHasACard = i < links.length;
+    const card = cellHasACard ? <Card linkData={links[i]} /> : null;
     return (
       <CellWrapper key={i}>
-        <Cell index={i} gridIndex={gridIndex} inDeleteMode={inDeleteMode}>
+        <Cell index={i} gridIndex={gridIndex} isInEditMode={isInEditMode}>
           {card}
         </Cell>
       </CellWrapper>
