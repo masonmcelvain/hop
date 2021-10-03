@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
-import { DragItemTypes } from "../types/DragItemTypes";
 import { useDrag } from "react-dnd";
+import { DragItemTypes } from "../types/DragItemTypes";
 import CardImage from "./CardImage";
 import { LinkData } from "../contexts/Links/reducer";
 

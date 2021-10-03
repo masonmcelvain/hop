@@ -1,6 +1,12 @@
-import { setNextStoredLinkId, setStoredLinks } from "../../lib/chrome/SyncStorage";
+import {
+  setNextStoredLinkId,
+  setStoredLinks,
+} from "../../lib/chrome/SyncStorage";
 
-export const Reducer = (state: StateType, action: LinkActionTypes): StateType => {
+export const Reducer = (
+  state: StateType,
+  action: LinkActionTypes
+): StateType => {
   switch (action.type) {
     case LinkAction.SET_LINKS:
       return setLinks(state, action.payload);
@@ -31,11 +37,8 @@ function setNextLinkId(prevState: StateType, nextLinkId: number): StateType {
   };
 }
 
-function addLink(
-  prevState: StateType,
-  payload: AddLinkPayload
-): StateType {
-  const {name, url, sectionIndex, imageUrl} = payload;
+function addLink(prevState: StateType, payload: AddLinkPayload): StateType {
+  const { name, url, sectionIndex, imageUrl } = payload;
 
   const newLinks: LinkData[][] = JSON.parse(JSON.stringify(prevState.links));
   if (sectionIndex > newLinks.length) {
@@ -59,7 +62,7 @@ function addLink(
   setNextStoredLinkId(nextLinkId);
   return {
     links: newLinks,
-    nextLinkId: nextLinkId,
+    nextLinkId,
   };
 }
 
@@ -83,13 +86,13 @@ function updateLinkOrder(
   );
   if (!removeFromGrid) {
     // If source is unknown, do nothing.
-    console.log("Unkown sourceId in updateLinkOrder(): " + sourceId);
+    console.log(`Unkown sourceId in updateLinkOrder(): ${sourceId}`);
     return prevState;
   }
-  const oldGridIndex = prevState.links.findIndex((grid) => grid === removeFromGrid);
-  const oldLinkIndex = removeFromGrid.findIndex(
-    (link) => link.id === sourceId
+  const oldGridIndex = prevState.links.findIndex(
+    (grid) => grid === removeFromGrid
   );
+  const oldLinkIndex = removeFromGrid.findIndex((link) => link.id === sourceId);
 
   if (oldLinkIndex === newLinkIndex && oldGridIndex === newGridIndex) {
     // If there is no positional change, do nothing.
@@ -105,7 +108,9 @@ function updateLinkOrder(
   const [link] = removeFromGrid.splice(oldLinkIndex, 1);
 
   const insertIntoGrid =
-    oldGridIndex === newGridIndex ? removeFromGrid : prevState.links[newGridIndex];
+    oldGridIndex === newGridIndex
+      ? removeFromGrid
+      : prevState.links[newGridIndex];
 
   // Insert the card into the new cards
   insertIntoGrid.splice(newLinkIndex, 0, link);
@@ -126,7 +131,7 @@ function addImageUrl(
   prevState: StateType,
   payload: AddImageUrlPayload
 ): StateType {
-  const {url, linkId} = payload;
+  const { url, linkId } = payload;
   const newLinks: LinkData[][] = JSON.parse(JSON.stringify(prevState.links));
   let returnEarly = false;
 
@@ -154,7 +159,7 @@ function deleteLink(
   prevState: StateType,
   payload: DeleteLinkPayload
 ): StateType {
-  const {cellIndex, gridIndex} = payload;
+  const { cellIndex, gridIndex } = payload;
   const newLinks: LinkData[][] = JSON.parse(JSON.stringify(prevState.links));
   newLinks[gridIndex].splice(cellIndex, 1);
   setStoredLinks(newLinks);
@@ -186,9 +191,9 @@ type AddLinkAction = {
 };
 
 type UpdateLinkOrderPayload = {
-  sourceId: number,
-  newLinkIndex: number,
-  newGridIndex: number
+  sourceId: number;
+  newLinkIndex: number;
+  newGridIndex: number;
 };
 type UpdateLinkOrderAction = {
   type: typeof LinkAction.UPDATE_LINK_ORDER;
@@ -213,7 +218,13 @@ type DeleteLinkAction = {
   payload: DeleteLinkPayload;
 };
 
-export type LinkActionTypes = SetLinksAction | SetNextLinkIdAction | AddLinkAction | UpdateLinkOrderAction | AddImageUrlAction | DeleteLinkAction;
+export type LinkActionTypes =
+  | SetLinksAction
+  | SetNextLinkIdAction
+  | AddLinkAction
+  | UpdateLinkOrderAction
+  | AddImageUrlAction
+  | DeleteLinkAction;
 
 export type StateType = {
   links: LinkData[][];

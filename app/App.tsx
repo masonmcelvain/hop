@@ -5,9 +5,7 @@ import lightTheme from "../themes/light";
 import darkTheme from "../themes/dark";
 import LaunchPage from "./pages/LaunchPage";
 import AddLinkPage from "./pages/AddLinkPage";
-import {
-  setStoredIsDarkMode
-} from "./lib/chrome/SyncStorage";
+import { setStoredIsDarkMode } from "./lib/chrome/SyncStorage";
 import { STORAGE } from "./types/StorageEnum";
 import { LinksProvider } from "./contexts/Links";
 

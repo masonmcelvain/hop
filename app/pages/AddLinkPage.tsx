@@ -2,7 +2,7 @@ import * as React from "react";
 import styled, { withTheme } from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 import * as psl from "psl";
-import { Input, Text } from "@chakra-ui/react"
+import { Input, Text } from "@chakra-ui/react";
 import { StyledPage } from "../App";
 import { ChevronLeft } from "react-feather";
 import { getCurrentTabUrl } from "../lib/chrome/Tab";
@@ -107,7 +107,7 @@ type AddLinkPageProps = {
   theme;
 };
 function AddLinkPage({ theme }: AddLinkPageProps) {
-  const {state, dispatch} = React.useContext(LinksContext);
+  const { dispatch } = React.useContext(LinksContext);
   const [linkName, setLinkName] = React.useState("");
   const [linkUrl, setLinkUrl] = React.useState("");
   const [imageUrl, setImageUrl] = React.useState("");
@@ -155,8 +155,8 @@ function AddLinkPage({ theme }: AddLinkPageProps) {
           name: linkName,
           url: url.toString(),
           sectionIndex,
-          imageUrl
-        }
+          imageUrl,
+        },
       });
       history.push("/");
     } catch (e) {
@@ -185,7 +185,9 @@ function AddLinkPage({ theme }: AddLinkPageProps) {
             placeholder="url"
             maxLength={2048}
           />
-          <Text mb="8px" color={theme.colors.textColor}>{imageUrlError}</Text>
+          <Text mb="8px" color={theme.colors.textColor}>
+            {imageUrlError}
+          </Text>
           <Input
             value={imageUrl}
             onChange={handleImageUrlChange}

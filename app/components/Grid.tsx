@@ -15,10 +15,10 @@ const StyledGrid = styled.div`
 `;
 
 const CellWrapper = styled.div`
-  width: ${(100 / cellsWide) - 2}%;
+  width: ${100 / cellsWide - 2}%;
   height: 0;
   margin: 1%;
-  padding-top: ${(100 / cellsWide) - 2}%;
+  padding-top: ${100 / cellsWide - 2}%;
   position: relative;
   display: flex;
   align-items: center;
@@ -55,16 +55,10 @@ export default function Grid({
 
   function renderCell(i: number) {
     const cellHasACard = i < cards.length;
-    const card = cellHasACard ? (
-      <Card linkData={cards[i]} />
-    ) : null;
+    const card = cellHasACard ? <Card linkData={cards[i]} /> : null;
     return (
       <CellWrapper key={i}>
-        <Cell
-          index={i}
-          gridIndex={gridIndex}
-          inDeleteMode={inDeleteMode}
-        >
+        <Cell index={i} gridIndex={gridIndex} inDeleteMode={inDeleteMode}>
           {card}
         </Cell>
       </CellWrapper>

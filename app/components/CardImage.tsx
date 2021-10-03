@@ -61,7 +61,7 @@ type CardImageProps = {
   linkData: LinkData;
 };
 export default function CardImage({ linkData }: CardImageProps): JSX.Element {
-  const {state, dispatch} = React.useContext(LinksContext);
+  const { dispatch } = React.useContext(LinksContext);
   const { id, name, url, imageUrl } = linkData;
   const faviconPromise = getHighestResFaviconUrl(url);
 

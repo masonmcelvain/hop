@@ -25,7 +25,7 @@ export default function LaunchPage({
   isDarkMode,
   toggleDarkMode,
 }: LaunchPageProps): JSX.Element {
-  const {state, dispatch} = React.useContext(LinksContext);
+  const { state } = React.useContext(LinksContext);
 
   const getGridContainer = (index: number): JSX.Element => (
     <GridContainer key={index}>
