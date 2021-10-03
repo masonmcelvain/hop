@@ -105,9 +105,6 @@ export default function AddLinkPage(): JSX.Element {
 
   function handleSubmit(event) {
     event.preventDefault();
-    if (!formValues.linkName || !formValues.linkUrl) {
-      return;
-    }
     try {
       const url = new URL(formValues.linkUrl);
       if (!psl.isValid(url.hostname)) {
@@ -192,12 +189,14 @@ export default function AddLinkPage(): JSX.Element {
             isInvalid={!!formValues.imageUrlError}
             maxLength={2048}
           />
-          <FormHelperText>Optional image url for your link.</FormHelperText>
+          <FormHelperText>Optional image url for the link</FormHelperText>
           <FormHelperText>{formValues.imageUrlError}</FormHelperText>
         </FormControl>
         <Button
           type="submit"
           disabled={
+            !formValues.linkName ||
+            !formValues.linkUrl ||
             !!formValues.linkNameError ||
             !!formValues.linkUrlError ||
             !!formValues.imageUrlError
