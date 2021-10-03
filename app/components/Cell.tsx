@@ -3,7 +3,6 @@ import styled, { withTheme } from "styled-components";
 import { CardDragItem, DragItemTypes } from "../types/DragItemTypes";
 import { useDrop } from "react-dnd";
 import { XCircle } from "react-feather";
-import { setStoredLinks } from "../lib/chrome/SyncStorage";
 import { LinksContext } from "../contexts/Links";
 import { LinkAction } from "../contexts/Links/reducer";
 
@@ -50,7 +49,6 @@ function Cell({ index, gridIndex, inDeleteMode, theme, children }: CellProps) {
             newGridIndex: gridIndex,
           },
         }),
-      drop: () => setStoredLinks(state.links),
       collect: (monitor) => ({
         isOver: !!monitor.isOver(),
       }),

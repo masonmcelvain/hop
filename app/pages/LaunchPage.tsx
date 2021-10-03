@@ -6,7 +6,6 @@ import Grid from "../components/Grid";
 import ActionBar from "../components/ActionBar";
 import { HorizontalRule } from "../components/HorizontalRule";
 import { LinksContext } from "../contexts/Links";
-import { StateType } from "../contexts/Links/reducer";
 
 const GridContainer = styled.div`
   width: 100%;

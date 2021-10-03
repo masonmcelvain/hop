@@ -2,8 +2,8 @@ import * as React from "react";
 import {
   setNextStoredLinkId,
   setStoredLinks,
+  STORAGE,
 } from "../../lib/chrome/SyncStorage";
-import { STORAGE } from "../../types/StorageEnum";
 import { Reducer, LinkAction, StateType, LinkActionTypes } from "./reducer";
 
 const InitialState: StateType = {
@@ -29,25 +29,29 @@ export const LinksProvider = ({
   // Initialize state from chrome storage
   React.useEffect(() => {
     chrome.storage.sync.get(null, (result) => {
+      const payload: StateType = {
+        links: state.links,
+        nextLinkId: state.nextLinkId,
+      };
+
+      // Initialize links
+      if (STORAGE.STORED_LINKS in result) {
+        payload.links = result[STORAGE.STORED_LINKS];
+      } else {
+        setStoredLinks(state.links);
+      }
+
       // Set the next linkid
       if (STORAGE.NEXT_LINK_ID in result) {
-        dispatch({
-          type: LinkAction.SET_NEXT_LINK_ID,
-          payload: result[STORAGE.NEXT_LINK_ID],
-        });
+        payload.nextLinkId = result[STORAGE.NEXT_LINK_ID];
       } else {
         setNextStoredLinkId(state.nextLinkId);
       }
 
-      // Initialize links
-      if (STORAGE.STORED_LINKS in result) {
-        dispatch({
-          type: LinkAction.SET_LINKS,
-          payload: result[STORAGE.STORED_LINKS],
-        });
-      } else {
-        setStoredLinks(state.links);
-      }
+      dispatch({
+        type: LinkAction.SET_STATE_FROM_STORAGE,
+        payload,
+      });
     });
   }, []);
 

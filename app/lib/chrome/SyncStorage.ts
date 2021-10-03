@@ -1,5 +1,4 @@
 import { LinkData } from "../../contexts/Links/reducer";
-import { STORAGE } from "../../types/StorageEnum";
 
 export function setStoredIsDarkMode(isDarkMode: boolean): void {
   setStorageWithKey(STORAGE.IS_DARK_MODE_SET, isDarkMode);
@@ -17,4 +16,13 @@ function setStorageWithKey(key: string, value) {
   const storageObj = {};
   storageObj[key] = value;
   chrome.storage.sync.set(storageObj);
+}
+
+/**
+ * Keys for values in chrome storage
+ */
+export enum STORAGE {
+  IS_DARK_MODE_SET = "IS_DARK_MODE_SET",
+  STORED_LINKS = "STORED_LINKS",
+  NEXT_LINK_ID = "NEXT_LINK_ID",
 }

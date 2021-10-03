@@ -37,7 +37,7 @@ async function getHighestResFaviconUrl(cardUrl: string) {
   let highestResUrl = null;
   let highestRes = "0x0";
   const hasGreaterRes = (icon: grabFaviconApiIconType) =>
-    icon.hasOwnProperty("sizes") && parseInt(icon.sizes) > parseInt(highestRes);
+    icon["sizes"] && parseInt(icon.sizes) > parseInt(highestRes);
 
   await axios
     // @ts-ignore
@@ -63,19 +63,19 @@ type CardImageProps = {
 export default function CardImage({ linkData }: CardImageProps): JSX.Element {
   const { dispatch } = React.useContext(LinksContext);
   const { id, name, url, imageUrl } = linkData;
-  const faviconPromise = getHighestResFaviconUrl(url);
 
-  if (!imageUrl) {
-    faviconPromise.then((imageUrl) => {
-      dispatch({
-        type: LinkAction.ADD_IMAGE_URL,
-        payload: {
-          url: imageUrl.toString(),
-          linkId: id,
-        },
-      });
-    });
-  }
+  // if (!imageUrl) {
+  //   const faviconPromise = getHighestResFaviconUrl(url);
+  //   faviconPromise.then((imageUrl) => {
+  //     imageUrl && dispatch({
+  //       type: LinkAction.ADD_IMAGE_URL,
+  //       payload: {
+  //         url: imageUrl.toString(),
+  //         linkId: id,
+  //       },
+  //     });
+  //   });
+  // }
 
   const DisplayImage = imageUrl ? (
     <StyledImage alt={name} src={imageUrl} />

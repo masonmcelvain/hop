@@ -8,10 +8,8 @@ export const Reducer = (
   action: LinkActionTypes
 ): StateType => {
   switch (action.type) {
-    case LinkAction.SET_LINKS:
-      return setLinks(state, action.payload);
-    case LinkAction.SET_NEXT_LINK_ID:
-      return setNextLinkId(state, action.payload);
+    case LinkAction.SET_STATE_FROM_STORAGE:
+      return setStateFromStorage(action.payload);
     case LinkAction.ADD_LINK:
       return addLink(state, action.payload);
     case LinkAction.UPDATE_LINK_ORDER:
@@ -23,18 +21,8 @@ export const Reducer = (
   }
 };
 
-function setLinks(prevState: StateType, links: LinkData[][]): StateType {
-  return {
-    links,
-    ...prevState,
-  };
-}
-
-function setNextLinkId(prevState: StateType, nextLinkId: number): StateType {
-  return {
-    ...prevState,
-    nextLinkId,
-  };
+function setStateFromStorage(payload: StateType): StateType {
+  return payload;
 }
 
 function addLink(prevState: StateType, payload: AddLinkPayload): StateType {
@@ -121,6 +109,7 @@ function updateLinkOrder(
   }
   newLinks.splice(newGridIndex, 1, insertIntoGrid);
 
+  setStoredLinks(newLinks);
   return {
     links: newLinks,
     ...prevState,
@@ -169,14 +158,9 @@ function deleteLink(
   };
 }
 
-type SetLinksAction = {
-  type: typeof LinkAction.SET_LINKS;
-  payload: LinkData[][];
-};
-
-type SetNextLinkIdAction = {
-  type: typeof LinkAction.SET_NEXT_LINK_ID;
-  payload: number;
+type SetStateFromStorageAction = {
+  type: typeof LinkAction.SET_STATE_FROM_STORAGE;
+  payload: StateType;
 };
 
 type AddLinkPayload = {
@@ -219,8 +203,7 @@ type DeleteLinkAction = {
 };
 
 export type LinkActionTypes =
-  | SetLinksAction
-  | SetNextLinkIdAction
+  | SetStateFromStorageAction
   | AddLinkAction
   | UpdateLinkOrderAction
   | AddImageUrlAction
@@ -232,8 +215,7 @@ export type StateType = {
 };
 
 export enum LinkAction {
-  SET_LINKS,
-  SET_NEXT_LINK_ID,
+  SET_STATE_FROM_STORAGE,
   ADD_LINK,
   UPDATE_LINK_ORDER,
   ADD_IMAGE_URL,

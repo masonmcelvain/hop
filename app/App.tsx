@@ -5,8 +5,7 @@ import lightTheme from "../themes/light";
 import darkTheme from "../themes/dark";
 import LaunchPage from "./pages/LaunchPage";
 import AddLinkPage from "./pages/AddLinkPage";
-import { setStoredIsDarkMode } from "./lib/chrome/SyncStorage";
-import { STORAGE } from "./types/StorageEnum";
+import { setStoredIsDarkMode, STORAGE } from "./lib/chrome/SyncStorage";
 import { LinksProvider } from "./contexts/Links";
 
 export default function App(): JSX.Element {
