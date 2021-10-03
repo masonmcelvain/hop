@@ -15,14 +15,10 @@ const GridContainer = styled.div`
 type LaunchPageProps = {
   inDeleteMode: boolean;
   setInDeleteMode: (prevCallback) => void;
-  isDarkMode: boolean;
-  toggleDarkMode: () => void;
 };
 export default function LaunchPage({
   inDeleteMode,
   setInDeleteMode,
-  isDarkMode,
-  toggleDarkMode,
 }: LaunchPageProps): JSX.Element {
   const { state } = React.useContext(LinksContext);
 
@@ -54,8 +50,6 @@ export default function LaunchPage({
       <DndContainer>{renderGrids()}</DndContainer>
       <ActionBar
         setInDeleteMode={setInDeleteMode}
-        isDarkMode={isDarkMode}
-        toggleDarkMode={toggleDarkMode}
       />
     </StyledPage>
   );

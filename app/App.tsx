@@ -1,38 +1,32 @@
 import * as React from "react";
 import { MemoryRouter, Switch, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
-import lightTheme from "../themes/light";
+import { useColorMode, useColorModeValue } from "@chakra-ui/react";
 import darkTheme from "../themes/dark";
+import lightTheme from "../themes/light";
 import LaunchPage from "./pages/LaunchPage";
 import AddLinkPage from "./pages/AddLinkPage";
-import { setStoredIsDarkMode, STORAGE } from "./lib/chrome/SyncStorage";
+import { setStoredColorMode, StorageKey } from "./lib/chrome/SyncStorage";
 import { LinksProvider } from "./contexts/Links";
 
 export default function App(): JSX.Element {
-  const [isDarkMode, setIsDarkMode] = React.useState(true);
   const [inDeleteMode, setInDeleteMode] = React.useState(false);
+  const { colorMode, toggleColorMode } = useColorMode();
 
-  // Initialize state from chrome storage
+  // Initialize color theme from chrome storage
   React.useEffect(() => {
     chrome.storage.sync.get(null, (result) => {
-      // Set color theme
-      if (STORAGE.IS_DARK_MODE_SET in result) {
-        setIsDarkMode(result[STORAGE.IS_DARK_MODE_SET]);
+      if (StorageKey.COLOR_MODE in result) {
+        const storedColorMode = result[StorageKey.COLOR_MODE];
+        storedColorMode !== colorMode && toggleColorMode();
       } else {
-        setStoredIsDarkMode(isDarkMode);
+        setStoredColorMode(colorMode);
       }
     });
   }, []);
 
-  function toggleDarkMode() {
-    setIsDarkMode((prevMode) => {
-      setStoredIsDarkMode(!prevMode);
-      return !prevMode;
-    });
-  }
-
   return (
-    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+    <ThemeProvider theme={useColorModeValue(lightTheme, darkTheme)}>
       <LinksProvider>
         <MemoryRouter>
           <Switch>
@@ -40,8 +34,6 @@ export default function App(): JSX.Element {
               <LaunchPage
                 inDeleteMode={inDeleteMode}
                 setInDeleteMode={setInDeleteMode}
-                isDarkMode={isDarkMode}
-                toggleDarkMode={toggleDarkMode}
               />
             </Route>
             <Route path="/add">

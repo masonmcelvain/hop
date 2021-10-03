@@ -1,15 +1,16 @@
+import { ColorMode } from "@chakra-ui/react";
 import { LinkData } from "../../contexts/Links/reducer";
 
-export function setStoredIsDarkMode(isDarkMode: boolean): void {
-  setStorageWithKey(STORAGE.IS_DARK_MODE_SET, isDarkMode);
+export function setStoredColorMode(colorMode: ColorMode): void {
+  setStorageWithKey(StorageKey.COLOR_MODE, colorMode);
 }
 
 export function setStoredLinks(links: LinkData[][]): void {
-  setStorageWithKey(STORAGE.STORED_LINKS, links);
+  setStorageWithKey(StorageKey.STORED_LINKS, links);
 }
 
 export function setNextStoredLinkId(id: number): void {
-  setStorageWithKey(STORAGE.NEXT_LINK_ID, id);
+  setStorageWithKey(StorageKey.NEXT_LINK_ID, id);
 }
 
 function setStorageWithKey(key: string, value) {
@@ -21,8 +22,8 @@ function setStorageWithKey(key: string, value) {
 /**
  * Keys for values in chrome storage
  */
-export enum STORAGE {
-  IS_DARK_MODE_SET = "IS_DARK_MODE_SET",
+export enum StorageKey {
+  COLOR_MODE = "COLOR_MODE",
   STORED_LINKS = "STORED_LINKS",
   NEXT_LINK_ID = "NEXT_LINK_ID",
 }

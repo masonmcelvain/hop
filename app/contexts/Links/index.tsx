@@ -2,7 +2,7 @@ import * as React from "react";
 import {
   setNextStoredLinkId,
   setStoredLinks,
-  STORAGE,
+  StorageKey,
 } from "../../lib/chrome/SyncStorage";
 import { Reducer, LinkAction, StateType, LinkActionTypes } from "./reducer";
 
@@ -35,15 +35,15 @@ export const LinksProvider = ({
       };
 
       // Initialize links
-      if (STORAGE.STORED_LINKS in result) {
-        payload.links = result[STORAGE.STORED_LINKS];
+      if (StorageKey.STORED_LINKS in result) {
+        payload.links = result[StorageKey.STORED_LINKS];
       } else {
         setStoredLinks(state.links);
       }
 
       // Set the next linkid
-      if (STORAGE.NEXT_LINK_ID in result) {
-        payload.nextLinkId = result[STORAGE.NEXT_LINK_ID];
+      if (StorageKey.NEXT_LINK_ID in result) {
+        payload.nextLinkId = result[StorageKey.NEXT_LINK_ID];
       } else {
         setNextStoredLinkId(state.nextLinkId);
       }

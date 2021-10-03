@@ -1,161 +1,125 @@
 import * as React from "react";
-import styled, { withTheme } from "styled-components";
-import { Link, useHistory } from "react-router-dom";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 import * as psl from "psl";
-import { Input, Text } from "@chakra-ui/react";
-import { StyledPage } from "../App";
+import {
+  Button,
+  Center,
+  Heading,
+  Input,
+  InputRightElement,
+  InputGroup,
+  FormControl,
+  FormLabel,
+  FormHelperText,
+  Text,
+  HStack,
+  VStack,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { ChevronLeft } from "react-feather";
 import { getCurrentTabUrl } from "../lib/chrome/Tab";
 import { LinksContext } from "../contexts/Links";
 import { LinkAction } from "../contexts/Links/reducer";
+import themes from "../../themes/themes";
 
-const BackButtonLink = styled(Link)`
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  width: 40px;
-  height: 40px;
-  margin: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-
-  @media (hover: hover) and (pointer: fine) {
-    :hover {
-      background-color: ${(props) => props.theme.colors.overlay_15};
-    }
-  }
-
-  :active {
-    background-color: ${(props) => props.theme.colors.overlay_25};
-  }
-`;
-
-const Title = styled.h1`
-  text-align: center;
-  margin: 12px 0 0;
-  font-weight: 400;
-  color: ${(props) => props.theme.colors.textColor};
-`;
-
-const FlexFormContainer = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Form = styled.form`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const StyledInput = styled.input`
-  width: 80%;
-  padding: 8px;
-  margin: 8px;
-  font-size: 20px;
-  border: ${(props) => props.theme.borders.input};
-  border-radius: 4px;
-`;
-
-const TextArea = styled.textarea`
-  width: 80%;
-  padding: 8px;
-  margin: 8px;
-  font-size: 20px;
-  border: ${(props) => props.theme.borders.input};
-  border-radius: 4px;
-`;
-
-const SubmitButton = styled.button`
-  padding: 8px 16px;
-  margin: 8px;
-  font-size: 16px;
-  font-weight: bold;
-  color: ${(props) => props.theme.colors.textColor};
-  background-color: ${(props) => props.theme.colors.overlay_10};
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.2s;
-
-  @media (hover: hover) and (pointer: fine) {
-    :hover {
-      background-color: ${(props) => props.theme.colors.overlay_15};
-    }
-  }
-
-  :active {
-    background-color: ${(props) => props.theme.colors.overlay_25};
-  }
-`;
-
-type AddLinkPageProps = {
-  theme;
+type FormFields = {
+  linkName: string;
+  linkNameError: string;
+  linkUrl: string;
+  linkUrlError: string;
+  imageUrl: string;
+  imageUrlError: string;
+  sectionIndex: number;
 };
-function AddLinkPage({ theme }: AddLinkPageProps) {
+const initialFormValues = {
+  linkName: "",
+  linkNameError: "",
+  linkUrl: "",
+  linkUrlError: "",
+  imageUrl: "",
+  imageUrlError: "",
+  sectionIndex: 0,
+};
+
+export default function AddLinkPage(): JSX.Element {
   const { dispatch } = React.useContext(LinksContext);
-  const [linkName, setLinkName] = React.useState("");
-  const [linkUrl, setLinkUrl] = React.useState("");
-  const [imageUrl, setImageUrl] = React.useState("");
-  const [imageUrlError, setImageUrlError] = React.useState("");
-  const [sectionIndex, setSectionIndex] = React.useState(0);
+  const [formValues, setFormValues] =
+    React.useState<FormFields>(initialFormValues);
   const history = useHistory();
+
+  const textColor = useColorModeValue(
+    themes.light.colors.textColor,
+    themes.dark.colors.textColor
+  );
+  const inputRightTextColor = useColorModeValue("black", "white");
+  const iconHoverOverlay = useColorModeValue(
+    themes.light.colors.overlay_15,
+    themes.dark.colors.overlay_15
+  );
+  const iconActiveOverlay = useColorModeValue(
+    themes.light.colors.overlay_25,
+    themes.dark.colors.overlay_25
+  );
 
   const initLinkUrl = React.useCallback(async () => {
     const url = await getCurrentTabUrl();
-    setLinkUrl(url);
+    setFormValues({ ...formValues, linkUrl: url });
   }, []);
 
   React.useEffect(() => {
     initLinkUrl();
   }, []);
 
+  function handleNameChange(event) {
+    event.preventDefault();
+    const linkName = event.target.value ? event.target.value : "";
+    const linkNameError = linkName ? "" : "Please enter a name for the link";
+    setFormValues({ ...formValues, linkName, linkNameError });
+  }
+
+  function handleLinkUrlChange(event) {
+    event.preventDefault();
+    const linkUrl = event.target.value ? event.target.value : "";
+    const linkUrlError = linkUrl ? "" : "Please enter a url for the link";
+    setFormValues({ ...formValues, linkUrl, linkUrlError });
+  }
+
   function handleImageUrlChange(event) {
     event.preventDefault();
     const urlValue = event.target.value ? event.target.value : "";
-    setImageUrl(urlValue);
+    let imageUrlError = "";
     try {
       urlValue && new URL(urlValue);
-      setImageUrlError("");
     } catch (e) {
       if (!(e instanceof TypeError)) {
         throw e;
       }
-      setImageUrlError("Please enter a valid image url");
+      imageUrlError = "Please enter a valid image url";
     }
+    setFormValues({
+      ...formValues,
+      imageUrl: urlValue,
+      imageUrlError,
+    });
   }
 
   function onSubmit(event) {
     event.preventDefault();
-    if (!linkName || !linkUrl) {
+    if (!formValues.linkName || !formValues.linkUrl) {
       return;
     }
     try {
-      const url = new URL(linkUrl);
+      const url = new URL(formValues.linkUrl);
       if (!psl.isValid(url.hostname)) {
         throw new Error(`Invalid URL Domain: ${url.hostname}`);
       }
       dispatch({
         type: LinkAction.ADD_LINK,
         payload: {
-          name: linkName,
+          name: formValues.linkName,
           url: url.toString(),
-          sectionIndex,
-          imageUrl,
+          sectionIndex: formValues.sectionIndex,
+          imageUrl: formValues.imageUrl,
         },
       });
       history.push("/");
@@ -165,46 +129,85 @@ function AddLinkPage({ theme }: AddLinkPageProps) {
   }
 
   return (
-    <StyledPage>
-      <BackButtonLink to="/">
-        <ChevronLeft color={theme.colors.textColor} size={34} />
-      </BackButtonLink>
-      <Title>Create New Link</Title>
-      <FlexFormContainer>
-        <Form onSubmit={onSubmit}>
-          <StyledInput
-            type="text"
-            value={linkName}
-            onChange={(event) => setLinkName(event.target.value)}
-            placeholder="title"
-            maxLength={48}
+    <VStack w="full" alignItems="flex-start">
+      <HStack w="full" p={2} pos="relative" alignItems="center">
+        <Center
+          pos="absolute"
+          left={0}
+          w={10}
+          h={10}
+          m={2}
+          borderRadius={8}
+          cursor="pointer"
+          transition="all 0.2s"
+          _hover={{ bg: iconHoverOverlay }}
+          _active={{ bg: iconActiveOverlay }}
+        >
+          <RouterLink to="/">
+            <ChevronLeft color={textColor} size={34} />
+          </RouterLink>
+        </Center>
+        <Heading as="h3" size="lg" w="full" textAlign="center">
+          Create New Link
+        </Heading>
+      </HStack>
+      <VStack w="full" h="full" px={10} pb={10} spacing={4}>
+        <FormControl isRequired>
+          <FormLabel>Name</FormLabel>
+          <InputGroup>
+            <Input
+              autoFocus
+              value={formValues.linkName}
+              onChange={handleNameChange}
+              placeholder="Name Goes Here"
+              maxLength={48}
+              isInvalid={!!formValues.linkNameError}
+            />
+            <InputRightElement>
+              <Text fontSize={12} color={inputRightTextColor}>
+                {formValues.linkName.length + "/48"}
+              </Text>
+            </InputRightElement>
+          </InputGroup>
+          <FormHelperText>{formValues.linkNameError}</FormHelperText>
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel>Url</FormLabel>
+          <Input
+            value={formValues.linkUrl}
+            onChange={handleLinkUrlChange}
+            placeholder="Url Goes Here"
+            maxLength={2048}
+            isInvalid={!!formValues.linkUrlError}
           />
-          <TextArea
-            value={linkUrl}
-            onChange={(event) => setLinkUrl(event.target.value)}
-            placeholder="url"
+          <FormHelperText>{formValues.linkUrlError}</FormHelperText>
+        </FormControl>
+        <FormControl>
+          <FormLabel>Image Url</FormLabel>
+          <Input
+            value={formValues.imageUrl}
+            onChange={handleImageUrlChange}
+            placeholder="Image Url"
+            isInvalid={!!formValues.imageUrlError}
             maxLength={2048}
           />
-          <Text mb="8px" color={theme.colors.textColor}>
-            {imageUrlError}
-          </Text>
-          <Input
-            value={imageUrl}
-            onChange={handleImageUrlChange}
-            placeholder="Optional Custom Image Url"
-            isInvalid={!!imageUrlError}
-            size="md"
-            width={{ base: "80%" }}
-            margin="0 8px"
-            color={theme.colors.textColor}
-          />
-          <SubmitButton type="submit" disabled={!!imageUrlError}>
-            Create
-          </SubmitButton>
-        </Form>
-      </FlexFormContainer>
-    </StyledPage>
+          <FormHelperText>Optional image url for your link.</FormHelperText>
+          <FormHelperText>{formValues.imageUrlError}</FormHelperText>
+        </FormControl>
+        <Button
+          type="submit"
+          disabled={
+            !!formValues.linkNameError ||
+            !!formValues.linkUrlError ||
+            !!formValues.imageUrlError
+          }
+          onSubmit={onSubmit}
+          w="full"
+          m={0}
+        >
+          Create
+        </Button>
+      </VStack>
+    </VStack>
   );
 }
-
-export default withTheme(AddLinkPage);

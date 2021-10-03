@@ -1,8 +1,10 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import styled, { withTheme } from "styled-components";
+import { useColorMode, useColorModeValue } from "@chakra-ui/react";
 import { HorizontalRule } from "../components/HorizontalRule";
 import { Trash2, Plus, Moon, Sun } from "react-feather";
+import { setStoredColorMode } from "../lib/chrome/SyncStorage";
 
 const ActionBarContainer = styled.div`
   width: 100%;
@@ -51,16 +53,16 @@ const StyledLink = styled(Link)`
 
 type ActionBarProps = {
   setInDeleteMode: React.Dispatch<React.SetStateAction<boolean>>;
-  isDarkMode: boolean;
-  toggleDarkMode: () => void;
   theme;
 };
-function ActionBar({
-  setInDeleteMode,
-  isDarkMode,
-  toggleDarkMode,
-  theme,
-}: ActionBarProps) {
+function ActionBar({ setInDeleteMode, theme }: ActionBarProps) {
+  const { colorMode, toggleColorMode } = useColorMode();
+
+  function toggleAndStoreColorMode(): void {
+    setStoredColorMode(colorMode === "light" ? "dark" : "light");
+    toggleColorMode();
+  }
+
   return (
     <>
       <HorizontalRule />
@@ -82,11 +84,10 @@ function ActionBar({
         </ActionButton>
 
         <ActionButton>
-          <ActionButtonOverlay onClick={() => toggleDarkMode()}>
-            {isDarkMode ? (
+          <ActionButtonOverlay onClick={toggleAndStoreColorMode}>
+            {useColorModeValue(
+              <Moon color={theme.colors.textColor} size={24} />,
               <Sun color={theme.colors.textColor} size={24} />
-            ) : (
-              <Moon color={theme.colors.textColor} size={24} />
             )}
           </ActionButtonOverlay>
         </ActionButton>
