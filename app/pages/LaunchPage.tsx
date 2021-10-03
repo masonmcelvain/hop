@@ -6,6 +6,7 @@ import Grid from "../components/Grid";
 import ActionBar from "../components/ActionBar";
 import { HorizontalRule } from "../components/HorizontalRule";
 import { LinksContext } from "../contexts/Links";
+import { StateType } from "../contexts/Links/reducer";
 
 const GridContainer = styled.div`
   width: 100%;
@@ -26,30 +27,23 @@ export default function LaunchPage({
 }: LaunchPageProps): JSX.Element {
   const {state, dispatch} = React.useContext(LinksContext);
 
+  const getGridContainer = (index: number): JSX.Element => (
+    <GridContainer key={index}>
+      <Grid
+        gridIndex={index}
+        cards={state.links[index]}
+        inDeleteMode={inDeleteMode}
+      />
+    </GridContainer>
+  );
+
   function renderGrids() {
-    if (!state.links) {
-      return null;
-    }
-    const grids = [
-      <GridContainer key={0}>
-        <Grid
-          gridIndex={0}
-          cards={state.links[0]}
-          inDeleteMode={inDeleteMode}
-        />
-      </GridContainer>,
-    ];
+    const grids = [getGridContainer(0)];
     for (let i = 1; i < state.links.length; i++) {
       grids.push(
         <React.Fragment key={i}>
           <HorizontalRule />
-          <GridContainer>
-            <Grid
-              gridIndex={i}
-              cards={state.links[i]}
-              inDeleteMode={inDeleteMode}
-            />
-          </GridContainer>
+          {getGridContainer(i)}
         </React.Fragment>
       );
     }

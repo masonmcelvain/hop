@@ -20,13 +20,13 @@ export const Reducer = (state: StateType, action: LinkActionTypes): StateType =>
 function setLinks(prevState: StateType, links: LinkData[][]): StateType {
   return {
     links,
-    nextLinkId: prevState.nextLinkId,
+    ...prevState,
   };
 }
 
 function setNextLinkId(prevState: StateType, nextLinkId: number): StateType {
   return {
-    links: prevState.links,
+    ...prevState,
     nextLinkId,
   };
 }
@@ -84,7 +84,7 @@ function updateLinkOrder(
   if (!removeFromGrid) {
     // If source is unknown, do nothing.
     console.log("Unkown sourceId in updateLinkOrder(): " + sourceId);
-    return;
+    return prevState;
   }
   const oldGridIndex = prevState.links.findIndex((grid) => grid === removeFromGrid);
   const oldLinkIndex = removeFromGrid.findIndex(
@@ -93,7 +93,7 @@ function updateLinkOrder(
 
   if (oldLinkIndex === newLinkIndex && oldGridIndex === newGridIndex) {
     // If there is no positional change, do nothing.
-    return;
+    return prevState;
   }
 
   // If dropped in an empty cell, put the card at the end of the array
@@ -118,7 +118,7 @@ function updateLinkOrder(
 
   return {
     links: newLinks,
-    nextLinkId: prevState.nextLinkId,
+    ...prevState,
   };
 }
 
@@ -146,7 +146,7 @@ function addImageUrl(
   setStoredLinks(newLinks);
   return {
     links: newLinks,
-    nextLinkId: prevState.nextLinkId,
+    ...prevState,
   };
 }
 
@@ -160,7 +160,7 @@ function deleteLink(
   setStoredLinks(newLinks);
   return {
     links: newLinks,
-    nextLinkId: prevState.nextLinkId,
+    ...prevState,
   };
 }
 
