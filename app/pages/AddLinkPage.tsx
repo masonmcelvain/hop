@@ -5,6 +5,7 @@ import {
   Button,
   Center,
   Heading,
+  IconButton,
   Input,
   InputRightElement,
   InputGroup,
@@ -12,15 +13,12 @@ import {
   FormLabel,
   FormHelperText,
   Text,
-  HStack,
   VStack,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { ChevronLeft } from "react-feather";
 import { getCurrentTabUrl } from "../lib/chrome/Tab";
 import { LinksContext } from "../contexts/Links";
 import { LinkAction } from "../contexts/Links/reducer";
-import themes from "../../themes/themes";
 
 type FormFields = {
   linkName: string;
@@ -46,20 +44,6 @@ export default function AddLinkPage(): JSX.Element {
   const [formValues, setFormValues] =
     React.useState<FormFields>(initialFormValues);
   const history = useHistory();
-
-  const textColor = useColorModeValue(
-    themes.light.colors.textColor,
-    themes.dark.colors.textColor
-  );
-  const inputRightTextColor = useColorModeValue("black", "white");
-  const iconHoverOverlay = useColorModeValue(
-    themes.light.colors.overlay_15,
-    themes.dark.colors.overlay_15
-  );
-  const iconActiveOverlay = useColorModeValue(
-    themes.light.colors.overlay_25,
-    themes.dark.colors.overlay_25
-  );
 
   const initLinkUrl = React.useCallback(async () => {
     const url = await getCurrentTabUrl();
@@ -124,31 +108,23 @@ export default function AddLinkPage(): JSX.Element {
       console.error(e);
     }
   }
-  console.log(formValues);
 
   return (
     <VStack w="full" alignItems="flex-start">
-      <HStack w="full" p={2} pos="relative" alignItems="center">
-        <Center
+      <Center w="full" mt={2} pos="relative">
+        <IconButton
           as={RouterLink}
           to="/"
           pos="absolute"
-          left={0}
-          w={10}
-          h={10}
-          m={2}
-          borderRadius={8}
-          cursor="pointer"
-          transition="all 0.2s"
-          _hover={{ bg: iconHoverOverlay }}
-          _active={{ bg: iconActiveOverlay }}
-        >
-          <ChevronLeft color={textColor} size={34} />
-        </Center>
-        <Heading as="h3" size="lg" w="full" textAlign="center">
+          left={1}
+          aria-label="Go Back"
+          variant="ghost"
+          icon={<ChevronLeft size={32} />}
+        />
+        <Heading as="h3" size="lg" textAlign="center">
           Create New Link
         </Heading>
-      </HStack>
+      </Center>
       <VStack w="full" h="full" px={10} pb={10} spacing={4}>
         <FormControl isRequired>
           <FormLabel>Name</FormLabel>
@@ -162,9 +138,7 @@ export default function AddLinkPage(): JSX.Element {
               isInvalid={!!formValues.linkNameError}
             />
             <InputRightElement>
-              <Text fontSize={12} color={inputRightTextColor}>
-                {formValues.linkName.length + "/48"}
-              </Text>
+              <Text fontSize={12}>{formValues.linkName.length + "/48"}</Text>
             </InputRightElement>
           </InputGroup>
           <FormHelperText>{formValues.linkNameError}</FormHelperText>
