@@ -7,7 +7,7 @@ import {
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { Trash2, Plus, Moon, Sun } from "react-feather";
+import { Edit, Plus, Moon, Sun } from "react-feather";
 import { setStoredColorMode } from "../lib/chrome/SyncStorage";
 
 type ActionBarProps = {
@@ -26,20 +26,20 @@ function ActionBar({ toggleEditMode }: ActionBarProps): JSX.Element {
       <Divider />
       <ButtonGroup variant="ghost" spacing={2}>
         <IconButton
-          aria-label="Choose Links to Edit"
-          icon={<Trash2 size={24} />}
+          aria-label="Choose links to edit"
+          icon={<Edit size={24} />}
           onClick={toggleEditMode}
         />
 
         <IconButton
           as={RouterLink}
-          aria-label="Create New Link"
+          aria-label="Create new link"
           icon={<Plus size={32} />}
           to="/add"
         />
 
         <IconButton
-          aria-label="Create New Link"
+          aria-label="Toggle color mode"
           icon={useColorModeValue(
             <Moon size={24} />,
             <Sun size={24} />

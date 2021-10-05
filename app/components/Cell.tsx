@@ -1,41 +1,26 @@
 import * as React from "react";
-import styled, { withTheme } from "styled-components";
+import { Center, IconButton, VStack } from "@chakra-ui/react";
 import { CardDragItem, DragItemTypes } from "../types/DragItemTypes";
 import { useDrop } from "react-dnd";
-import { XCircle } from "react-feather";
+import { Edit2, X } from "react-feather";
 import { LinksContext } from "../contexts/Links";
 import { LinkAction } from "../contexts/Links/reducer";
-
-const StyledCell = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const StyledXCircle = styled(XCircle)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  margin: 2px;
-  cursor: pointer;
-`;
 
 type CellProps = {
   index: number;
   gridIndex: number;
   isInEditMode: boolean;
-  theme;
   children: React.ReactChild;
 };
 
-function Cell({ index, gridIndex, isInEditMode, theme, children }: CellProps) {
+function Cell({
+  index,
+  gridIndex,
+  isInEditMode,
+  children,
+}: CellProps): JSX.Element {
   const { dispatch } = React.useContext(LinksContext);
+  const sideLength = 90;
 
   const [{ isOver }, drop] = useDrop(
     () => ({
@@ -56,26 +41,46 @@ function Cell({ index, gridIndex, isInEditMode, theme, children }: CellProps) {
     [index, gridIndex, dispatch]
   );
 
+  function deleteChildCard(event): void {
+    event.preventDefault();
+    dispatch({
+      type: LinkAction.DELETE_LINK,
+      payload: {
+        cellIndex: index,
+        gridIndex,
+      },
+    });
+  }
+
+  function editChildCard(event): void {
+    event.preventDefault();
+    // TODO: Open up the edit link page
+  }
+
   return (
-    <>
+    <Center ref={drop} pos="relative" w={sideLength} h={sideLength}>
       {children && isInEditMode ? (
-        <StyledXCircle
-          size={24}
-          color={theme.colors.delete}
-          onClick={() =>
-            dispatch({
-              type: LinkAction.DELETE_LINK,
-              payload: {
-                cellIndex: index,
-                gridIndex,
-              },
-            })
-          }
-        />
+        <VStack pos="absolute" top={0} left={0} zIndex="docked" spacing="px">
+          <IconButton
+            icon={<Edit2 size={16} />}
+            aria-label="Edit this card"
+            onClick={editChildCard}
+            variant="ghost"
+            size="xs"
+          />
+          <IconButton
+            icon={<X size={20} />}
+            aria-label="Delete this card"
+            onClick={deleteChildCard}
+            colorScheme="red"
+            variant="ghost"
+            size="xs"
+          />
+        </VStack>
       ) : null}
-      <StyledCell ref={drop}>{isOver ? null : children}</StyledCell>
-    </>
+      {isOver ? null : children}
+    </Center>
   );
 }
 
-export default withTheme(Cell);
+export default Cell;

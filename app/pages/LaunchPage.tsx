@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Container, Divider, VStack, useBoolean } from "@chakra-ui/react";
+import { Center, Divider, VStack, useBoolean } from "@chakra-ui/react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Grid from "../components/Grid";
@@ -14,14 +14,14 @@ export default function LaunchPage(): JSX.Element {
     <VStack w="full" p={2}>
       <DndProvider backend={HTML5Backend}>
         {state.links.map((sectionLinks, i) => (
-          <Container key={0}>
+          <Center key={0} w="full">
             {i > 0 && <Divider />}
             <Grid
               gridIndex={i}
               links={sectionLinks}
               isInEditMode={isInEditMode}
             />
-          </Container>
+          </Center>
         ))}
       </DndProvider>
       <ActionBar toggleEditMode={setIsInEditMode.toggle} />

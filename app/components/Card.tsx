@@ -14,9 +14,13 @@ function openLinkInThisTab(url: string): void {
 
 type CardProps = {
   linkData: LinkData;
+  isInEditMode: boolean;
 };
 
-export default function Card({ linkData }: CardProps): JSX.Element {
+export default function Card({
+  linkData,
+  isInEditMode,
+}: CardProps): JSX.Element {
   const { id, name, url } = linkData;
   const [isMouseOver, setIsMouseOver] = useBoolean();
   const [{ isDragging }, drag] = useDrag(
@@ -32,7 +36,7 @@ export default function Card({ linkData }: CardProps): JSX.Element {
 
   return (
     <Button
-      position="absolute"
+      pos="absolute"
       top={0}
       as="a"
       href={url.toString()}
@@ -52,6 +56,7 @@ export default function Card({ linkData }: CardProps): JSX.Element {
       onMouseLeave={setIsMouseOver.off}
       ref={drag}
       transform="translate(0, 0)" // Prevents React DnD background color bug
+      disabled={isInEditMode}
     >
       <CardImage linkData={linkData} />
       <Text

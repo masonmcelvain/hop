@@ -117,7 +117,7 @@ export default function AddLinkPage(): JSX.Element {
           to="/"
           pos="absolute"
           left={1}
-          aria-label="Go Back"
+          aria-label="Go back"
           variant="ghost"
           icon={<ChevronLeft size={32} />}
         />
