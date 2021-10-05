@@ -1,21 +1,10 @@
 import * as React from "react";
-import styled from "styled-components";
-import { Image } from "react-feather";
+import { Image as FeatherImageIcon } from "react-feather";
+import { Icon, Image } from "@chakra-ui/react";
 import * as psl from "psl";
 import * as axios from "axios";
-import { LinkAction, LinkData } from "../contexts/Links/reducer";
+import { LinkData } from "../contexts/Links/reducer";
 import { LinksContext } from "../contexts/Links";
-
-const DefaultImage = styled(Image)`
-  width: 50%;
-  height: auto;
-  color: ${(props) => props.theme.colors.icon_accent};
-`;
-
-const StyledImage = styled.img`
-  width: 50%;
-  height: auto;
-`;
 
 /**
  * @return {Promise<?URL>}
@@ -77,11 +66,9 @@ export default function CardImage({ linkData }: CardImageProps): JSX.Element {
   //   });
   // }
 
-  const DisplayImage = imageUrl ? (
-    <StyledImage alt={name} src={imageUrl} />
+  return imageUrl ? (
+    <Image src={imageUrl} alt={name} w={8} />
   ) : (
-    <DefaultImage />
+    <Icon as={FeatherImageIcon} w={8} h={8} opacity="0.5" />
   );
-
-  return DisplayImage;
 }

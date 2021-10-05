@@ -134,11 +134,11 @@ export default function AddLinkPage(): JSX.Element {
               value={formValues.linkName}
               onChange={handleNameChange}
               placeholder="Name Goes Here"
-              maxLength={48}
+              maxLength={32}
               isInvalid={!!formValues.linkNameError}
             />
             <InputRightElement>
-              <Text fontSize={12}>{formValues.linkName.length + "/48"}</Text>
+              <Text fontSize={12}>{formValues.linkName.length + "/32"}</Text>
             </InputRightElement>
           </InputGroup>
           <FormHelperText>{formValues.linkNameError}</FormHelperText>

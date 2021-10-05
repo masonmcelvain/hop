@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Container, Divider, VStack } from "@chakra-ui/react";
+import { Container, Divider, VStack, useBoolean } from "@chakra-ui/react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Grid from "../components/Grid";
@@ -8,11 +8,7 @@ import { LinksContext } from "../contexts/Links";
 
 export default function LaunchPage(): JSX.Element {
   const { state } = React.useContext(LinksContext); // after clicking delete button, this state does not seem to get the updated version (ie the deleted link still exists here)
-  const [isInEditMode, setIsInEditMode] = React.useState(false);
-
-  function toggleEditMode(): void {
-    setIsInEditMode(!isInEditMode);
-  }
+  const [isInEditMode, setIsInEditMode] = useBoolean();
 
   return (
     <VStack w="full" p={2}>
@@ -28,7 +24,7 @@ export default function LaunchPage(): JSX.Element {
           </Container>
         ))}
       </DndProvider>
-      <ActionBar toggleEditMode={toggleEditMode} />
+      <ActionBar toggleEditMode={setIsInEditMode.toggle} />
     </VStack>
   );
 }
