@@ -111,8 +111,8 @@ function updateLinkOrder(
 
   setStoredLinks(newLinks);
   return {
-    links: newLinks,
     ...prevState,
+    links: newLinks,
   };
 }
 
@@ -139,8 +139,8 @@ function addImageUrl(
 
   setStoredLinks(newLinks);
   return {
-    links: newLinks,
     ...prevState,
+    links: newLinks,
   };
 }
 
@@ -154,8 +154,8 @@ function deleteLink(
 
   setStoredLinks(newLinks);
   return {
-    links: newLinks,
     ...prevState,
+    links: newLinks,
   };
 }
 
