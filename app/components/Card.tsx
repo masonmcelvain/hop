@@ -45,7 +45,7 @@ export default function Card({
       w="full"
       minH="full"
       h="max-content"
-      pt={2}
+      pt={4}
       px={1}
       display="flex"
       flexDir="column"
