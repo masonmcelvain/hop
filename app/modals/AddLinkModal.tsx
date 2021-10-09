@@ -12,6 +12,7 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
+  ModalFooter,
   ModalBody,
   ModalCloseButton,
   Text,
@@ -123,7 +124,7 @@ export default function AddLinkModal({
         <ModalHeader>Create New Link</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <VStack w="full" h="full" spacing={4}>
+          <VStack w="full" h="full" spacing={2}>
             <FormControl isRequired>
               <FormLabel>Name</FormLabel>
               <InputGroup>
@@ -166,6 +167,8 @@ export default function AddLinkModal({
               <FormHelperText>Optional image url for the link</FormHelperText>
               <FormHelperText>{formValues.imageUrlError}</FormHelperText>
             </FormControl>
+          </VStack>
+          <ModalFooter>
             <Button
               type="submit"
               disabled={
@@ -181,7 +184,7 @@ export default function AddLinkModal({
             >
               Create
             </Button>
-          </VStack>
+          </ModalFooter>
         </ModalBody>
       </ModalContent>
     </Modal>
