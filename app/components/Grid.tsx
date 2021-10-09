@@ -42,9 +42,10 @@ export default function Grid({
     const card = cellHasACard ? (
       <Card linkData={links[i]} isInEditMode={isInEditMode} />
     ) : null;
+
     return (
       <Cell
-        key={i}
+        key={i + gridIndex * numCells}
         index={i}
         gridIndex={gridIndex}
         isInEditMode={isInEditMode}
@@ -60,9 +61,5 @@ export default function Grid({
     cells.push(renderCell(i));
   }
 
-  return (
-    <SimpleGrid columns={numColumns} spacing={2}>
-      {cells}
-    </SimpleGrid>
-  );
+  return <SimpleGrid columns={numColumns}>{cells}</SimpleGrid>;
 }

@@ -1,9 +1,10 @@
 import * as React from "react";
-import { Button, Text, useBoolean } from "@chakra-ui/react";
+import { Button, Text, VStack, useBoolean } from "@chakra-ui/react";
 import { useDrag } from "react-dnd";
 import { DragItemTypes } from "../types/DragItemTypes";
 import CardImage from "./CardImage";
-import { LinkData } from "../contexts/Links/reducer";
+import { LinkAction, LinkData } from "../contexts/Links/reducer";
+import { LinksContext } from "../contexts/Links";
 
 function openLinkInThisTab(url: string): void {
   chrome.tabs.query({ currentWindow: true, active: true }, (tabs) => {
@@ -22,17 +23,35 @@ export default function Card({
   isInEditMode,
 }: CardProps): JSX.Element {
   const { id, name, url } = linkData;
+  const { state, dispatch } = React.useContext(LinksContext);
   const [isMouseOver, setIsMouseOver] = useBoolean();
-  const [{ isDragging }, drag] = useDrag(
+  const [, drag] = useDrag(
     () => ({
       type: DragItemTypes.CARD,
-      item: { id },
-      collect: (monitor) => ({
-        isDragging: !!monitor.isDragging(),
-      }),
+      item: () => {
+        dispatch({
+          type: LinkAction.SET_HAS_DRAG_EVENT,
+          payload: true,
+        });
+        return { id };
+      },
+      end: () =>
+        dispatch({
+          type: LinkAction.SET_HAS_DRAG_EVENT,
+          payload: false,
+        }),
+      isDragging: (monitor) => id === monitor.getItem().id,
     }),
     [linkData]
   );
+
+  const conditionalButtonProps = state.hasDragEvent
+    ? {
+        _hover: {},
+        _active: {},
+        _focus: {},
+      }
+    : {};
 
   return (
     <Button
@@ -42,8 +61,8 @@ export default function Card({
       href={url.toString()}
       onClick={() => openLinkInThisTab(url.toString())}
       variant="ghost"
-      w="full"
-      minH="full"
+      w="92%"
+      minH="92%"
       h="max-content"
       pt={4}
       px={1}
@@ -54,20 +73,25 @@ export default function Card({
       gridRowGap={2}
       onMouseEnter={setIsMouseOver.on}
       onMouseLeave={setIsMouseOver.off}
-      ref={drag}
-      transform="translate(0, 0)" // Prevents React DnD background color bug
       disabled={isInEditMode}
+      {...conditionalButtonProps}
     >
-      <CardImage linkData={linkData} />
-      <Text
-        align="center"
-        fontSize="sm"
-        maxW="full"
-        whiteSpace="normal"
-        isTruncated={!isMouseOver}
+      <VStack
+        w="full"
+        ref={drag}
+        transform="translate(0, 0)" // Prevents React DnD background color bug
       >
-        {name}
-      </Text>
+        <CardImage linkData={linkData} />
+        <Text
+          align="center"
+          fontSize="sm"
+          maxW="full"
+          whiteSpace="normal"
+          isTruncated={!isMouseOver}
+        >
+          {name}
+        </Text>
+      </VStack>
     </Button>
   );
 }

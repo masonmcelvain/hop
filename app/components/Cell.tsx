@@ -55,6 +55,8 @@ function Cell({
     });
   }
 
+  const shouldDisplayChildren = !isOver;
+
   return (
     <Center ref={drop} pos="relative" w={sideLength} h={sideLength}>
       {children && isInEditMode ? (
@@ -76,7 +78,7 @@ function Cell({
           />
         </VStack>
       ) : null}
-      {isOver ? null : children}
+      {shouldDisplayChildren ? children : null}
     </Center>
   );
 }
