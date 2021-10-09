@@ -3,6 +3,7 @@ import { SimpleGrid } from "@chakra-ui/react";
 import Card from "./Card";
 import Cell from "./Cell";
 import { LinkData } from "../contexts/Links/reducer";
+import { openUpdateLinkModalForCellType } from "../Page";
 
 const numColumns = 3;
 
@@ -25,20 +26,30 @@ type GridProps = {
   gridIndex: number;
   links: LinkData[];
   isInEditMode: boolean;
+  openUpdateLinkModal: openUpdateLinkModalForCellType;
 };
 
 export default function Grid({
   gridIndex,
   links,
   isInEditMode,
+  openUpdateLinkModal,
 }: GridProps): JSX.Element {
   const numCells = getNumCells(links ? links.length : 0);
 
   function renderCell(i: number) {
     const cellHasACard = i < links.length;
-    const card = cellHasACard ? <Card linkData={links[i]} isInEditMode={isInEditMode} /> : null;
+    const card = cellHasACard ? (
+      <Card linkData={links[i]} isInEditMode={isInEditMode} />
+    ) : null;
     return (
-      <Cell key={i} index={i} gridIndex={gridIndex} isInEditMode={isInEditMode}>
+      <Cell
+        key={i}
+        index={i}
+        gridIndex={gridIndex}
+        isInEditMode={isInEditMode}
+        openUpdateLinkModal={openUpdateLinkModal}
+      >
         {card}
       </Cell>
     );

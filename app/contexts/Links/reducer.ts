@@ -12,8 +12,10 @@ export const Reducer = (
       return setStateFromStorage(action.payload);
     case LinkAction.ADD_LINK:
       return addLink(state, action.payload);
-    case LinkAction.UPDATE_LINK_ORDER:
-      return updateLinkOrder(state, action.payload);
+    case LinkAction.UPDATE_LINK:
+      return updateLink(state, action.payload);
+    case LinkAction.REORDER_LINKS:
+      return reorderLinks(state, action.payload);
     case LinkAction.ADD_IMAGE_URL:
       return addImageUrl(state, action.payload);
     case LinkAction.DELETE_LINK:
@@ -54,6 +56,22 @@ function addLink(prevState: StateType, payload: AddLinkPayload): StateType {
   };
 }
 
+function updateLink(
+  prevState: StateType,
+  payload: UpdateLinkPayload
+): StateType {
+  const { id, name, url, imageUrl } = payload;
+  const newLinks = modifyLink(prevState.links, id, () => ({
+    id,
+    name,
+    url,
+    imageUrl,
+  }));
+
+  setStoredLinks(newLinks);
+  return { ...prevState, links: newLinks };
+}
+
 /**
  * Modify the order of the cards by relocating a card. Relocation can be
  * between grids.
@@ -62,9 +80,9 @@ function addLink(prevState: StateType, payload: AddLinkPayload): StateType {
  * @param newLinkIndex Index to move the source link to.
  * @param newGridIndex The index of the grid the card is being moved to.
  */
-function updateLinkOrder(
+function reorderLinks(
   prevState: StateType,
-  payload: UpdateLinkOrderPayload
+  payload: ReorderLinksPayload
 ): StateType {
   const { sourceId, newGridIndex } = payload;
   let { newLinkIndex } = payload;
@@ -74,7 +92,7 @@ function updateLinkOrder(
   );
   if (!removeFromGrid) {
     // If source is unknown, do nothing.
-    console.log(`Unkown sourceId in updateLinkOrder(): ${sourceId}`);
+    console.log(`Unkown sourceId in reorderLinks(): ${sourceId}`);
     return prevState;
   }
   const oldGridIndex = prevState.links.findIndex(
@@ -121,21 +139,11 @@ function addImageUrl(
   payload: AddImageUrlPayload
 ): StateType {
   const { url, linkId } = payload;
-  const newLinks: LinkData[][] = JSON.parse(JSON.stringify(prevState.links));
-  let returnEarly = false;
 
-  newLinks.forEach((section, i) => {
-    section.forEach((link, j) => {
-      if (link.id === linkId) {
-        newLinks[i][j].imageUrl = url;
-        returnEarly = true;
-        return;
-      }
-    });
-    if (returnEarly) {
-      return;
-    }
-  });
+  const newLinks = modifyLink(prevState.links, linkId, (link: LinkData) => ({
+    ...link,
+    imageUrl: url,
+  }));
 
   setStoredLinks(newLinks);
   return {
@@ -159,6 +167,30 @@ function deleteLink(
   };
 }
 
+function modifyLink(
+  prevLinks: LinkData[][],
+  linkId: number,
+  callback: (link: LinkData) => LinkData
+): LinkData[][] {
+  const newLinks = [...prevLinks];
+  let returnEarly = false;
+
+  newLinks.forEach((section, i) => {
+    section.forEach((link, j) => {
+      if (link.id === linkId) {
+        newLinks[i][j] = callback(link);
+        returnEarly = true;
+        return;
+      }
+    });
+    if (returnEarly) {
+      return;
+    }
+  });
+
+  return newLinks;
+}
+
 type SetStateFromStorageAction = {
   type: typeof LinkAction.SET_STATE_FROM_STORAGE;
   payload: StateType;
@@ -175,14 +207,25 @@ type AddLinkAction = {
   payload: AddLinkPayload;
 };
 
-type UpdateLinkOrderPayload = {
+type UpdateLinkPayload = {
+  id: number;
+  name: string;
+  url: string;
+  imageUrl: string;
+};
+type UpdateLinkAction = {
+  type: typeof LinkAction.UPDATE_LINK;
+  payload: UpdateLinkPayload;
+};
+
+type ReorderLinksPayload = {
   sourceId: number;
   newLinkIndex: number;
   newGridIndex: number;
 };
-type UpdateLinkOrderAction = {
-  type: typeof LinkAction.UPDATE_LINK_ORDER;
-  payload: UpdateLinkOrderPayload;
+type ReorderLinksAction = {
+  type: typeof LinkAction.REORDER_LINKS;
+  payload: ReorderLinksPayload;
 };
 
 type AddImageUrlPayload = {
@@ -206,7 +249,8 @@ type DeleteLinkAction = {
 export type LinkActionTypes =
   | SetStateFromStorageAction
   | AddLinkAction
-  | UpdateLinkOrderAction
+  | UpdateLinkAction
+  | ReorderLinksAction
   | AddImageUrlAction
   | DeleteLinkAction;
 
@@ -218,7 +262,8 @@ export type StateType = {
 export enum LinkAction {
   SET_STATE_FROM_STORAGE,
   ADD_LINK,
-  UPDATE_LINK_ORDER,
+  UPDATE_LINK,
+  REORDER_LINKS,
   ADD_IMAGE_URL,
   DELETE_LINK,
 }

@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Link as RouterLink } from "react-router-dom";
 import {
   IconButton,
   ButtonGroup,
@@ -12,8 +11,12 @@ import { setStoredColorMode } from "../lib/chrome/SyncStorage";
 
 type ActionBarProps = {
   toggleEditMode: () => void;
+  onAddLinkModalOpen: () => void;
 };
-function ActionBar({ toggleEditMode }: ActionBarProps): JSX.Element {
+function ActionBar({
+  toggleEditMode,
+  onAddLinkModalOpen,
+}: ActionBarProps): JSX.Element {
   const { colorMode, toggleColorMode } = useColorMode();
 
   function toggleAndStoreColorMode(): void {
@@ -32,18 +35,14 @@ function ActionBar({ toggleEditMode }: ActionBarProps): JSX.Element {
         />
 
         <IconButton
-          as={RouterLink}
           aria-label="Create new link"
           icon={<Plus size={32} />}
-          to="/add"
+          onClick={onAddLinkModalOpen}
         />
 
         <IconButton
           aria-label="Toggle color mode"
-          icon={useColorModeValue(
-            <Moon size={24} />,
-            <Sun size={24} />
-          )}
+          icon={useColorModeValue(<Moon size={24} />, <Sun size={24} />)}
           onClick={toggleAndStoreColorMode}
         />
       </ButtonGroup>

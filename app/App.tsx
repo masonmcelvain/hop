@@ -1,8 +1,6 @@
 import * as React from "react";
-import { MemoryRouter, Switch, Route } from "react-router-dom";
 import { useColorMode } from "@chakra-ui/react";
-import LaunchPage from "./pages/LaunchPage";
-import AddLinkPage from "./pages/AddLinkPage";
+import Page from "./Page";
 import { setStoredColorMode, StorageKey } from "./lib/chrome/SyncStorage";
 import { LinksProvider } from "./contexts/Links";
 
@@ -23,16 +21,7 @@ export default function App(): JSX.Element {
 
   return (
     <LinksProvider>
-      <MemoryRouter>
-        <Switch>
-          <Route exact path="/">
-            <LaunchPage />
-          </Route>
-          <Route path="/add">
-            <AddLinkPage />
-          </Route>
-        </Switch>
-      </MemoryRouter>
+      <Page />
     </LinksProvider>
   );
 }

@@ -5,11 +5,13 @@ import { useDrop } from "react-dnd";
 import { Edit2, X } from "react-feather";
 import { LinksContext } from "../contexts/Links";
 import { LinkAction } from "../contexts/Links/reducer";
+import { openUpdateLinkModalForCellType } from "../Page";
 
 type CellProps = {
   index: number;
   gridIndex: number;
   isInEditMode: boolean;
+  openUpdateLinkModal: openUpdateLinkModalForCellType;
   children: React.ReactChild;
 };
 
@@ -17,6 +19,7 @@ function Cell({
   index,
   gridIndex,
   isInEditMode,
+  openUpdateLinkModal,
   children,
 }: CellProps): JSX.Element {
   const { dispatch } = React.useContext(LinksContext);
@@ -27,7 +30,7 @@ function Cell({
       accept: DragItemTypes.CARD,
       hover: (item: CardDragItem) =>
         dispatch({
-          type: LinkAction.UPDATE_LINK_ORDER,
+          type: LinkAction.REORDER_LINKS,
           payload: {
             sourceId: item.id,
             newLinkIndex: index,
@@ -52,11 +55,6 @@ function Cell({
     });
   }
 
-  function editChildCard(event): void {
-    event.preventDefault();
-    // TODO: Open up the edit link page
-  }
-
   return (
     <Center ref={drop} pos="relative" w={sideLength} h={sideLength}>
       {children && isInEditMode ? (
@@ -64,7 +62,7 @@ function Cell({
           <IconButton
             icon={<Edit2 size={16} />}
             aria-label="Edit this card"
-            onClick={editChildCard}
+            onClick={() => openUpdateLinkModal(index, gridIndex)}
             variant="ghost"
             size="xs"
           />
