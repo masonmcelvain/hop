@@ -53,14 +53,14 @@ export default function AddLinkModal({
   const [formValues, setFormValues] =
     React.useState<FormFields>(initialFormValues);
 
-  const initLinkUrl = React.useCallback(async () => {
-    const url = await getCurrentTabUrl();
-    setFormValues({ ...formValues, linkUrl: url });
-  }, []);
-
   React.useEffect(() => {
-    initLinkUrl();
-  }, []);
+    setInitialFormValues();
+  }, [isOpen]);
+
+  async function setInitialFormValues(): Promise<void> {
+    const url = await getCurrentTabUrl();
+    setFormValues({...initialFormValues, linkUrl: url });
+  }
 
   function handleNameChange(event) {
     event.preventDefault();
