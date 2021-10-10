@@ -7,17 +7,17 @@
         "default_title": "Hop",
         "default_popup": "index.html",
         "default_icon": {
-            "16": "/icons/get_started16.png",
-            "32": "/icons/get_started32.png",
-            "48": "/icons/get_started48.png",
-            "128": "/icons/get_started128.png"
+            "16": "/icons/hop16.png",
+            "32": "/icons/hop32.png",
+            "48": "/icons/hop48.png",
+            "128": "/icons/hop128.png"
         }
     },
     "icons": {
-        "16": "/icons/get_started16.png",
-        "32": "/icons/get_started32.png",
-        "48": "/icons/get_started48.png",
-        "128": "/icons/get_started128.png"
+        "16": "/icons/hop16.png",
+        "32": "/icons/hop32.png",
+        "48": "/icons/hop48.png",
+        "128": "/icons/hop128.png"
     },
     "permissions": [
         "storage",
