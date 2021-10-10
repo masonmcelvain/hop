@@ -1,9 +1,14 @@
-# Launchpad
+# Hop
 
-Launchpad is a Chrome extension that lets you navigate webpages in a more visually pleasing way than traditional bookmarks. The primary feature is silky smooth drag & drop to sort your links.
+Hop is a Chrome extension that stores links to your favorite sites in a more visually pleasing way than traditional browser bookmarks. Hop will try to find an icon for each link automatically, but you can use your own image if you prefer.
+
+It's available for use on the [Chrome Web Store](https://chrome.google.com/webstore/category/extensions).
+
+## Opening Issues
+If you'd like to see a new feature or you've spotted a bug, please check to see if there are any closed issues that might address your concern before opening a new issue on this repository.
 
 ## Contributing
-The extension is still under development, but when its on the [Chrome Web Store](https://chrome.google.com/webstore/category/extensions) and I'm ready to accept contributions, I'll detail the process here.
+If there's an issue you're interested in tackling, please fork this repository, make your changes in a series of well documented commits, and open a pull request. I really appreciate your willingness to contribute to this project 🙂
 
 ### Develop Locally
 * Clone with `https://github.com/masonmcelvain/launchpad-chrome-extension.git`.

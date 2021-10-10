@@ -1,10 +1,10 @@
 {
-    "name": "Launchpad",
+    "name": "Hop",
     "description": "Going places!",
     "version": "1.0",
     "manifest_version": 3,
     "action": {
-        "default_title": "Launchpad",
+        "default_title": "Hop",
         "default_popup": "index.html",
         "default_icon": {
             "16": "/icons/get_started16.png",
