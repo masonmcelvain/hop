@@ -1,6 +1,6 @@
 {
     "name": "Hop",
-    "description": "Going places!",
+    "description": "Store links to your favorite sites in a more visually pleasing way than traditional browser bookmarks",
     "version": "1.0",
     "manifest_version": 3,
     "action": {
@@ -22,8 +22,5 @@
     "permissions": [
         "storage",
         "tabs"
-    ],
-    "host_permissions": [
-        "http://favicongrabber.com/api/grab/*"
     ]
 }
