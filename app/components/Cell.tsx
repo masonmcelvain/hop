@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Center, IconButton, VStack } from "@chakra-ui/react";
-import { CardDragItem, DragItemTypes } from "../types/DragItemTypes";
+import { CardDragItem, DragItemTypes } from "./Card";
 import { useDrop } from "react-dnd";
 import { Edit2, X } from "react-feather";
 import { LinksContext } from "../contexts/Links";

@@ -1,23 +1,22 @@
 import * as React from "react";
 import { Button, Text, VStack, useBoolean } from "@chakra-ui/react";
 import { useDrag } from "react-dnd";
-import { DragItemTypes } from "../types/DragItemTypes";
 import CardImage from "./CardImage";
 import { LinkAction, LinkData } from "../contexts/Links/reducer";
 import { LinksContext } from "../contexts/Links";
+import { openLinkInThisTab } from "../lib/chrome/Tab";
 
-function openLinkInThisTab(url: string): void {
-  chrome.tabs.query({ currentWindow: true, active: true }, (tabs) => {
-    chrome.tabs.update(tabs[0].id, { url });
-  });
-  window.close();
+export const DragItemTypes = {
+  CARD: "card",
+};
+export type CardDragItem = {
+  id: number;
 }
 
 type CardProps = {
   linkData: LinkData;
   isInEditMode: boolean;
 };
-
 export default function Card({
   linkData,
   isInEditMode,
