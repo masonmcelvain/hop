@@ -17,8 +17,8 @@ If there's an issue you're interested in tackling, please fork this repository, 
 * Load the extension into your browser.
   * Navigate to `chrome://extensions` in your browser. You can also access this page by clicking on the Chrome menu on the top right side of the Omnibox, hovering over More Tools and selecting Extensions.
   * Check the box next to Developer Mode.
-  * Click Load Unpacked Extension and select the `build` directory in the top level directory of this repository.
-* Start a development server with `npm run dev`.
+  * Click Load Unpacked Extension and select the `dist` directory in the top level directory of this repository.
+* Start a development server with `npm start`.
 * Open the extension in your browser to see the app.
   * Note: When you make code changes, you most close the extension popup (i.e. click anything but the extension window) and re-open it to see those changes reflected.
 * Have fun 🥳
