@@ -10,6 +10,14 @@ import { setStoredLinks } from "../lib/chrome/SyncStorage";
 
 type CellProps = {
   index: number;
+  manageIsOverEmpty: [
+    boolean,
+    {
+      readonly on: () => void;
+      readonly off: () => void;
+      readonly toggle: () => void;
+    }
+  ];
   isInEditMode: boolean;
   openUpdateLinkModal: openUpdateLinkModalForCellType;
   children: React.ReactChild;
@@ -17,11 +25,13 @@ type CellProps = {
 
 function Cell({
   index,
+  manageIsOverEmpty,
   isInEditMode,
   openUpdateLinkModal,
   children,
 }: CellProps): JSX.Element {
   const { state, dispatch } = React.useContext(LinksContext);
+  const [isOverEmpty, setIsOverEmpty] = manageIsOverEmpty;
   const sideLength = 90;
 
   const [{ isOver, dragItem }, drop] = useDrop(
@@ -44,6 +54,16 @@ function Cell({
     [index, state, dispatch]
   );
 
+  React.useEffect(() => {
+    if (isOver && !children) {
+      setIsOverEmpty.on();
+    } else if (isOver && children) {
+      setIsOverEmpty.off();
+    } else if (!dragItem) {
+      setIsOverEmpty.off();
+    }
+  }, [children, isOver, dragItem, setIsOverEmpty]);
+
   function deleteChildCard(event): void {
     event.preventDefault();
     dispatch({
@@ -53,9 +73,7 @@ function Cell({
   }
 
   const isLastCellWithCard = index === state.links.length - 1;
-  const shouldDisplayChildren =
-    !isOver &&
-    !(dragItem && isLastCellWithCard && dragItem.id === state.links[index].id);
+  const shouldHideChildren = isOver || (isLastCellWithCard && isOverEmpty);
 
   return (
     <Center ref={drop} pos="relative" w={sideLength} h={sideLength}>
@@ -78,7 +96,7 @@ function Cell({
           />
         </VStack>
       ) : null}
-      {shouldDisplayChildren ? children : null}
+      {shouldHideChildren ? null : children}
     </Center>
   );
 }

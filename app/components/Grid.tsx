@@ -1,5 +1,5 @@
 import * as React from "react";
-import { SimpleGrid } from "@chakra-ui/react";
+import { SimpleGrid, useBoolean } from "@chakra-ui/react";
 import Card from "./Card";
 import Cell from "./Cell";
 import { openUpdateLinkModalForCellType } from "../Page";
@@ -32,6 +32,7 @@ export default function Grid({
   openUpdateLinkModal,
 }: GridProps): JSX.Element {
   const { state } = React.useContext(LinksContext);
+  const [isOverEmpty, setIsOverEmpty] = useBoolean();
   const numCells = getNumCells(state.links ? state.links.length : 0);
 
   function renderCell(i: number) {
@@ -44,6 +45,7 @@ export default function Grid({
       <Cell
         key={i}
         index={i}
+        manageIsOverEmpty={[isOverEmpty, setIsOverEmpty]}
         isInEditMode={isInEditMode}
         openUpdateLinkModal={openUpdateLinkModal}
       >
