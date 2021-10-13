@@ -1,20 +1,15 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
-const baseManifest = require("./chrome/manifest.json");
 const WebpackExtensionManifestPlugin = require("webpack-extension-manifest-plugin");
-const config = {
-  mode: "development",
-  devtool: "cheap-module-source-map",
+const baseManifest = require("./src/chrome/manifest.json");
+
+module.exports = {
   entry: {
     app: path.join(__dirname, "./static/index.js"),
   },
-  output: {
-    path: path.resolve(__dirname, "./build"),
-    filename: "[name].js",
-  },
   resolve: {
-    extensions: ["*", ".js", ".jsx", ".ts", ".tsx"],
+    extensions: [".js", ".jsx", ".ts", ".tsx"],
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -32,7 +27,7 @@ const config = {
     new CopyPlugin({
       patterns: [
         {
-          from: "chrome/icons",
+          from: "src/chrome/icons",
           to: "icons",
         },
       ],
@@ -63,5 +58,9 @@ const config = {
       },
     ],
   },
+  output: {
+    filename: "[name].bundle.js",
+    path: path.resolve(__dirname, "dist"),
+    clean: true,
+  },
 };
-module.exports = config;
