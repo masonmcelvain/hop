@@ -30,6 +30,11 @@ export default function Page(): JSX.Element {
     onUpdateLinkModalOpen();
   }
 
+  function closeAddLinkModal(): void {
+    setIsInEditMode.off();
+    onAddLinkModalClose();
+  }
+
   function closeUpdateLinkModal(): void {
     setIsInEditMode.off();
     onUpdateLinkModalClose();
@@ -49,7 +54,7 @@ export default function Page(): JSX.Element {
         toggleEditMode={setIsInEditMode.toggle}
         onAddLinkModalOpen={onAddLinkModalOpen}
       />
-      <AddLinkModal isOpen={isAddLinkModalOpen} onClose={onAddLinkModalClose} />
+      <AddLinkModal isOpen={isAddLinkModalOpen} onClose={closeAddLinkModal} />
       <EditLinkModal
         link={linkToEdit}
         isOpen={isUpdateLinkModalOpen}
