@@ -40,7 +40,6 @@ export default function Page(): JSX.Element {
       <DndProvider backend={HTML5Backend}>
         <Center w="full">
           <Grid
-            links={state.links}
             isInEditMode={isInEditMode}
             openUpdateLinkModal={openUpdateLinkModalForCell}
           />

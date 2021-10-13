@@ -9,7 +9,6 @@ import { Reducer, LinkAction, StateType, LinkActionTypes } from "./reducer";
 const InitialState: StateType = {
   links: [],
   nextLinkId: 0,
-  hasDragEvent: false,
 };
 
 export const LinksContext = React.createContext<{
@@ -33,7 +32,6 @@ export const LinksProvider = ({
       const payload: StateType = {
         links: state.links,
         nextLinkId: state.nextLinkId,
-        hasDragEvent: false,
       };
 
       // Initialize links

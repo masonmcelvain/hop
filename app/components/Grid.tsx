@@ -2,8 +2,8 @@ import * as React from "react";
 import { SimpleGrid } from "@chakra-ui/react";
 import Card from "./Card";
 import Cell from "./Cell";
-import { LinkData } from "../contexts/Links/reducer";
 import { openUpdateLinkModalForCellType } from "../Page";
+import { LinksContext } from "../contexts/Links";
 
 const numColumns = 3;
 
@@ -23,22 +23,21 @@ function getNumCells(numCards: number) {
 }
 
 type GridProps = {
-  links: LinkData[];
   isInEditMode: boolean;
   openUpdateLinkModal: openUpdateLinkModalForCellType;
 };
 
 export default function Grid({
-  links,
   isInEditMode,
   openUpdateLinkModal,
 }: GridProps): JSX.Element {
-  const numCells = getNumCells(links ? links.length : 0);
+  const { state } = React.useContext(LinksContext);
+  const numCells = getNumCells(state.links ? state.links.length : 0);
 
   function renderCell(i: number) {
-    const cellHasACard = i < links.length;
+    const cellHasACard = i < state.links.length;
     const card = cellHasACard ? (
-      <Card linkData={links[i]} isInEditMode={isInEditMode} />
+      <Card linkData={state.links[i]} isInEditMode={isInEditMode} />
     ) : null;
 
     return (

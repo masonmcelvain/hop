@@ -10,8 +10,6 @@ export const Reducer = (
   switch (action.type) {
     case LinkAction.SET_STATE_FROM_STORAGE:
       return setStateFromStorage(action.payload);
-    case LinkAction.SET_HAS_DRAG_EVENT:
-      return setHasDragEvent(state, action.payload);
     case LinkAction.ADD_LINK:
       return addLink(state, action.payload);
     case LinkAction.UPDATE_LINK:
@@ -27,16 +25,6 @@ export const Reducer = (
 
 function setStateFromStorage(payload: StateType): StateType {
   return payload;
-}
-
-function setHasDragEvent(
-  prevState: StateType,
-  hasDragEvent: boolean
-): StateType {
-  return {
-    ...prevState,
-    hasDragEvent,
-  };
 }
 
 function addLink(prevState: StateType, payload: AddLinkPayload): StateType {
@@ -91,14 +79,14 @@ function reorderLinks(
 
   const oldLinkIndex = newLinks.findIndex((link) => link.id === sourceId);
 
-  if (oldLinkIndex === newLinkIndex) {
-    // If there is no positional change, do nothing.
-    return prevState;
-  }
-
   // If dropped in an empty cell, put the card at the end of the array
   if (newLinkIndex >= newLinks.length) {
     newLinkIndex = newLinks.length - 1;
+  }
+
+  if (oldLinkIndex === newLinkIndex) {
+    // If there is no positional change, do nothing.
+    return prevState;
   }
 
   const [link] = newLinks.splice(oldLinkIndex, 1);
@@ -161,11 +149,6 @@ type SetStateFromStorageAction = {
   payload: StateType;
 };
 
-type SetHasDragEventAction = {
-  type: typeof LinkAction.SET_HAS_DRAG_EVENT;
-  payload: boolean;
-};
-
 type AddLinkPayload = {
   name: string;
   url: string;
@@ -212,7 +195,6 @@ type DeleteLinkAction = {
 
 export type LinkActionTypes =
   | SetStateFromStorageAction
-  | SetHasDragEventAction
   | AddLinkAction
   | UpdateLinkAction
   | ReorderLinksAction
@@ -222,12 +204,10 @@ export type LinkActionTypes =
 export type StateType = {
   links: LinkData[];
   nextLinkId: number;
-  hasDragEvent: boolean;
 };
 
 export enum LinkAction {
   SET_STATE_FROM_STORAGE,
-  SET_HAS_DRAG_EVENT,
   ADD_LINK,
   UPDATE_LINK,
   REORDER_LINKS,

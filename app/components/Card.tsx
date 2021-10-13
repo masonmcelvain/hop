@@ -2,7 +2,7 @@ import * as React from "react";
 import { Button, Text, VStack, useBoolean } from "@chakra-ui/react";
 import { useDrag } from "react-dnd";
 import CardImage from "./CardImage";
-import { LinkAction, LinkData } from "../contexts/Links/reducer";
+import { LinkData } from "../contexts/Links/reducer";
 import { LinksContext } from "../contexts/Links";
 import { openLinkInThisTab } from "../lib/chrome/Tab";
 
@@ -22,29 +22,21 @@ export default function Card({
   isInEditMode,
 }: CardProps): JSX.Element {
   const { id, name, url } = linkData;
-  const { state, dispatch } = React.useContext(LinksContext);
+  const { dispatch } = React.useContext(LinksContext);
   const [isMouseOver, setIsMouseOver] = useBoolean();
-  const [, drag] = useDrag(
+  const [{ isDragEventInProgress }, drag] = useDrag(
     () => ({
       type: DragItemTypes.CARD,
-      item: () => {
-        dispatch({
-          type: LinkAction.SET_HAS_DRAG_EVENT,
-          payload: true,
-        });
-        return { id };
-      },
-      end: () =>
-        dispatch({
-          type: LinkAction.SET_HAS_DRAG_EVENT,
-          payload: false,
-        }),
+      item: { id },
       isDragging: (monitor) => id === monitor.getItem().id,
+      collect: (monitor) => ({
+        isDragEventInProgress: !!monitor.getItem(),
+      }),
     }),
-    [linkData]
+    [linkData, dispatch]
   );
 
-  const conditionalButtonProps = state.hasDragEvent
+  const conditionalButtonProps = isDragEventInProgress
     ? {
         _hover: {},
         _active: {},

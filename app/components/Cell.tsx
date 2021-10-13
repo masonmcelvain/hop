@@ -24,7 +24,7 @@ function Cell({
   const { state, dispatch } = React.useContext(LinksContext);
   const sideLength = 90;
 
-  const [{ isOver }, drop] = useDrop(
+  const [{ isOver, dragItem }, drop] = useDrop(
     () => ({
       accept: DragItemTypes.CARD,
       hover: (item: CardDragItem) =>
@@ -35,9 +35,10 @@ function Cell({
             newLinkIndex: index,
           },
         }),
-      drop : () => setStoredLinks(state.links),
+      drop: () => setStoredLinks(state.links),
       collect: (monitor) => ({
         isOver: !!monitor.isOver(),
+        dragItem: monitor.getItem(),
       }),
     }),
     [index, state, dispatch]
@@ -51,7 +52,10 @@ function Cell({
     });
   }
 
-  const shouldDisplayChildren = !isOver;
+  const isLastCellWithCard = index === state.links.length - 1;
+  const shouldDisplayChildren =
+    !isOver &&
+    !(dragItem && isLastCellWithCard && dragItem.id === state.links[index].id);
 
   return (
     <Center ref={drop} pos="relative" w={sideLength} h={sideLength}>
