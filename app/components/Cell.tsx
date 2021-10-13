@@ -6,6 +6,7 @@ import { Edit2, X } from "react-feather";
 import { LinksContext } from "../contexts/Links";
 import { LinkAction } from "../contexts/Links/reducer";
 import { openUpdateLinkModalForCellType } from "../Page";
+import { setStoredLinks } from "../lib/chrome/SyncStorage";
 
 type CellProps = {
   index: number;
@@ -20,7 +21,7 @@ function Cell({
   openUpdateLinkModal,
   children,
 }: CellProps): JSX.Element {
-  const { dispatch } = React.useContext(LinksContext);
+  const { state, dispatch } = React.useContext(LinksContext);
   const sideLength = 90;
 
   const [{ isOver }, drop] = useDrop(
@@ -34,12 +35,12 @@ function Cell({
             newLinkIndex: index,
           },
         }),
-      drop : (item: CardDragItem) => {},
+      drop : () => setStoredLinks(state.links),
       collect: (monitor) => ({
         isOver: !!monitor.isOver(),
       }),
     }),
-    [index, dispatch]
+    [index, state, dispatch]
   );
 
   function deleteChildCard(event): void {

@@ -78,6 +78,9 @@ function updateLink(
   return { ...prevState, links: newLinks };
 }
 
+/**
+ * The caller must save the links to local storage.
+ */
 function reorderLinks(
   prevState: StateType,
   payload: ReorderLinksPayload
@@ -101,7 +104,6 @@ function reorderLinks(
   const [link] = newLinks.splice(oldLinkIndex, 1);
   newLinks.splice(newLinkIndex, 0, link);
 
-  setStoredLinks(newLinks);
   return {
     ...prevState,
     links: newLinks,
