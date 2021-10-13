@@ -5,7 +5,7 @@ export function setStoredColorMode(colorMode: ColorMode): void {
   setStorageWithKey(StorageKey.COLOR_MODE, colorMode);
 }
 
-export function setStoredLinks(links: LinkData[][]): void {
+export function setStoredLinks(links: LinkData[]): void {
   setStorageWithKey(StorageKey.STORED_LINKS, links);
 }
 

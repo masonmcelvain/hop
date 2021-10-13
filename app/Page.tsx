@@ -1,11 +1,5 @@
 import * as React from "react";
-import {
-  Center,
-  Divider,
-  VStack,
-  useBoolean,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Center, VStack, useBoolean, useDisclosure } from "@chakra-ui/react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Grid from "./components/Grid";
@@ -31,11 +25,8 @@ export default function Page(): JSX.Element {
     onClose: onUpdateLinkModalClose,
   } = useDisclosure();
 
-  function openUpdateLinkModalForCell(
-    cellIndex: number,
-    sectionIndex: number
-  ): void {
-    setLinkToEdit(state.links[sectionIndex][cellIndex]);
+  function openUpdateLinkModalForCell(cellIndex: number): void {
+    setLinkToEdit(state.links[cellIndex]);
     onUpdateLinkModalOpen();
   }
 
@@ -47,17 +38,13 @@ export default function Page(): JSX.Element {
   return (
     <VStack w="full" p={2}>
       <DndProvider backend={HTML5Backend}>
-        {state.links.map((sectionLinks, i) => (
-          <Center key={0} w="full">
-            {i > 0 && <Divider />}
-            <Grid
-              gridIndex={i}
-              links={sectionLinks}
-              isInEditMode={isInEditMode}
-              openUpdateLinkModal={openUpdateLinkModalForCell}
-            />
-          </Center>
-        ))}
+        <Center w="full">
+          <Grid
+            links={state.links}
+            isInEditMode={isInEditMode}
+            openUpdateLinkModal={openUpdateLinkModalForCell}
+          />
+        </Center>
       </DndProvider>
       <ActionBar
         toggleEditMode={setIsInEditMode.toggle}
@@ -73,7 +60,4 @@ export default function Page(): JSX.Element {
   );
 }
 
-export type openUpdateLinkModalForCellType = (
-  cellIndex: number,
-  sectionIndex: number
-) => void;
+export type openUpdateLinkModalForCellType = (cellIndex: number) => void;

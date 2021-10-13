@@ -11,7 +11,7 @@ export const DragItemTypes = {
 };
 export type CardDragItem = {
   id: number;
-}
+};
 
 type CardProps = {
   linkData: LinkData;

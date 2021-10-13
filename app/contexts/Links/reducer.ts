@@ -40,14 +40,7 @@ function setHasDragEvent(
 }
 
 function addLink(prevState: StateType, payload: AddLinkPayload): StateType {
-  const { name, url, sectionIndex, imageUrl } = payload;
-
-  const newLinks: LinkData[][] = JSON.parse(JSON.stringify(prevState.links));
-  if (sectionIndex > newLinks.length) {
-    throw new Error(
-      `Trying to insert a link into section that does not exist: ${sectionIndex}`
-    );
-  }
+  const { name, url, imageUrl } = payload;
 
   const currentLinkId = prevState.nextLinkId;
   const nextLinkId = currentLinkId + 1;
@@ -58,7 +51,7 @@ function addLink(prevState: StateType, payload: AddLinkPayload): StateType {
     url,
     imageUrl,
   };
-  newLinks[sectionIndex].push(newLink);
+  const newLinks = [...prevState.links, newLink];
 
   setStoredLinks(newLinks);
   setNextStoredLinkId(nextLinkId);
@@ -85,60 +78,28 @@ function updateLink(
   return { ...prevState, links: newLinks };
 }
 
-/**
- * Modify the order of the cards by relocating a card. Relocation can be
- * between grids.
- *
- * @param sourceId Id of the card being moved.
- * @param newLinkIndex Index to move the source link to.
- * @param newGridIndex The index of the grid the card is being moved to.
- */
 function reorderLinks(
   prevState: StateType,
   payload: ReorderLinksPayload
 ): StateType {
-  const { sourceId, newGridIndex } = payload;
+  const { sourceId } = payload;
   let { newLinkIndex } = payload;
+  const newLinks = [...prevState.links];
 
-  const removeFromGrid = prevState.links.find((grid) =>
-    grid.some((link) => link.id === sourceId)
-  );
-  if (!removeFromGrid) {
-    // If source is unknown, do nothing.
-    console.log(`Unkown sourceId in reorderLinks(): ${sourceId}`);
-    return prevState;
-  }
-  const oldGridIndex = prevState.links.findIndex(
-    (grid) => grid === removeFromGrid
-  );
-  const oldLinkIndex = removeFromGrid.findIndex((link) => link.id === sourceId);
+  const oldLinkIndex = newLinks.findIndex((link) => link.id === sourceId);
 
-  if (oldLinkIndex === newLinkIndex && oldGridIndex === newGridIndex) {
+  if (oldLinkIndex === newLinkIndex) {
     // If there is no positional change, do nothing.
     return prevState;
   }
 
   // If dropped in an empty cell, put the card at the end of the array
-  if (newLinkIndex >= removeFromGrid.length) {
-    newLinkIndex = removeFromGrid.length - 1;
+  if (newLinkIndex >= newLinks.length) {
+    newLinkIndex = newLinks.length - 1;
   }
 
-  // Delete the card from the old cards
-  const [link] = removeFromGrid.splice(oldLinkIndex, 1);
-
-  const insertIntoGrid =
-    oldGridIndex === newGridIndex
-      ? removeFromGrid
-      : prevState.links[newGridIndex];
-
-  // Insert the card into the new cards
-  insertIntoGrid.splice(newLinkIndex, 0, link);
-
-  const newLinks = [...prevState.links];
-  if (oldGridIndex !== newGridIndex) {
-    newLinks.splice(oldGridIndex, 1, removeFromGrid);
-  }
-  newLinks.splice(newGridIndex, 1, insertIntoGrid);
+  const [link] = newLinks.splice(oldLinkIndex, 1);
+  newLinks.splice(newLinkIndex, 0, link);
 
   setStoredLinks(newLinks);
   return {
@@ -165,13 +126,9 @@ function addImageUrl(
   };
 }
 
-function deleteLink(
-  prevState: StateType,
-  payload: DeleteLinkPayload
-): StateType {
-  const { cellIndex, gridIndex } = payload;
-  const newLinks: LinkData[][] = JSON.parse(JSON.stringify(prevState.links));
-  newLinks[gridIndex].splice(cellIndex, 1);
+function deleteLink(prevState: StateType, linkIndex: number): StateType {
+  const newLinks = [...prevState.links];
+  newLinks.splice(linkIndex, 1);
 
   setStoredLinks(newLinks);
   return {
@@ -181,22 +138,15 @@ function deleteLink(
 }
 
 function modifyLink(
-  prevLinks: LinkData[][],
+  prevLinks: LinkData[],
   linkId: number,
   callback: (link: LinkData) => LinkData
-): LinkData[][] {
+): LinkData[] {
   const newLinks = [...prevLinks];
-  let returnEarly = false;
 
-  newLinks.forEach((section, i) => {
-    section.forEach((link, j) => {
-      if (link.id === linkId) {
-        newLinks[i][j] = callback(link);
-        returnEarly = true;
-        return;
-      }
-    });
-    if (returnEarly) {
+  newLinks.forEach((link, i) => {
+    if (link.id === linkId) {
+      newLinks[i] = callback(link);
       return;
     }
   });
@@ -217,7 +167,6 @@ type SetHasDragEventAction = {
 type AddLinkPayload = {
   name: string;
   url: string;
-  sectionIndex: number;
   imageUrl: string;
 };
 type AddLinkAction = {
@@ -239,7 +188,6 @@ type UpdateLinkAction = {
 type ReorderLinksPayload = {
   sourceId: number;
   newLinkIndex: number;
-  newGridIndex: number;
 };
 type ReorderLinksAction = {
   type: typeof LinkAction.REORDER_LINKS;
@@ -255,13 +203,9 @@ type AddImageUrlAction = {
   payload: AddImageUrlPayload;
 };
 
-type DeleteLinkPayload = {
-  cellIndex: number;
-  gridIndex: number;
-};
 type DeleteLinkAction = {
   type: typeof LinkAction.DELETE_LINK;
-  payload: DeleteLinkPayload;
+  payload: number;
 };
 
 export type LinkActionTypes =
@@ -274,7 +218,7 @@ export type LinkActionTypes =
   | DeleteLinkAction;
 
 export type StateType = {
-  links: LinkData[][];
+  links: LinkData[];
   nextLinkId: number;
   hasDragEvent: boolean;
 };

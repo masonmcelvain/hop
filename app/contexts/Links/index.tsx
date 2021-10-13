@@ -7,7 +7,7 @@ import {
 import { Reducer, LinkAction, StateType, LinkActionTypes } from "./reducer";
 
 const InitialState: StateType = {
-  links: [[]],
+  links: [],
   nextLinkId: 0,
   hasDragEvent: false,
 };

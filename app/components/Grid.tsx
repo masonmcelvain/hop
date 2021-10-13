@@ -23,14 +23,12 @@ function getNumCells(numCards: number) {
 }
 
 type GridProps = {
-  gridIndex: number;
   links: LinkData[];
   isInEditMode: boolean;
   openUpdateLinkModal: openUpdateLinkModalForCellType;
 };
 
 export default function Grid({
-  gridIndex,
   links,
   isInEditMode,
   openUpdateLinkModal,
@@ -45,9 +43,8 @@ export default function Grid({
 
     return (
       <Cell
-        key={i + gridIndex * numCells}
+        key={i}
         index={i}
-        gridIndex={gridIndex}
         isInEditMode={isInEditMode}
         openUpdateLinkModal={openUpdateLinkModal}
       >

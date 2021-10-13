@@ -9,7 +9,6 @@ import { openUpdateLinkModalForCellType } from "../Page";
 
 type CellProps = {
   index: number;
-  gridIndex: number;
   isInEditMode: boolean;
   openUpdateLinkModal: openUpdateLinkModalForCellType;
   children: React.ReactChild;
@@ -17,7 +16,6 @@ type CellProps = {
 
 function Cell({
   index,
-  gridIndex,
   isInEditMode,
   openUpdateLinkModal,
   children,
@@ -34,24 +32,21 @@ function Cell({
           payload: {
             sourceId: item.id,
             newLinkIndex: index,
-            newGridIndex: gridIndex,
           },
         }),
+      drop : (item: CardDragItem) => {},
       collect: (monitor) => ({
         isOver: !!monitor.isOver(),
       }),
     }),
-    [index, gridIndex, dispatch]
+    [index, dispatch]
   );
 
   function deleteChildCard(event): void {
     event.preventDefault();
     dispatch({
       type: LinkAction.DELETE_LINK,
-      payload: {
-        cellIndex: index,
-        gridIndex,
-      },
+      payload: index,
     });
   }
 
@@ -64,7 +59,7 @@ function Cell({
           <IconButton
             icon={<Edit2 size={16} />}
             aria-label="Edit this card"
-            onClick={() => openUpdateLinkModal(index, gridIndex)}
+            onClick={() => openUpdateLinkModal(index)}
             variant="ghost"
             size="xs"
           />
