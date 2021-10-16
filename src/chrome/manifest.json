@@ -1,7 +1,7 @@
 {
     "name": "Hop",
     "description": "Store links to your favorite sites in a more visually pleasing way than traditional browser bookmarks",
-    "version": "1.1",
+    "version": "1.1.1",
     "manifest_version": 3,
     "action": {
         "default_title": "Hop",
