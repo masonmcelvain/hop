@@ -18,7 +18,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { getCurrentTabUrl } from "../../lib/chrome/Tab";
+import { getCurrentTab } from "../../lib/chrome/Tab";
 import { LinksContext } from "../../contexts/Links";
 import { LinkAction } from "../../contexts/Links/reducer";
 
@@ -39,6 +39,9 @@ const initialFormValues = {
   imageUrlError: "",
 };
 
+/** The max length of a link's title. */
+const TITLE_MAX_LENGTH = 32;
+
 type AddLinkModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -56,8 +59,13 @@ export default function AddLinkModal({
   }, [isOpen]);
 
   async function setInitialFormValues(): Promise<void> {
-    const url = await getCurrentTabUrl();
-    setFormValues({...initialFormValues, linkUrl: url });
+    const tab = await getCurrentTab();
+    setFormValues({
+      ...initialFormValues,
+      linkName: tab.title ? tab.title.slice(0, TITLE_MAX_LENGTH) : "",
+      linkUrl: tab.url ? tab.url : "",
+      imageUrl: tab.favIconUrl ? tab.favIconUrl : "",
+    });
   }
 
   function handleNameChange(event) {
@@ -130,12 +138,12 @@ export default function AddLinkModal({
                   value={formValues.linkName}
                   onChange={handleNameChange}
                   placeholder="Name Goes Here"
-                  maxLength={32}
+                  maxLength={TITLE_MAX_LENGTH}
                   isInvalid={!!formValues.linkNameError}
                 />
                 <InputRightElement>
                   <Text fontSize={12}>
-                    {formValues.linkName.length + "/32"}
+                    {formValues.linkName.length + "/" + TITLE_MAX_LENGTH}
                   </Text>
                 </InputRightElement>
               </InputGroup>
