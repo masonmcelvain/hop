@@ -39,8 +39,8 @@ const initialFormValues = {
   imageUrlError: "",
 };
 
-/** The max length of a link's title. */
-const TITLE_MAX_LENGTH = 32;
+/** The max length of a link's name. */
+const LINK_NAME_MAX_LENGTH = 32;
 
 type AddLinkModalProps = {
   isOpen: boolean;
@@ -62,7 +62,7 @@ export default function AddLinkModal({
     const tab = await getCurrentTab();
     setFormValues({
       ...initialFormValues,
-      linkName: tab.title ? tab.title.slice(0, TITLE_MAX_LENGTH) : "",
+      linkName: tab.title ? tab.title.slice(0, LINK_NAME_MAX_LENGTH) : "",
       linkUrl: tab.url ? tab.url : "",
       imageUrl: tab.favIconUrl ? tab.favIconUrl : "",
     });
@@ -138,12 +138,12 @@ export default function AddLinkModal({
                   value={formValues.linkName}
                   onChange={handleNameChange}
                   placeholder="Name Goes Here"
-                  maxLength={TITLE_MAX_LENGTH}
+                  maxLength={LINK_NAME_MAX_LENGTH}
                   isInvalid={!!formValues.linkNameError}
                 />
                 <InputRightElement>
                   <Text fontSize={12}>
-                    {formValues.linkName.length + "/" + TITLE_MAX_LENGTH}
+                    {formValues.linkName.length + "/" + LINK_NAME_MAX_LENGTH}
                   </Text>
                 </InputRightElement>
               </InputGroup>
