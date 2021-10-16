@@ -1,6 +1,6 @@
 {
     "name": "Hop",
-    "description": "Store links to your favorite sites in a more visually pleasing way than traditional browser bookmarks",
+    "description": "An icon-first bookmark manager",
     "version": "1.1.1",
     "manifest_version": 3,
     "action": {

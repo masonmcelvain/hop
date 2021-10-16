@@ -1,7 +1,7 @@
 {
   "name": "hop",
   "version": "1.1.1",
-  "description": "Visual organizer for your favorite web apps.",
+  "description": "An icon-first bookmark manager",
   "main": "index.js",
   "scripts": {
     "start": "webpack watch --config webpack.dev.js",
