@@ -2,12 +2,12 @@ import * as React from "react";
 import { Center, VStack, useBoolean, useDisclosure } from "@chakra-ui/react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import Grid from "./components/Grid";
-import ActionBar from "./components/ActionBar";
+import Grid from "./Grid";
+import ActionBar from "./ActionBar";
 import AddLinkModal from "./modals/AddLinkModal";
 import EditLinkModal from "./modals/EditLinkModal";
-import { LinksContext } from "./contexts/Links";
-import { LinkData } from "./contexts/Links/reducer";
+import { LinksContext } from "../contexts/Links";
+import { LinkData } from "../contexts/Links/reducer";
 
 export default function Page(): JSX.Element {
   const { state } = React.useContext(LinksContext);

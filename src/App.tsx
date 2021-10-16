@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useColorMode } from "@chakra-ui/react";
-import Page from "./Page";
+import Page from "./components/Page";
 import { setStoredColorMode, StorageKey } from "./lib/chrome/SyncStorage";
 import { LinksProvider } from "./contexts/Links";
 

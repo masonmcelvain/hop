@@ -18,9 +18,19 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { getCurrentTabUrl } from "../lib/chrome/Tab";
-import { LinksContext } from "../contexts/Links";
-import { LinkAction } from "../contexts/Links/reducer";
+import { LinksContext } from "../../contexts/Links";
+import { LinkAction, LinkData } from "../../contexts/Links/reducer";
+
+function getFormValuesForLink(link: null | LinkData): FormFields {
+  return {
+    linkName: link?.name || "",
+    linkNameError: "",
+    linkUrl: link?.url || "",
+    linkUrlError: "",
+    imageUrl: link?.imageUrl || "",
+    imageUrlError: "",
+  };
+}
 
 type FormFields = {
   linkName: string;
@@ -29,38 +39,26 @@ type FormFields = {
   linkUrlError: string;
   imageUrl: string;
   imageUrlError: string;
-  sectionIndex: number;
-};
-const initialFormValues = {
-  linkName: "",
-  linkNameError: "",
-  linkUrl: "",
-  linkUrlError: "",
-  imageUrl: "",
-  imageUrlError: "",
-  sectionIndex: 0,
 };
 
-type AddLinkModalProps = {
+type EditLinkModalProps = {
+  link: LinkData;
   isOpen: boolean;
   onClose: () => void;
 };
-export default function AddLinkModal({
+export default function EditLinkModal({
+  link,
   isOpen,
   onClose,
-}: AddLinkModalProps): JSX.Element {
+}: EditLinkModalProps): JSX.Element {
   const { dispatch } = React.useContext(LinksContext);
-  const [formValues, setFormValues] =
-    React.useState<FormFields>(initialFormValues);
+  const [formValues, setFormValues] = React.useState<FormFields>(
+    getFormValuesForLink(link)
+  );
 
   React.useEffect(() => {
-    setInitialFormValues();
-  }, [isOpen]);
-
-  async function setInitialFormValues(): Promise<void> {
-    const url = await getCurrentTabUrl();
-    setFormValues({...initialFormValues, linkUrl: url });
-  }
+    setFormValues(getFormValuesForLink(link));
+  }, [link]);
 
   function handleNameChange(event) {
     event.preventDefault();
@@ -103,11 +101,11 @@ export default function AddLinkModal({
         throw new Error(`Invalid URL Domain: ${url.hostname}`);
       }
       dispatch({
-        type: LinkAction.ADD_LINK,
+        type: LinkAction.UPDATE_LINK,
         payload: {
+          id: link.id,
           name: formValues.linkName,
           url: url.toString(),
-          sectionIndex: formValues.sectionIndex,
           imageUrl: formValues.imageUrl,
         },
       });
@@ -121,7 +119,7 @@ export default function AddLinkModal({
     <Modal isOpen={isOpen} onClose={onClose} size="full">
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Create New Link</ModalHeader>
+        <ModalHeader>Update Link</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <VStack w="full" h="full" spacing={2}>
@@ -182,7 +180,7 @@ export default function AddLinkModal({
               w="full"
               m={0}
             >
-              Create
+              Update
             </Button>
           </ModalFooter>
         </ModalBody>

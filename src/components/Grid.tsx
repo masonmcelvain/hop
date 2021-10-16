@@ -2,7 +2,7 @@ import * as React from "react";
 import { SimpleGrid, useBoolean } from "@chakra-ui/react";
 import Card from "./Card";
 import Cell from "./Cell";
-import { openUpdateLinkModalForCellType } from "../Page";
+import { openUpdateLinkModalForCellType } from "../components/Page";
 import { LinksContext } from "../contexts/Links";
 
 const numColumns = 3;

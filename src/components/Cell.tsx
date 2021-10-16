@@ -5,7 +5,7 @@ import { useDrop } from "react-dnd";
 import { Edit2, X } from "react-feather";
 import { LinksContext } from "../contexts/Links";
 import { LinkAction } from "../contexts/Links/reducer";
-import { openUpdateLinkModalForCellType } from "../Page";
+import { openUpdateLinkModalForCellType } from "../components/Page";
 import { setStoredLinks } from "../lib/chrome/SyncStorage";
 
 type CellProps = {
