@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as psl from "psl";
 import {
   Button,
   Input,
@@ -95,24 +94,16 @@ export default function EditLinkModal({
 
   function handleSubmit(event) {
     event.preventDefault();
-    try {
-      const url = new URL(formValues.linkUrl);
-      if (!psl.isValid(url.hostname)) {
-        throw new Error(`Invalid URL Domain: ${url.hostname}`);
-      }
-      dispatch({
-        type: LinkAction.UPDATE_LINK,
-        payload: {
-          id: link.id,
-          name: formValues.linkName,
-          url: url.toString(),
-          imageUrl: formValues.imageUrl,
-        },
-      });
-      onClose();
-    } catch (e) {
-      console.error(e);
-    }
+    dispatch({
+      type: LinkAction.UPDATE_LINK,
+      payload: {
+        id: link.id,
+        name: formValues.linkName,
+        url: formValues.linkUrl,
+        imageUrl: formValues.imageUrl,
+      },
+    });
+    onClose();
   }
 
   return (
