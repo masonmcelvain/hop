@@ -118,73 +118,75 @@ export default function EditLinkModal({
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="full">
       <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Update Link</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <VStack w="full" h="full" spacing={2}>
-            <FormControl isRequired>
-              <FormLabel>Name</FormLabel>
-              <InputGroup>
+      <form>
+        <ModalContent>
+          <ModalHeader>Update Link</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <VStack w="full" h="full" spacing={2}>
+              <FormControl isRequired>
+                <FormLabel>Name</FormLabel>
+                <InputGroup>
+                  <Input
+                    autoFocus
+                    value={formValues.linkName}
+                    onChange={handleNameChange}
+                    placeholder="Name Goes Here"
+                    maxLength={32}
+                    isInvalid={!!formValues.linkNameError}
+                  />
+                  <InputRightElement>
+                    <Text fontSize={12}>
+                      {formValues.linkName.length + "/32"}
+                    </Text>
+                  </InputRightElement>
+                </InputGroup>
+                <FormHelperText>{formValues.linkNameError}</FormHelperText>
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Url</FormLabel>
                 <Input
-                  autoFocus
-                  value={formValues.linkName}
-                  onChange={handleNameChange}
-                  placeholder="Name Goes Here"
-                  maxLength={32}
-                  isInvalid={!!formValues.linkNameError}
+                  value={formValues.linkUrl}
+                  onChange={handleLinkUrlChange}
+                  placeholder="Url Goes Here"
+                  maxLength={2048}
+                  isInvalid={!!formValues.linkUrlError}
                 />
-                <InputRightElement>
-                  <Text fontSize={12}>
-                    {formValues.linkName.length + "/32"}
-                  </Text>
-                </InputRightElement>
-              </InputGroup>
-              <FormHelperText>{formValues.linkNameError}</FormHelperText>
-            </FormControl>
-            <FormControl isRequired>
-              <FormLabel>Url</FormLabel>
-              <Input
-                value={formValues.linkUrl}
-                onChange={handleLinkUrlChange}
-                placeholder="Url Goes Here"
-                maxLength={2048}
-                isInvalid={!!formValues.linkUrlError}
-              />
-              <FormHelperText>{formValues.linkUrlError}</FormHelperText>
-            </FormControl>
-            <FormControl>
-              <FormLabel>Image Url</FormLabel>
-              <Input
-                value={formValues.imageUrl}
-                onChange={handleImageUrlChange}
-                placeholder="Image Url"
-                isInvalid={!!formValues.imageUrlError}
-                maxLength={2048}
-              />
-              <FormHelperText>Optional image url for the link</FormHelperText>
-              <FormHelperText>{formValues.imageUrlError}</FormHelperText>
-            </FormControl>
-          </VStack>
-          <ModalFooter>
-            <Button
-              type="submit"
-              disabled={
-                !formValues.linkName ||
-                !formValues.linkUrl ||
-                !!formValues.linkNameError ||
-                !!formValues.linkUrlError ||
-                !!formValues.imageUrlError
-              }
-              onClick={handleSubmit}
-              w="full"
-              m={0}
-            >
-              Update
-            </Button>
-          </ModalFooter>
-        </ModalBody>
-      </ModalContent>
+                <FormHelperText>{formValues.linkUrlError}</FormHelperText>
+              </FormControl>
+              <FormControl>
+                <FormLabel>Image Url</FormLabel>
+                <Input
+                  value={formValues.imageUrl}
+                  onChange={handleImageUrlChange}
+                  placeholder="Image Url"
+                  isInvalid={!!formValues.imageUrlError}
+                  maxLength={2048}
+                />
+                <FormHelperText>Optional image url for the link</FormHelperText>
+                <FormHelperText>{formValues.imageUrlError}</FormHelperText>
+              </FormControl>
+            </VStack>
+            <ModalFooter>
+              <Button
+                type="submit"
+                disabled={
+                  !formValues.linkName ||
+                  !formValues.linkUrl ||
+                  !!formValues.linkNameError ||
+                  !!formValues.linkUrlError ||
+                  !!formValues.imageUrlError
+                }
+                onClick={handleSubmit}
+                w="full"
+                m={0}
+              >
+                Update
+              </Button>
+            </ModalFooter>
+          </ModalBody>
+        </ModalContent>
+      </form>
     </Modal>
   );
 }
