@@ -1,14 +1,16 @@
-# Hop
+<img align="right" width="256px" height="256px" alt="Hop logo" src="https://user-images.githubusercontent.com/52104630/138492652-531cc551-f07c-4e63-9146-3c9352d34847.png" />
+
+# Hop 
 
 Hop is a Chrome extension that stores links to your favorite sites in a more visually pleasing way than traditional browser bookmarks. Hop will try to find an icon for each link automatically, but you can use your own image if you prefer.
 
 It's available for use on the [Chrome Web Store](https://chrome.google.com/webstore/detail/hop/djdlkcbfbdebfaoakhnoienanaakgccd).
 
-## Opening Issues
+## Opening Issues 🥕
 If you'd like to see a new feature or you've spotted a bug, please check to see if there are any [closed issues](https://github.com/masonmcelvain/hop/issues?q=is%3Aissue+is%3Aclosed) that might address your concern before opening a new issue on this repository.
 
-## Contributing
-If there's an issue you're interested in tackling, please fork this repository, make your changes in a series of well documented commits, and open a pull request. I really appreciate your willingness to contribute to this project 🙂
+## Contributing 🐰
+If there's an issue you'd like to tackle, please fork this repository, make your changes in a series of well documented commits, and open a pull request. I appreciate your interest in contributing to this project.
 
 ### Develop Locally
 * Clone the repository and navigate to it's root directory with `git clone https://github.com/masonmcelvain/hop.git && cd hop`
@@ -21,4 +23,4 @@ If there's an issue you're interested in tackling, please fork this repository, 
   * Click Load Unpacked Extension and select the `dist` directory in the top level directory of this repository.
 * Open the extension in your browser to see the app.
   * Note: When you make code changes, you most close the extension popup (i.e. click anything but the extension window) and re-open it to see those changes reflected.
-* Have fun 🥳
+* Have fun!
