@@ -10,6 +10,7 @@ import { setStoredLinks } from "../lib/chrome/SyncStorage";
 
 type CellProps = {
   index: number;
+  zIndex: number;
   manageIsOverEmpty: [
     boolean,
     {
@@ -25,6 +26,7 @@ type CellProps = {
 
 function Cell({
   index,
+  zIndex,
   manageIsOverEmpty,
   isInEditMode,
   openUpdateLinkModal,
@@ -76,7 +78,13 @@ function Cell({
   const shouldHideChildren = isOver || (isLastCellWithCard && isOverEmpty);
 
   return (
-    <Center ref={drop} pos="relative" w={sideLength} h={sideLength}>
+    <Center
+      ref={drop}
+      pos="relative"
+      w={sideLength}
+      h={sideLength}
+      zIndex={zIndex}
+    >
       {children && isInEditMode ? (
         <VStack pos="absolute" top={0} left={0} zIndex="docked" spacing="px">
           <IconButton

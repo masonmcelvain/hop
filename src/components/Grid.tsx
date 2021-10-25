@@ -45,6 +45,7 @@ export default function Grid({
       <Cell
         key={i}
         index={i}
+        zIndex={state.links.length - i}
         manageIsOverEmpty={[isOverEmpty, setIsOverEmpty]}
         isInEditMode={isInEditMode}
         openUpdateLinkModal={openUpdateLinkModal}
