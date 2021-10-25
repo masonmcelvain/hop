@@ -110,7 +110,7 @@ export default function EditLinkModal({
     <Modal isOpen={isOpen} onClose={onClose} size="full">
       <ModalOverlay />
       <form>
-        <ModalContent>
+        <ModalContent borderRadius="none">
           <ModalHeader>Update Link</ModalHeader>
           <ModalCloseButton />
           <ModalBody>

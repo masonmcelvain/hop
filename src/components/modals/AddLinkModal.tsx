@@ -117,7 +117,7 @@ export default function AddLinkModal({
     <Modal isOpen={isOpen} onClose={onClose} size="full">
       <ModalOverlay />
       <form>
-        <ModalContent>
+        <ModalContent borderRadius="none">
           <ModalHeader>Create New Link</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
