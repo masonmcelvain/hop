@@ -1,6 +1,8 @@
 <img align="right" width="256px" height="256px" alt="Hop logo" src="https://user-images.githubusercontent.com/52104630/138492652-531cc551-f07c-4e63-9146-3c9352d34847.png" />
 
-# Hop 
+# Hop
+
+[![CodeQL](https://github.com/masonmcelvain/hop/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/masonmcelvain/hop/actions/workflows/codeql-analysis.yml)
 
 Hop is a Chrome extension that stores links to your favorite sites in a more visually pleasing way than traditional browser bookmarks. Hop will try to find an icon for each link automatically, but you can use your own image if you prefer.
 
