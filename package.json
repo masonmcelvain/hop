@@ -4,8 +4,14 @@
   "description": "An icon-first bookmark manager",
   "main": "index.js",
   "scripts": {
-    "start": "webpack watch --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js",
+    "start": "npm run start-chrome",
+    "start-chrome": "webpack watch --config webpack.dev.js --env target=chrome",
+    "start-firefox": "webpack watch --config webpack.dev.js --env target=firefox",
+
+    "build": "npm run build-chrome",
+    "build-chrome": "webpack --config webpack.prod.js --env target=chrome",
+    "build-firefox": "webpack --config webpack.prod.js --env target=firefox",
+
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Mason McElvain",
