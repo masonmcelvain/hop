@@ -6,7 +6,7 @@ const baseManifest = require("./src/chrome/manifest.json");
 
 module.exports = {
   entry: {
-    app: path.join(__dirname, "./static/index.js"),
+    app: "./src/index.js",
   },
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
@@ -21,7 +21,7 @@ module.exports = {
       },
       manifest: "manifest.json",
       filename: "index.html",
-      template: "./static/index.html",
+      template: "./src/index.html",
       hash: true,
     }),
     new CopyPlugin({
