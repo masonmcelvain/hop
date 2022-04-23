@@ -17,7 +17,7 @@ If there's an issue you'd like to tackle, please fork this repository, make your
 ### Develop Locally
 * Clone the repository and navigate to it's root directory with `git clone https://github.com/masonmcelvain/hop.git && cd hop`
 * Install dependencies with `npm install`
-  * You'll need a recent version of [Node.js](https://nodejs.org/en/download/) installed.
+  * You'll need version 16 of [Node.js](https://nodejs.org/en/download/) installed, and `npm` version 8. I recommend using [`nvm`](https://github.com/nvm-sh/nvm) to switch between versions quickly.
 * Start a development server with `npm start`.
 * Load the extension into your browser.
   * Navigate to `chrome://extensions` in your browser. You can also access this page by clicking on the Chrome menu on the top right side of the Omnibox, hovering over More Tools and selecting Extensions.
