@@ -1,5 +1,6 @@
+import browser from "webextension-polyfill";
 import { ColorMode } from "@chakra-ui/react";
-import { LinkData } from "../../contexts/Links/reducer";
+import { LinkData } from "../contexts/Links/reducer";
 
 export function setStoredColorMode(colorMode: ColorMode): void {
   setStorageWithKey(StorageKey.COLOR_MODE, colorMode);
@@ -13,10 +14,22 @@ export function setNextStoredLinkId(id: number): void {
   setStorageWithKey(StorageKey.NEXT_LINK_ID, id);
 }
 
+export async function navigateCurrentTab(url: string): Promise<void> {
+  await getCurrentTab().then((tab) => {
+    browser.tabs.update(tab.id, { url });
+  });
+  window.close();
+}
+
+export async function getCurrentTab(): Promise<browser.Tabs.Tab> {
+  const tabs = await browser.tabs.query({ active: true, currentWindow: true });
+  return tabs[0];
+}
+
 function setStorageWithKey(key: string, value) {
   const storageObj = {};
   storageObj[key] = value;
-  chrome.storage.sync.set(storageObj);
+  browser.storage.sync.set(storageObj);
 }
 
 /**

@@ -4,7 +4,7 @@ import { useDrag } from "react-dnd";
 import CardImage from "./CardImage";
 import { LinkData } from "../contexts/Links/reducer";
 import { LinksContext } from "../contexts/Links";
-import { openLinkInThisTab } from "../lib/chrome/Tab";
+import { navigateCurrentTab } from "../lib/webextension";
 
 export const DragItemTypes = {
   CARD: "card",
@@ -50,7 +50,7 @@ export default function Card({
       top={0}
       as="a"
       href={url.toString()}
-      onClick={() => openLinkInThisTab(url.toString())}
+      onClick={() => navigateCurrentTab(url.toString())}
       variant="ghost"
       w="92%"
       minH="92%"

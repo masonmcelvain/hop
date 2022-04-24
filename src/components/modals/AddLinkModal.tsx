@@ -17,9 +17,9 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { getCurrentTab } from "../../lib/chrome/Tab";
 import { LinksContext } from "../../contexts/Links";
 import { LinkAction } from "../../contexts/Links/reducer";
+import { getCurrentTab } from "../../lib/webextension";
 
 type FormFields = {
   linkName: string;

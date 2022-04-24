@@ -1,21 +1,20 @@
 import * as React from "react";
+import browser from "webextension-polyfill";
 import { useColorMode } from "@chakra-ui/react";
 import Page from "./components/Page";
-import { setStoredColorMode, StorageKey } from "./lib/chrome/SyncStorage";
+import { setStoredColorMode, StorageKey } from "./lib/webextension";
 import { LinksProvider } from "./contexts/Links";
 
 export default function App(): JSX.Element {
   const { colorMode, toggleColorMode } = useColorMode();
 
-  // Initialize color theme from chrome storage
+  // Initialize color theme from browser storage
   React.useEffect(() => {
-    chrome.storage.sync.get(null, (result) => {
-      if (StorageKey.COLOR_MODE in result) {
-        const storedColorMode = result[StorageKey.COLOR_MODE];
-        storedColorMode !== colorMode && toggleColorMode();
-      } else {
+    browser.storage.sync.get(StorageKey.COLOR_MODE).then((result) => {
+      const storedColorMode = result[StorageKey.COLOR_MODE];
+      storedColorMode ?
+        storedColorMode !== colorMode && toggleColorMode() :
         setStoredColorMode(colorMode);
-      }
     });
   }, []);
 

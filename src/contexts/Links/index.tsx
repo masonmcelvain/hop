@@ -1,9 +1,10 @@
 import * as React from "react";
+import browser from "webextension-polyfill";
 import {
   setNextStoredLinkId,
   setStoredLinks,
   StorageKey,
-} from "../../lib/chrome/SyncStorage";
+} from "../../lib/webextension";
 import { Reducer, LinkAction, StateType, LinkActionTypes } from "./reducer";
 
 const InitialState: StateType = {
@@ -26,27 +27,25 @@ export const LinksProvider = ({
 }): JSX.Element => {
   const [state, dispatch] = React.useReducer(Reducer, InitialState);
 
-  // Initialize state from chrome storage
+  // Initialize state from browser storage
   React.useEffect(() => {
-    chrome.storage.sync.get(null, (result) => {
-      const payload: StateType = {
-        links: state.links,
-        nextLinkId: state.nextLinkId,
-      };
+    const payload: StateType = {
+      links: state.links,
+      nextLinkId: state.nextLinkId,
+    };
 
+    browser.storage.sync.get([StorageKey.STORED_LINKS, StorageKey.NEXT_LINK_ID]).then((result) => {
       // Initialize links
-      if (StorageKey.STORED_LINKS in result) {
-        payload.links = result[StorageKey.STORED_LINKS];
-      } else {
+      const storedLinks = result[StorageKey.STORED_LINKS];
+      storedLinks ?
+        payload.links = storedLinks :
         setStoredLinks(state.links);
-      }
 
       // Set the next linkid
-      if (StorageKey.NEXT_LINK_ID in result) {
-        payload.nextLinkId = result[StorageKey.NEXT_LINK_ID];
-      } else {
+      const nextLinkId = result[StorageKey.NEXT_LINK_ID];
+      nextLinkId ?
+        payload.nextLinkId = nextLinkId :
         setNextStoredLinkId(state.nextLinkId);
-      }
 
       dispatch({
         type: LinkAction.SET_STATE_FROM_STORAGE,
