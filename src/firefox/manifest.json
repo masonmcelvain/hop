@@ -15,5 +15,10 @@
   "permissions": [
     "storage",
     "tabs"
-  ]
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "hop@masonmcelvain.com"
+    }
+  }
 }
