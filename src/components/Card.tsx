@@ -49,6 +49,7 @@ export default function Card({
       pos="absolute"
       top={0}
       as="a"
+      target="_self"
       href={url.toString()}
       onClick={() => navigateCurrentTab(url.toString())}
       variant="ghost"
