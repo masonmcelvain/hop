@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const WebpackExtensionManifestPlugin = require("webpack-extension-manifest-plugin");
+const ZipPlugin = require('zip-webpack-plugin');
 const chromeManifest = require("./src/chrome/manifest.json");
 const firefoxManifest = require("./src/firefox/manifest.json");
 
@@ -62,6 +63,10 @@ module.exports = (env) => {
           base: baseManifest,
         },
       }),
+      new ZipPlugin({
+        path: path.resolve(__dirname, "dist", "zip"),
+        filename: `${env.target}.zip`,
+      }),
     ],
     module: {
       rules: [
@@ -85,7 +90,7 @@ module.exports = (env) => {
     },
     output: {
       filename: "[name].bundle.js",
-      path: path.resolve(__dirname, "dist"),
+      path: path.resolve(__dirname, "dist", env.target),
       clean: true,
     },
   };
