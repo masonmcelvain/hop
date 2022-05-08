@@ -66,13 +66,11 @@ export default function Card({
       onMouseEnter={setIsMouseOver.on}
       onMouseLeave={setIsMouseOver.off}
       disabled={isInEditMode}
+      ref={drag}
+      transform="translate(0, 0)" // Prevents React DnD background color bug
       {...conditionalButtonProps}
     >
-      <VStack
-        w="full"
-        ref={drag}
-        transform="translate(0, 0)" // Prevents React DnD background color bug
-      >
+      <VStack w="full">
         <CardImage linkData={linkData} />
         <Text
           align="center"
