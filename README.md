@@ -3,6 +3,7 @@
 # Hop
 
 [![CodeQL](https://github.com/masonmcelvain/hop/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/masonmcelvain/hop/actions/workflows/codeql-analysis.yml)
+[![Lint](https://github.com/masonmcelvain/hop/actions/workflows/lint.yml/badge.svg)](https://github.com/masonmcelvain/hop/actions/workflows/lint.yml)
 
 Hop is a browser extension that stores links to your favorite sites in a more visually pleasing way than traditional bookmarks. Hop will try to find an icon for each link automatically, but you can use your own image if you prefer.
 
