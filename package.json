@@ -6,7 +6,7 @@
   "scripts": {
     "start:chrome": "webpack watch --config webpack.dev.js --env target=chrome",
     "start:firefox": "concurrently --kill-others \"webpack watch --config webpack.dev.js --env target=firefox\" \"cd dist/firefox && ../../node_modules/.bin/web-ext run -p=\"../../tmp-web-ext-profile\" --profile-create-if-missing --keep-profile-changes\"",
-    "build": "npm run build-chrome && npm run build-firefox",
+    "build": "npm run build:chrome && npm run build:firefox",
     "build:chrome": "webpack --config webpack.prod.js --env target=chrome",
     "build:firefox": "webpack --config webpack.prod.js --env target=firefox",
     "lint": "eslint .",
