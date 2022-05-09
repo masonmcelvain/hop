@@ -21,6 +21,11 @@ module.exports = {
         "react",
         "@typescript-eslint"
     ],
+    "ignorePatterns": [
+        "**/node_modules/**",
+        "**/dist/**",
+        "**/tmp-*/**",
+    ],
     "rules": {
     },
     "settings": {

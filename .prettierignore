@@ -1,0 +1,7 @@
+**/.git
+**/.github
+**/.svn
+**/.hg
+**/node_modules
+**/dist
+**/tmp-*
