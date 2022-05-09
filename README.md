@@ -4,9 +4,9 @@
 
 [![CodeQL](https://github.com/masonmcelvain/hop/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/masonmcelvain/hop/actions/workflows/codeql-analysis.yml)
 
-Hop is a Chrome extension that stores links to your favorite sites in a more visually pleasing way than traditional browser bookmarks. Hop will try to find an icon for each link automatically, but you can use your own image if you prefer.
+Hop is a browser extension that stores links to your favorite sites in a more visually pleasing way than traditional bookmarks. Hop will try to find an icon for each link automatically, but you can use your own image if you prefer.
 
-It's available for use on the [Chrome Web Store](https://chrome.google.com/webstore/detail/hop/djdlkcbfbdebfaoakhnoienanaakgccd).
+It's available for use on the [Chrome Web Store](https://chrome.google.com/webstore/detail/hop/djdlkcbfbdebfaoakhnoienanaakgccd) and as a [Firefox Add-on](https://addons.mozilla.org/en-US/firefox/extensions/).
 
 ## Opening Issues 🥕
 If you'd like to see a new feature or you've spotted a bug, please check to see if there are any [closed issues](https://github.com/masonmcelvain/hop/issues?q=is%3Aissue+is%3Aclosed) that might address your concern before opening a new issue on this repository.
@@ -18,8 +18,8 @@ If there's an issue you'd like to tackle, please fork this repository, make your
 * Clone the repository and navigate to it's root directory with `git clone https://github.com/masonmcelvain/hop.git && cd hop`
 * Install dependencies with `npm install`
   * You'll need version 16 of [Node.js](https://nodejs.org/en/download/) installed, and `npm` version 8. I recommend using [`nvm`](https://github.com/nvm-sh/nvm) to switch between versions quickly.
-* Start a development server with `npm start`.
-* Load the extension into your browser.
+* Start a development server with `npm run start:chrome` or `npm run start:firefox`.
+* Special Chrome instructions:
   * Navigate to `chrome://extensions` in your browser. You can also access this page by clicking on the Chrome menu on the top right side of the Omnibox, hovering over More Tools and selecting Extensions.
   * Check the box next to Developer Mode.
   * Click Load Unpacked Extension and select the `dist` directory in the top level directory of this repository.
