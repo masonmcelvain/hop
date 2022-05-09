@@ -1,7 +1,4 @@
-import {
-  setNextStoredLinkId,
-  setStoredLinks,
-} from "../../lib/webextension";
+import { setNextStoredLinkId, setStoredLinks } from "../../lib/webextension";
 
 export const Reducer = (
   state: StateType,

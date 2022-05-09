@@ -10,7 +10,7 @@
     "build:chrome": "webpack --config webpack.prod.js --env target=chrome",
     "build:firefox": "webpack --config webpack.prod.js --env target=firefox",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix",
+    "lint:fix": "eslint --fix .",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf dist tmp-web-ext-profile"

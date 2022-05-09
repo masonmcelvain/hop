@@ -34,24 +34,26 @@ export const LinksProvider = ({
       nextLinkId: state.nextLinkId,
     };
 
-    browser.storage.sync.get([StorageKey.STORED_LINKS, StorageKey.NEXT_LINK_ID]).then((result) => {
-      // Initialize links
-      const storedLinks = result[StorageKey.STORED_LINKS];
-      storedLinks ?
-        payload.links = storedLinks :
-        setStoredLinks(state.links);
+    browser.storage.sync
+      .get([StorageKey.STORED_LINKS, StorageKey.NEXT_LINK_ID])
+      .then((result) => {
+        // Initialize links
+        const storedLinks = result[StorageKey.STORED_LINKS];
+        storedLinks
+          ? (payload.links = storedLinks)
+          : setStoredLinks(state.links);
 
-      // Set the next linkid
-      const nextLinkId = result[StorageKey.NEXT_LINK_ID];
-      nextLinkId ?
-        payload.nextLinkId = nextLinkId :
-        setNextStoredLinkId(state.nextLinkId);
+        // Set the next linkid
+        const nextLinkId = result[StorageKey.NEXT_LINK_ID];
+        nextLinkId
+          ? (payload.nextLinkId = nextLinkId)
+          : setNextStoredLinkId(state.nextLinkId);
 
-      dispatch({
-        type: LinkAction.SET_STATE_FROM_STORAGE,
-        payload,
+        dispatch({
+          type: LinkAction.SET_STATE_FROM_STORAGE,
+          payload,
+        });
       });
-    });
   }, []);
 
   return (

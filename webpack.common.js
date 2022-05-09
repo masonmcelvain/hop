@@ -2,7 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const WebpackExtensionManifestPlugin = require("webpack-extension-manifest-plugin");
-const ZipPlugin = require('zip-webpack-plugin');
+const ZipPlugin = require("zip-webpack-plugin");
 const chromeManifest = require("./src/chrome/manifest.json");
 const firefoxManifest = require("./src/firefox/manifest.json");
 
@@ -16,7 +16,7 @@ module.exports = (env) => {
 
   let iconPattern;
   let baseManifest;
-  switch(env.target) {
+  switch (env.target) {
     case CHROME:
       iconPattern = {
         from: "src/chrome/icons",
@@ -54,9 +54,7 @@ module.exports = (env) => {
         hash: true,
       }),
       new CopyPlugin({
-        patterns: [
-          iconPattern,
-        ],
+        patterns: [iconPattern],
       }),
       new WebpackExtensionManifestPlugin({
         config: {

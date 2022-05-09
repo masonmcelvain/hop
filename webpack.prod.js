@@ -3,7 +3,7 @@ const common = require("./webpack.common.js");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
-module.exports = (env) => (
+module.exports = (env) =>
   merge(common(env), {
     mode: "production",
     devtool: "source-map",
@@ -33,6 +33,5 @@ module.exports = (env) => (
           },
         },
       },
-    }
-  })
-);
+    },
+  });
