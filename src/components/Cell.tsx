@@ -6,7 +6,7 @@ import { Edit2, X } from "react-feather";
 import { LinksContext } from "../contexts/Links";
 import { LinkAction } from "../contexts/Links/reducer";
 import { openUpdateLinkModalForCellType } from "../components/Page";
-import { setStoredLinks } from "../lib/chrome/SyncStorage";
+import { setStoredLinks } from "../lib/webextension";
 
 type CellProps = {
   index: number;

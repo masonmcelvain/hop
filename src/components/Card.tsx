@@ -4,7 +4,7 @@ import { useDrag } from "react-dnd";
 import CardImage from "./CardImage";
 import { LinkData } from "../contexts/Links/reducer";
 import { LinksContext } from "../contexts/Links";
-import { openLinkInThisTab } from "../lib/chrome/Tab";
+import { navigateCurrentTab } from "../lib/webextension";
 
 export const DragItemTypes = {
   CARD: "card",
@@ -49,8 +49,9 @@ export default function Card({
       pos="absolute"
       top={0}
       as="a"
+      target="_self"
       href={url.toString()}
-      onClick={() => openLinkInThisTab(url.toString())}
+      onClick={() => navigateCurrentTab(url.toString())}
       variant="ghost"
       w="92%"
       minH="92%"
@@ -65,13 +66,11 @@ export default function Card({
       onMouseEnter={setIsMouseOver.on}
       onMouseLeave={setIsMouseOver.off}
       disabled={isInEditMode}
+      ref={drag}
+      transform="translate(0, 0)" // Prevents React DnD background color bug
       {...conditionalButtonProps}
     >
-      <VStack
-        w="full"
-        ref={drag}
-        transform="translate(0, 0)" // Prevents React DnD background color bug
-      >
+      <VStack w="full">
         <CardImage linkData={linkData} />
         <Text
           align="center"

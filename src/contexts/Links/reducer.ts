@@ -1,7 +1,4 @@
-import {
-  setNextStoredLinkId,
-  setStoredLinks,
-} from "../../lib/chrome/SyncStorage";
+import { setNextStoredLinkId, setStoredLinks } from "../../lib/webextension";
 
 export const Reducer = (
   state: StateType,
