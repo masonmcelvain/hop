@@ -27,3 +27,6 @@ If there's an issue you'd like to tackle, please fork this repository, make your
 * Open the extension in your browser to see the app.
   * Note: When you make code changes, you most close the extension popup (i.e. click anything but the extension window) and re-open it to see those changes reflected.
 * Have fun!
+
+### Building for Production
+* Run `npm run build`, which will output minified projects in `dist/chrome`, `dist/firefox`, and zipped projects in `dist/zip/chrome.zip` and `dist/zip/firefox.zip`.
