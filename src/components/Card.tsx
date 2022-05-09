@@ -4,7 +4,7 @@ import { useDrag } from "react-dnd";
 import CardImage from "./CardImage";
 import { LinkData } from "../contexts/Links/reducer";
 import { LinksContext } from "../contexts/Links";
-import { navigateCurrentTab } from "../lib/webextension";
+import { navigateCurrentTab, openInNewTab } from "../lib/webextension";
 
 export const DragItemTypes = {
   CARD: "card",
@@ -44,6 +44,17 @@ export default function Card({
       }
     : {};
 
+  async function clickHandler(
+    event: React.MouseEvent<HTMLButtonElement>
+  ): Promise<void> {
+    if (event.ctrlKey) {
+      event.preventDefault();
+      await openInNewTab(url.toString());
+    } else {
+      await navigateCurrentTab(url.toString());
+    }
+  }
+
   return (
     <Button
       pos="absolute"
@@ -51,7 +62,7 @@ export default function Card({
       as="a"
       target="_self"
       href={url.toString()}
-      onClick={() => navigateCurrentTab(url.toString())}
+      onClick={clickHandler}
       variant="ghost"
       w="92%"
       minH="92%"
