@@ -7,7 +7,7 @@
 
 Hop is a browser extension that stores links to your favorite sites in a more visually pleasing way than traditional bookmarks. Hop will try to find an icon for each link automatically, but you can use your own image if you prefer.
 
-It's available for use on the [Chrome Web Store](https://chrome.google.com/webstore/detail/hop/djdlkcbfbdebfaoakhnoienanaakgccd) and as a [Firefox Add-on](https://addons.mozilla.org/en-US/firefox/extensions/).
+It's available for use on the [Chrome Web Store](https://chrome.google.com/webstore/detail/hop/djdlkcbfbdebfaoakhnoienanaakgccd) and as a [Firefox Add-on](https://addons.mozilla.org/en-US/firefox/addon/hop/).
 
 ## Opening Issues 🥕
 If you'd like to see a new feature or you've spotted a bug, please check to see if there are any [closed issues](https://github.com/masonmcelvain/hop/issues?q=is%3Aissue+is%3Aclosed) that might address your concern before opening a new issue on this repository.
