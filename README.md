@@ -2,14 +2,21 @@
 
 # Hop
 
-[![CodeQL](https://github.com/masonmcelvain/hop/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/masonmcelvain/hop/actions/workflows/codeql-analysis.yml)
-[![Lint](https://github.com/masonmcelvain/hop/actions/workflows/lint.yml/badge.svg)](https://github.com/masonmcelvain/hop/actions/workflows/lint.yml)
+[link-chrome]: https://chrome.google.com/webstore/detail/hop/djdlkcbfbdebfaoakhnoienanaakgccd 'Version published on Chrome Web Store'
+[link-firefox]: https://addons.mozilla.org/en-US/firefox/addon/hop/ 'Version published on Mozilla Add-ons'
+
+[<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/chrome/chrome.svg" width="48" alt="Chrome" valign="middle">][link-chrome] [<img valign="middle" src="https://img.shields.io/chrome-web-store/v/lmjdlojahmbbcodnpecnjnmlddbkjhnn.svg?label=%20">][link-chrome]
+[<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/firefox/firefox.svg" width="48" alt="Firefox" valign="middle">][link-firefox] [<img valign="middle" src="https://img.shields.io/amo/v/notifier-for-github.svg?label=%20">][link-firefox]
 
 Hop is a browser extension that stores links to your favorite sites in a more visually pleasing way than traditional bookmarks. Hop will try to find an icon for each link automatically, but you can use your own image if you prefer.
 
 It's available for use on the [Chrome Web Store](https://chrome.google.com/webstore/detail/hop/djdlkcbfbdebfaoakhnoienanaakgccd) and as a [Firefox Add-on](https://addons.mozilla.org/en-US/firefox/addon/hop/).
 
 ## Opening Issues 🥕
+
+[![CodeQL](https://github.com/masonmcelvain/hop/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/masonmcelvain/hop/actions/workflows/codeql-analysis.yml)
+[![Lint](https://github.com/masonmcelvain/hop/actions/workflows/lint.yml/badge.svg)](https://github.com/masonmcelvain/hop/actions/workflows/lint.yml)
+
 If you'd like to see a new feature or you've spotted a bug, please check to see if there are any [closed issues](https://github.com/masonmcelvain/hop/issues?q=is%3Aissue+is%3Aclosed) that might address your concern before opening a new issue on this repository.
 
 ## Contributing 🐰
