@@ -30,8 +30,8 @@ export async function getCurrentTab(): Promise<browser.Tabs.Tab> {
   return tabs[0];
 }
 
-function setStorageWithKey(key: string, value) {
-  const storageObj = {};
+function setStorageWithKey(key: string, value: any) {
+  const storageObj: Record<string, any> = {};
   storageObj[key] = value;
   browser.storage.sync.set(storageObj);
 }

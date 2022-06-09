@@ -21,7 +21,7 @@ type CellProps = {
   ];
   isInEditMode: boolean;
   openUpdateLinkModal: openUpdateLinkModalForCellType;
-  children: React.ReactChild;
+  children: React.ReactNode;
 };
 
 function Cell({
@@ -66,7 +66,7 @@ function Cell({
     }
   }, [children, isOver, dragItem, setIsOverEmpty]);
 
-  function deleteChildCard(event): void {
+  function deleteChildCard(event: React.MouseEvent<HTMLButtonElement>): void {
     event.preventDefault();
     dispatch({
       type: LinkAction.DELETE_LINK,

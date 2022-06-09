@@ -10,9 +10,12 @@ type grabFaviconResponseType = {
   icons: grabFaviconIconType[];
 };
 
-export async function getHighestResFaviconUrl(linkUrl: string): Promise<URL> {
+export async function getHighestResFaviconUrl(
+  linkUrl: string
+): Promise<URL | null> {
   const url = new URL(linkUrl);
-  const domain = psl.parse(url.hostname).domain;
+  const parsed = psl.parse(url.hostname);
+  const domain = "domain" in parsed ? parsed.domain : null;
   if (!domain) {
     const message = "Invalid domain name";
     console.error(message, linkUrl);
@@ -20,7 +23,7 @@ export async function getHighestResFaviconUrl(linkUrl: string): Promise<URL> {
   }
   const endpoint = grabFaviconBaseEndpoint + domain;
 
-  let highestResUrl: URL = null;
+  let highestResUrl: URL | null = null;
   let highestRes = "0x0";
   const hasGreaterRes = (icon: grabFaviconIconType) =>
     icon["sizes"] && parseInt(icon.sizes) > parseInt(highestRes);
@@ -35,7 +38,7 @@ export async function getHighestResFaviconUrl(linkUrl: string): Promise<URL> {
           highestRes = icon.sizes ? icon.sizes : highestRes;
         } else if (hasGreaterRes(icon)) {
           highestResUrl = new URL(icon.src);
-          highestRes = icon.sizes;
+          highestRes = icon?.sizes ?? highestRes;
         }
       });
     })

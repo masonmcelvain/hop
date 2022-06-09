@@ -43,6 +43,7 @@
     "@babel/preset-react": "^7.13.13",
     "@babel/preset-typescript": "^7.13.0",
     "@types/chrome": "^0.0.145",
+    "@types/psl": "^1.1.0",
     "@types/webextension-polyfill": "^0.8.3",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
