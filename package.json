@@ -13,6 +13,7 @@
     "lint:fix": "eslint --fix .",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "type-check": "tsc --pretty --noEmit",
     "clean": "rm -rf dist tmp-web-ext-profile"
   },
   "author": "Mason McElvain",
