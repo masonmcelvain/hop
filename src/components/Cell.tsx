@@ -6,7 +6,7 @@ import { Edit2, X } from "react-feather";
 import { LinksContext } from "../contexts/Links";
 import { LinkAction } from "../contexts/Links/reducer";
 import { openUpdateLinkModalForCellType } from "../components/Page";
-import { setStoredLinks } from "../lib/webextension";
+import { setStoredLinkKeys } from "../lib/webextension";
 
 type CellProps = {
   index: number;
@@ -44,10 +44,12 @@ function Cell({
           type: LinkAction.REORDER_LINKS,
           payload: {
             sourceId: item.id,
-            newLinkIndex: index,
+            newLinkKeyIndex: index,
           },
         }),
-      drop: () => setStoredLinks(state.links),
+      drop: () => {
+        setStoredLinkKeys(state.linkKeys);
+      },
       collect: (monitor) => ({
         isOver: !!monitor.isOver(),
         dragItem: monitor.getItem(),

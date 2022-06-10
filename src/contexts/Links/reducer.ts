@@ -1,4 +1,10 @@
-import { setNextStoredLinkId, setStoredLinks } from "../../lib/webextension";
+import {
+  getLinkIdForStorageKey,
+  getStorageKeyForLink,
+  setNextStoredLinkId,
+  setStoredLinks,
+  setStoredLinksAndKeys,
+} from "../../lib/webextension";
 
 export const Reducer = (
   state: StateType,
@@ -13,8 +19,8 @@ export const Reducer = (
       return updateLink(state, action.payload);
     case LinkAction.REORDER_LINKS:
       return reorderLinks(state, action.payload);
-    case LinkAction.ADD_IMAGE_URL:
-      return addImageUrl(state, action.payload);
+    case LinkAction.UPDATE_IMAGE_URL:
+      return updateImageUrl(state, action.payload);
     case LinkAction.DELETE_LINK:
       return deleteLink(state, action.payload);
   }
@@ -37,11 +43,13 @@ function addLink(prevState: StateType, payload: AddLinkPayload): StateType {
     imageUrl,
   };
   const newLinks = [...prevState.links, newLink];
+  const newLinkKeys = [...prevState.linkKeys, getStorageKeyForLink(newLink)];
 
-  setStoredLinks(newLinks);
+  setStoredLinksAndKeys(newLinks, newLinkKeys);
   setNextStoredLinkId(nextLinkId);
   return {
     ...prevState,
+    linkKeys: newLinkKeys,
     links: newLinks,
     nextLinkId,
   };
@@ -71,31 +79,34 @@ function reorderLinks(
   payload: ReorderLinksPayload
 ): StateType {
   const { sourceId } = payload;
-  let { newLinkIndex } = payload;
-  const newLinks = [...prevState.links];
+  let { newLinkKeyIndex } = payload;
+  const newLinkKeys = [...prevState.linkKeys];
 
-  const oldLinkIndex = newLinks.findIndex((link) => link.id === sourceId);
+  const oldLinkKeyIndex = newLinkKeys.findIndex(
+    (key) => getLinkIdForStorageKey(key) === sourceId
+  );
 
   // If dropped in an empty cell, put the card at the end of the array
-  if (newLinkIndex >= newLinks.length) {
-    newLinkIndex = newLinks.length - 1;
+  if (newLinkKeyIndex >= newLinkKeys.length) {
+    newLinkKeyIndex = newLinkKeys.length - 1;
   }
 
-  if (oldLinkIndex === newLinkIndex) {
+  if (oldLinkKeyIndex === newLinkKeyIndex) {
     // If there is no positional change, do nothing.
     return prevState;
   }
 
-  const [link] = newLinks.splice(oldLinkIndex, 1);
-  newLinks.splice(newLinkIndex, 0, link);
+  const [linkKeyToMove] = newLinkKeys.splice(oldLinkKeyIndex, 1);
+  newLinkKeys.splice(newLinkKeyIndex, 0, linkKeyToMove);
 
+  // Don't store the new order, as this reordering may be temporary.
   return {
     ...prevState,
-    links: newLinks,
+    linkKeys: newLinkKeys,
   };
 }
 
-function addImageUrl(
+function updateImageUrl(
   prevState: StateType,
   payload: AddImageUrlPayload
 ): StateType {
@@ -113,13 +124,18 @@ function addImageUrl(
   };
 }
 
-function deleteLink(prevState: StateType, linkIndex: number): StateType {
-  const newLinks = [...prevState.links];
-  newLinks.splice(linkIndex, 1);
+function deleteLink(prevState: StateType, linkKeyIndex: number): StateType {
+  const newLinkKeys = [...prevState.linkKeys];
+  const [deletedLinkKey] = newLinkKeys.splice(linkKeyIndex, 1);
 
-  setStoredLinks(newLinks);
+  const newLinks = prevState.links.filter(
+    (link) => deletedLinkKey !== getStorageKeyForLink(link)
+  );
+
+  setStoredLinksAndKeys(newLinks, newLinkKeys);
   return {
     ...prevState,
+    linkKeys: newLinkKeys,
     links: newLinks,
   };
 }
@@ -169,7 +185,7 @@ type UpdateLinkAction = {
 
 type ReorderLinksPayload = {
   sourceId: number;
-  newLinkIndex: number;
+  newLinkKeyIndex: number;
 };
 type ReorderLinksAction = {
   type: typeof LinkAction.REORDER_LINKS;
@@ -180,8 +196,8 @@ type AddImageUrlPayload = {
   url: string;
   linkId: number;
 };
-type AddImageUrlAction = {
-  type: typeof LinkAction.ADD_IMAGE_URL;
+type UpdateImageUrlAction = {
+  type: typeof LinkAction.UPDATE_IMAGE_URL;
   payload: AddImageUrlPayload;
 };
 
@@ -195,10 +211,11 @@ export type LinkActionTypes =
   | AddLinkAction
   | UpdateLinkAction
   | ReorderLinksAction
-  | AddImageUrlAction
+  | UpdateImageUrlAction
   | DeleteLinkAction;
 
 export type StateType = {
+  linkKeys: string[];
   links: LinkData[];
   nextLinkId: number;
 };
@@ -208,7 +225,7 @@ export enum LinkAction {
   ADD_LINK,
   UPDATE_LINK,
   REORDER_LINKS,
-  ADD_IMAGE_URL,
+  UPDATE_IMAGE_URL,
   DELETE_LINK,
 }
 

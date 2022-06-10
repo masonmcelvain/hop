@@ -4,6 +4,7 @@ import Card from "./Card";
 import Cell from "./Cell";
 import { openUpdateLinkModalForCellType } from "../components/Page";
 import { LinksContext } from "../contexts/Links";
+import { getStorageKeyForLink } from "../lib/webextension";
 
 const numColumns = 3;
 
@@ -33,13 +34,19 @@ export default function Grid({
 }: GridProps): JSX.Element {
   const { state } = React.useContext(LinksContext);
   const [isOverEmpty, setIsOverEmpty] = useBoolean();
-  const numCells = getNumCells(state.links ? state.links.length : 0);
+  const numCells = getNumCells(state.linkKeys ? state.linkKeys.length : 0);
 
   function renderCell(i: number) {
-    const cellHasACard = i < state.links.length;
-    const card = cellHasACard ? (
-      <Card linkData={state.links[i]} isInEditMode={isInEditMode} />
-    ) : null;
+    const cellHasACard = i < state.linkKeys.length;
+
+    let card = null;
+    if (cellHasACard) {
+      const linkKey = state.linkKeys[i];
+      const link = state.links.find(
+        (link) => link && getStorageKeyForLink(link) === linkKey
+      );
+      card = link ? <Card linkData={link} isInEditMode={isInEditMode} /> : null;
+    }
 
     return (
       <Cell
