@@ -18,7 +18,7 @@ export default function CardImage({ linkData }: CardImageProps): JSX.Element {
         const faviconUrl = await getHighestResFaviconUrl(url);
         faviconUrl &&
           dispatch({
-            type: LinkAction.ADD_IMAGE_URL,
+            type: LinkAction.UPDATE_IMAGE_URL,
             payload: {
               url: faviconUrl.toString(),
               linkId: id,

@@ -6,7 +6,7 @@ import { Edit2, X } from "react-feather";
 import { LinksContext } from "../contexts/Links";
 import { LinkAction } from "../contexts/Links/reducer";
 import { openUpdateLinkModalForCellType } from "../components/Page";
-import { setStoredLinks } from "../lib/webextension";
+import { setStoredLinkKeys } from "../lib/webextension";
 
 type CellProps = {
   index: number;
@@ -21,7 +21,7 @@ type CellProps = {
   ];
   isInEditMode: boolean;
   openUpdateLinkModal: openUpdateLinkModalForCellType;
-  children: React.ReactChild;
+  children: React.ReactNode;
 };
 
 function Cell({
@@ -44,10 +44,12 @@ function Cell({
           type: LinkAction.REORDER_LINKS,
           payload: {
             sourceId: item.id,
-            newLinkIndex: index,
+            newLinkKeyIndex: index,
           },
         }),
-      drop: () => setStoredLinks(state.links),
+      drop: () => {
+        setStoredLinkKeys(state.linkKeys);
+      },
       collect: (monitor) => ({
         isOver: !!monitor.isOver(),
         dragItem: monitor.getItem(),
@@ -66,7 +68,7 @@ function Cell({
     }
   }, [children, isOver, dragItem, setIsOverEmpty]);
 
-  function deleteChildCard(event): void {
+  function deleteChildCard(event: React.MouseEvent<HTMLButtonElement>): void {
     event.preventDefault();
     dispatch({
       type: LinkAction.DELETE_LINK,

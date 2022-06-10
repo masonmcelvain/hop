@@ -1,16 +1,30 @@
 import * as React from "react";
 import browser from "webextension-polyfill";
 import {
+  getStorageKeyForLink,
   setNextStoredLinkId,
-  setStoredLinks,
+  setStoredLinksAndKeys,
   StorageKey,
 } from "../../lib/webextension";
-import { Reducer, LinkAction, StateType, LinkActionTypes } from "./reducer";
+import { getLegacyLinks } from "./getLegacyLinks";
+import {
+  Reducer,
+  LinkAction,
+  StateType,
+  LinkActionTypes,
+  LinkData,
+} from "./reducer";
 
 const InitialState: StateType = {
+  linkKeys: [],
   links: [],
   nextLinkId: 0,
 };
+
+function cleanseStoredState(): void {
+  setStoredLinksAndKeys(InitialState.links, InitialState.linkKeys);
+  setNextStoredLinkId(InitialState.nextLinkId);
+}
 
 export const LinksContext = React.createContext<{
   state: StateType;
@@ -27,34 +41,63 @@ export const LinksProvider = ({
 }): JSX.Element => {
   const [state, dispatch] = React.useReducer(Reducer, InitialState);
 
-  // Initialize state from browser storage
-  React.useEffect(() => {
+  const initializeState = React.useCallback(async (): Promise<void> => {
     const payload: StateType = {
+      linkKeys: state.linkKeys,
       links: state.links,
       nextLinkId: state.nextLinkId,
     };
 
+    const fetchLegacyLinks = async () => await getLegacyLinks();
+
     browser.storage.sync
-      .get([StorageKey.STORED_LINKS, StorageKey.NEXT_LINK_ID])
+      .get([StorageKey.LINK_STORAGE_KEYS, StorageKey.NEXT_LINK_ID])
       .then((result) => {
-        // Initialize links
-        const storedLinks = result[StorageKey.STORED_LINKS];
-        storedLinks
-          ? (payload.links = storedLinks)
-          : setStoredLinks(state.links);
-
-        // Set the next linkid
         const nextLinkId = result[StorageKey.NEXT_LINK_ID];
-        nextLinkId
-          ? (payload.nextLinkId = nextLinkId)
-          : setNextStoredLinkId(state.nextLinkId);
+        const storedLinkKeys = result[StorageKey.LINK_STORAGE_KEYS];
 
-        dispatch({
-          type: LinkAction.SET_STATE_FROM_STORAGE,
-          payload,
-        });
+        if (nextLinkId && storedLinkKeys && storedLinkKeys.length > 0) {
+          payload.nextLinkId = nextLinkId;
+          payload.linkKeys = storedLinkKeys;
+          browser.storage.sync.get(storedLinkKeys).then((result) => {
+            const storedLinks = storedLinkKeys.map(
+              (key: string) => result[key] as LinkData
+            );
+            payload.links = storedLinks;
+
+            dispatch({
+              type: LinkAction.SET_STATE_FROM_STORAGE,
+              payload,
+            });
+          });
+        } else if (nextLinkId) {
+          // Migrate legacy links to new storage format
+          fetchLegacyLinks().then((legacyLinks) => {
+            if (legacyLinks && legacyLinks.length > 0) {
+              payload.nextLinkId = nextLinkId;
+              payload.links = legacyLinks;
+              payload.linkKeys = legacyLinks.map((link) =>
+                getStorageKeyForLink(link)
+              );
+
+              setStoredLinksAndKeys(legacyLinks, payload.linkKeys);
+              dispatch({
+                type: LinkAction.SET_STATE_FROM_STORAGE,
+                payload,
+              });
+            } else {
+              cleanseStoredState();
+            }
+          });
+        } else {
+          cleanseStoredState();
+        }
       });
   }, []);
+
+  React.useEffect(() => {
+    initializeState();
+  }, [initializeState]);
 
   return (
     <LinksContext.Provider value={{ state, dispatch }}>

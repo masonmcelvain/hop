@@ -1,6 +1,6 @@
 {
   "name": "hop",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "An icon-first bookmark manager",
   "main": "index.js",
   "scripts": {
@@ -13,6 +13,7 @@
     "lint:fix": "eslint --fix .",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "type-check": "tsc --pretty --noEmit",
     "clean": "rm -rf dist tmp-web-ext-profile"
   },
   "author": "Mason McElvain",
@@ -42,6 +43,7 @@
     "@babel/preset-react": "^7.13.13",
     "@babel/preset-typescript": "^7.13.0",
     "@types/chrome": "^0.0.145",
+    "@types/psl": "^1.1.0",
     "@types/webextension-polyfill": "^0.8.3",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",

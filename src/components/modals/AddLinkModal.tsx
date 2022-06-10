@@ -67,21 +67,21 @@ export default function AddLinkModal({
     });
   }
 
-  function handleNameChange(event) {
+  function handleNameChange(event: React.ChangeEvent<HTMLInputElement>) {
     event.preventDefault();
     const linkName = event.target.value ? event.target.value : "";
     const linkNameError = linkName ? "" : "Please enter a name for the link";
     setFormValues({ ...formValues, linkName, linkNameError });
   }
 
-  function handleLinkUrlChange(event) {
+  function handleLinkUrlChange(event: React.ChangeEvent<HTMLInputElement>) {
     event.preventDefault();
     const linkUrl = event.target.value ? event.target.value : "";
     const linkUrlError = linkUrl ? "" : "Please enter a url for the link";
     setFormValues({ ...formValues, linkUrl, linkUrlError });
   }
 
-  function handleImageUrlChange(event) {
+  function handleImageUrlChange(event: React.ChangeEvent<HTMLInputElement>) {
     event.preventDefault();
     const urlValue = event.target.value ? event.target.value : "";
     let imageUrlError = "";
@@ -100,7 +100,7 @@ export default function AddLinkModal({
     });
   }
 
-  function handleSubmit(event) {
+  function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     dispatch({
       type: LinkAction.ADD_LINK,

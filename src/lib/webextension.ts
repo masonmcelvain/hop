@@ -6,8 +6,22 @@ export function setStoredColorMode(colorMode: ColorMode): void {
   setStorageWithKey(StorageKey.COLOR_MODE, colorMode);
 }
 
+export function setStoredLinksAndKeys(
+  links: LinkData[],
+  linkKeys: string[]
+): void {
+  setStoredLinkKeys(linkKeys);
+  setStoredLinks(links);
+}
+
+export function setStoredLinkKeys(linkKeys: string[]): void {
+  setStorageWithKey(StorageKey.LINK_STORAGE_KEYS, linkKeys);
+}
+
 export function setStoredLinks(links: LinkData[]): void {
-  setStorageWithKey(StorageKey.STORED_LINKS, links);
+  links.forEach((link) => {
+    setStorageWithKey(getStorageKeyForLink(link), link);
+  });
 }
 
 export function setNextStoredLinkId(id: number): void {
@@ -30,8 +44,16 @@ export async function getCurrentTab(): Promise<browser.Tabs.Tab> {
   return tabs[0];
 }
 
-function setStorageWithKey(key: string, value) {
-  const storageObj = {};
+export function getStorageKeyForLink(link: LinkData): string {
+  return `${StorageKey.LINK_STORAGE_PREFIX}${link.id}`;
+}
+
+export function getLinkIdForStorageKey(key: string): number {
+  return parseInt(key.replace(StorageKey.LINK_STORAGE_PREFIX, ""), 10);
+}
+
+function setStorageWithKey(key: string, value: any) {
+  const storageObj: Record<string, any> = {};
   storageObj[key] = value;
   browser.storage.sync.set(storageObj);
 }
@@ -41,6 +63,7 @@ function setStorageWithKey(key: string, value) {
  */
 export enum StorageKey {
   COLOR_MODE = "COLOR_MODE",
-  STORED_LINKS = "STORED_LINKS",
+  LINK_STORAGE_KEYS = "LINK_STORAGE_KEYS",
+  LINK_STORAGE_PREFIX = "LINK_ID_",
   NEXT_LINK_ID = "NEXT_LINK_ID",
 }

@@ -12,7 +12,7 @@ import { LinkData } from "../contexts/Links/reducer";
 export default function Page(): JSX.Element {
   const { state } = React.useContext(LinksContext);
   const [isInEditMode, setIsInEditMode] = useBoolean();
-  const [linkToEdit, setLinkToEdit] = React.useState<LinkData>(null);
+  const [linkToEdit, setLinkToEdit] = React.useState<LinkData | null>(null);
 
   const {
     isOpen: isAddLinkModalOpen,
