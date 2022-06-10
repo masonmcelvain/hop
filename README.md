@@ -16,6 +16,7 @@ It's available for use on the [Chrome Web Store](https://chrome.google.com/webst
 
 [![CodeQL](https://github.com/masonmcelvain/hop/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/masonmcelvain/hop/actions/workflows/codeql-analysis.yml)
 [![Lint](https://github.com/masonmcelvain/hop/actions/workflows/lint.yml/badge.svg)](https://github.com/masonmcelvain/hop/actions/workflows/lint.yml)
+[![Type Check](https://github.com/masonmcelvain/hop/actions/workflows/type-check.yml/badge.svg)](https://github.com/masonmcelvain/hop/actions/workflows/type-check.yml)
 
 If you'd like to see a new feature or you've spotted a bug, please check to see if there are any [closed issues](https://github.com/masonmcelvain/hop/issues?q=is%3Aissue+is%3Aclosed) that might address your concern before opening a new issue on this repository.
 
