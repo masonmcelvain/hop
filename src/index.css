@@ -11,6 +11,20 @@ body {
   display: flex;
 }
 
+@media (prefers-color-scheme: light) {
+  html,
+  body {
+    background-color: #fff;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  html,
+  body {
+    background-color: #20242c;
+  }
+}
+
 #root {
   height: 100%;
   width: 100%;
