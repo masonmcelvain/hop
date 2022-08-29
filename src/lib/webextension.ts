@@ -55,7 +55,7 @@ export function getLinkIdForStorageKey(key: string): number {
 function setStorageWithKey(key: string, value: any) {
   const storageObj: Record<string, any> = {};
   storageObj[key] = value;
-  browser.storage.sync.set(storageObj);
+  browser.storage.local.set(storageObj);
 }
 
 /**
