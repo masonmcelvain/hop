@@ -50,61 +50,49 @@ export const LinksProvider = ({
 
     const fetchLegacyLinks = async () => await getLegacyLinks();
 
-    type StorageArea =
-      | browser.Storage.Static["sync"]
-      | browser.Storage.Static["local"];
-    const getFromStorage = async (storageArea: StorageArea) => {
-      storageArea
-        .get([StorageKey.LINK_STORAGE_KEYS, StorageKey.NEXT_LINK_ID])
-        .then((result) => {
-          const nextLinkId = result[StorageKey.NEXT_LINK_ID];
-          const storedLinkKeys = result[StorageKey.LINK_STORAGE_KEYS];
+    browser.storage.local
+      .get([StorageKey.LINK_STORAGE_KEYS, StorageKey.NEXT_LINK_ID])
+      .then((result) => {
+        const nextLinkId = result[StorageKey.NEXT_LINK_ID];
+        const storedLinkKeys = result[StorageKey.LINK_STORAGE_KEYS];
 
-          if (nextLinkId && storedLinkKeys && storedLinkKeys.length > 0) {
-            payload.nextLinkId = nextLinkId;
-            payload.linkKeys = storedLinkKeys;
-            storageArea.get(storedLinkKeys).then((result) => {
-              const storedLinks = storedLinkKeys.map(
-                (key: string) => result[key] as LinkData
+        if (nextLinkId && storedLinkKeys && storedLinkKeys.length > 0) {
+          payload.nextLinkId = nextLinkId;
+          payload.linkKeys = storedLinkKeys;
+          browser.storage.local.get(storedLinkKeys).then((result) => {
+            const storedLinks = storedLinkKeys.map(
+              (key: string) => result[key] as LinkData
+            );
+            payload.links = storedLinks;
+
+            dispatch({
+              type: LinkAction.SET_STATE_FROM_STORAGE,
+              payload,
+            });
+          });
+        } else if (nextLinkId) {
+          // Migrate legacy links to new storage format
+          fetchLegacyLinks().then((legacyLinks) => {
+            if (legacyLinks && legacyLinks.length > 0) {
+              payload.nextLinkId = nextLinkId;
+              payload.links = legacyLinks;
+              payload.linkKeys = legacyLinks.map((link) =>
+                getStorageKeyForLink(link)
               );
-              payload.links = storedLinks;
 
+              setStoredLinksAndKeys(legacyLinks, payload.linkKeys);
               dispatch({
                 type: LinkAction.SET_STATE_FROM_STORAGE,
                 payload,
               });
-              return true;
-            });
-          } else if (nextLinkId) {
-            // Migrate legacy links to new storage format
-            fetchLegacyLinks().then((legacyLinks) => {
-              if (legacyLinks && legacyLinks.length > 0) {
-                payload.nextLinkId = nextLinkId;
-                payload.links = legacyLinks;
-                payload.linkKeys = legacyLinks.map((link) =>
-                  getStorageKeyForLink(link)
-                );
-
-                setStoredLinksAndKeys(legacyLinks, payload.linkKeys);
-                dispatch({
-                  type: LinkAction.SET_STATE_FROM_STORAGE,
-                  payload,
-                });
-                return true;
-              } else {
-                cleanseStoredState();
-              }
-            });
-          } else {
-            cleanseStoredState();
-          }
-          return false;
-        });
-    };
-
-    if (!getFromStorage(browser.storage.local)) {
-      getFromStorage(browser.storage.sync);
-    }
+            } else {
+              cleanseStoredState();
+            }
+          });
+        } else {
+          cleanseStoredState();
+        }
+      });
   }, []);
 
   React.useEffect(() => {
