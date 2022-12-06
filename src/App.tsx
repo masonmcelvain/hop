@@ -10,7 +10,7 @@ export default function App(): JSX.Element {
 
   // Initialize color theme from browser storage
   React.useEffect(() => {
-    browser.storage.sync.get(StorageKey.COLOR_MODE).then((result) => {
+    browser.storage.local.get(StorageKey.COLOR_MODE).then((result) => {
       const storedColorMode = result[StorageKey.COLOR_MODE];
       storedColorMode
         ? storedColorMode !== colorMode && toggleColorMode()
