@@ -1,12 +1,10 @@
 import * as React from "react";
 import browser from "webextension-polyfill";
 import {
-  getStorageKeyForLink,
   setNextStoredLinkId,
   setStoredLinksAndKeys,
   StorageKey,
 } from "../../lib/webextension";
-import { getLegacyLinks } from "./getLegacyLinks";
 import {
   Reducer,
   LinkAction,
@@ -48,8 +46,6 @@ export const LinksProvider = ({
       nextLinkId: state.nextLinkId,
     };
 
-    const fetchLegacyLinks = async () => await getLegacyLinks();
-
     browser.storage.local
       .get([StorageKey.LINK_STORAGE_KEYS, StorageKey.NEXT_LINK_ID])
       .then((result) => {
@@ -69,25 +65,6 @@ export const LinksProvider = ({
               type: LinkAction.SET_STATE_FROM_STORAGE,
               payload,
             });
-          });
-        } else if (nextLinkId) {
-          // Migrate legacy links to new storage format
-          fetchLegacyLinks().then((legacyLinks) => {
-            if (legacyLinks && legacyLinks.length > 0) {
-              payload.nextLinkId = nextLinkId;
-              payload.links = legacyLinks;
-              payload.linkKeys = legacyLinks.map((link) =>
-                getStorageKeyForLink(link)
-              );
-
-              setStoredLinksAndKeys(legacyLinks, payload.linkKeys);
-              dispatch({
-                type: LinkAction.SET_STATE_FROM_STORAGE,
-                payload,
-              });
-            } else {
-              cleanseStoredState();
-            }
           });
         } else {
           cleanseStoredState();
