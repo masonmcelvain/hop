@@ -11,7 +11,7 @@
     "build:firefox": "webpack --config webpack.prod.js --env target=firefox",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}'",
     "type-check": "tsc --pretty --noEmit",
     "clean": "rm -rf dist tmp-web-ext-profile"
   },
