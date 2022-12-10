@@ -12,6 +12,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}'",
+    "test": "npx playwright test",
+    "test:debug": "npx playwright test --debug",
     "type-check": "tsc --pretty --noEmit",
     "clean": "rm -rf dist tmp-web-ext-profile"
   },
