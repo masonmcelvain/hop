@@ -2,3 +2,6 @@
 dist/*
 node_modules/*
 tmp-web-ext-profile/*
+/test-results/
+/playwright-report/
+/playwright/.cache/

@@ -20,7 +20,10 @@ module.exports = {
   },
   plugins: ["react", "@typescript-eslint"],
   ignorePatterns: ["**/node_modules/**", "**/dist/**", "**/tmp-*/**"],
-  rules: {},
+  rules: {
+    // https://github.com/microsoft/playwright/issues/8798
+    "no-empty-pattern": "off",
+  },
   settings: {
     react: {
       version: "detect",
