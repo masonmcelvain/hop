@@ -77,7 +77,7 @@ export default function AddLinkModal({
   function handleLinkUrlChange(event: React.ChangeEvent<HTMLInputElement>) {
     event.preventDefault();
     const linkUrl = event.target.value ? event.target.value : "";
-    const linkUrlError = linkUrl ? "" : "Please enter a url for the link";
+    const linkUrlError = linkUrl ? "" : "Please enter a URL for the link";
     setFormValues({ ...formValues, linkUrl, linkUrlError });
   }
 
@@ -91,7 +91,7 @@ export default function AddLinkModal({
       if (!(e instanceof TypeError)) {
         throw e;
       }
-      imageUrlError = "Please enter a valid image url";
+      imageUrlError = "Please enter a valid image URL";
     }
     setFormValues({
       ...formValues,
@@ -129,7 +129,7 @@ export default function AddLinkModal({
                     autoFocus
                     value={formValues.linkName}
                     onChange={handleNameChange}
-                    placeholder="Name Goes Here"
+                    placeholder="Name"
                     maxLength={LINK_NAME_MAX_LENGTH}
                     isInvalid={!!formValues.linkNameError}
                   />
@@ -142,26 +142,25 @@ export default function AddLinkModal({
                 <FormHelperText>{formValues.linkNameError}</FormHelperText>
               </FormControl>
               <FormControl isRequired>
-                <FormLabel>Url</FormLabel>
+                <FormLabel>Link URL</FormLabel>
                 <Input
                   value={formValues.linkUrl}
                   onChange={handleLinkUrlChange}
-                  placeholder="Url Goes Here"
+                  placeholder="Link URL"
                   maxLength={2048}
                   isInvalid={!!formValues.linkUrlError}
                 />
                 <FormHelperText>{formValues.linkUrlError}</FormHelperText>
               </FormControl>
               <FormControl>
-                <FormLabel>Image Url</FormLabel>
+                <FormLabel>Image URL</FormLabel>
                 <Input
                   value={formValues.imageUrl}
                   onChange={handleImageUrlChange}
-                  placeholder="Image Url"
+                  placeholder="Image URL"
                   isInvalid={!!formValues.imageUrlError}
                   maxLength={2048}
                 />
-                <FormHelperText>Optional image url for the link</FormHelperText>
                 <FormHelperText>{formValues.imageUrlError}</FormHelperText>
               </FormControl>
             </VStack>
