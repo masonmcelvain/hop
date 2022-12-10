@@ -12,10 +12,7 @@
     "48": "icon.svg",
     "96": "icon.svg"
   },
-  "permissions": [
-    "storage",
-    "tabs"
-  ],
+  "permissions": ["storage", "tabs"],
   "browser_specific_settings": {
     "gecko": {
       "id": "hop@masonmcelvain.com"
