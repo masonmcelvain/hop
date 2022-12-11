@@ -1,5 +1,5 @@
 .vscode/*
-dist/*
+**/dist
 node_modules/*
 tmp-web-ext-profile/*
 /test-results/
