@@ -1,7 +1,8 @@
 name: Playwright Tests
+
 on:
-  push:
-    branches: "*"
+  - push
+
 jobs:
   test:
     timeout-minutes: 60
@@ -12,17 +13,18 @@ jobs:
       with:
         node-version: 16
 
-    - name: Install dependencies
-      run: npm ci
+    - uses: pnpm/action-setup@v2
+      with:
+        run_install: true
 
     - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
+      run: pnpm playwright install --with-deps
 
     - name: Build for Chrome
-      run: npm run build:chrome
+      run: pnpm build:chrome
 
     - name: Run Playwright tests
-      run: xvfb-run -- npx playwright test
+      run: xvfb-run -- pnpm playwright test
 
     - uses: actions/upload-artifact@v3
       if: always()
