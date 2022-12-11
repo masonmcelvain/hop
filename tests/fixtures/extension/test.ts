@@ -1,10 +1,12 @@
 import { test as base, chromium, BrowserContext, Page } from "@playwright/test";
 import path from "path";
+import links from "./data/links.json";
 
 export const test = base.extend<{
   context: BrowserContext;
   extensionId: string;
   page: Page;
+  links: typeof links;
 }>({
   context: async ({}, use) => {
     const pathToExtension = path.join(__dirname, "../../../dist/chrome");
@@ -28,6 +30,9 @@ export const test = base.extend<{
   page: async ({ extensionId, page }, use) => {
     await page.goto(`chrome-extension://${extensionId}/index.html`);
     await use(page);
+  },
+  links: async ({}, use) => {
+    await use(links);
   },
 });
 export const expect = test.expect;
