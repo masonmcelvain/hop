@@ -1,44 +1,24 @@
+import { Center, useBoolean, useDisclosure, VStack } from "@chakra-ui/react";
 import * as React from "react";
-import { Center, VStack, useBoolean, useDisclosure } from "@chakra-ui/react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import Grid from "./Grid";
-import ActionBar from "./ActionBar";
-import AddLinkModal from "./modals/AddLinkModal";
-import EditLinkModal from "./modals/EditLinkModal";
 import { LinksContext } from "../contexts/Links";
 import { LinkData } from "../contexts/Links/reducer";
+import ActionBar from "./ActionBar";
+import Grid from "./Grid";
+import LinkEditModal from "./LinkEditModal";
 
 export default function Page(): JSX.Element {
   const { state } = React.useContext(LinksContext);
-  const [isInEditMode, setIsInEditMode] = useBoolean();
+  const [isInEditMode, { toggle: toggleEditMode, off: offEditMode }] =
+    useBoolean();
   const [linkToEdit, setLinkToEdit] = React.useState<LinkData | null>(null);
 
   const {
-    isOpen: isAddLinkModalOpen,
-    onOpen: onAddLinkModalOpen,
-    onClose: onAddLinkModalClose,
+    isOpen: isLinkEditModalOpen,
+    onOpen: onLinkEditModalOpen,
+    onClose: onLinkEditModalClose,
   } = useDisclosure();
-  const {
-    isOpen: isUpdateLinkModalOpen,
-    onOpen: onUpdateLinkModalOpen,
-    onClose: onUpdateLinkModalClose,
-  } = useDisclosure();
-
-  function openUpdateLinkModalForCell(cellIndex: number): void {
-    setLinkToEdit(state.links[cellIndex]);
-    onUpdateLinkModalOpen();
-  }
-
-  function closeAddLinkModal(): void {
-    setIsInEditMode.off();
-    onAddLinkModalClose();
-  }
-
-  function closeUpdateLinkModal(): void {
-    setIsInEditMode.off();
-    onUpdateLinkModalClose();
-  }
 
   return (
     <VStack w="full" p={2}>
@@ -46,19 +26,25 @@ export default function Page(): JSX.Element {
         <Center w="full">
           <Grid
             isInEditMode={isInEditMode}
-            openUpdateLinkModal={openUpdateLinkModalForCell}
+            openUpdateLinkModal={(cellIndex: number) => {
+              setLinkToEdit(state.links[cellIndex]);
+              onLinkEditModalOpen();
+            }}
           />
         </Center>
       </DndProvider>
       <ActionBar
-        toggleEditMode={setIsInEditMode.toggle}
-        onAddLinkModalOpen={onAddLinkModalOpen}
+        toggleEditMode={toggleEditMode}
+        onLinkEditModalOpen={onLinkEditModalOpen}
       />
-      <AddLinkModal isOpen={isAddLinkModalOpen} onClose={closeAddLinkModal} />
-      <EditLinkModal
+      <LinkEditModal
         link={linkToEdit}
-        isOpen={isUpdateLinkModalOpen}
-        onClose={closeUpdateLinkModal}
+        isOpen={isLinkEditModalOpen}
+        onClose={() => {
+          setLinkToEdit(null);
+          offEditMode();
+          onLinkEditModalClose();
+        }}
       />
     </VStack>
   );

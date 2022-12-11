@@ -19,8 +19,6 @@ export const Reducer = (
       return updateLink(state, action.payload);
     case LinkAction.REORDER_LINKS:
       return reorderLinks(state, action.payload);
-    case LinkAction.UPDATE_IMAGE_URL:
-      return updateImageUrl(state, action.payload);
     case LinkAction.DELETE_LINK:
       return deleteLink(state, action.payload);
   }
@@ -106,24 +104,6 @@ function reorderLinks(
   };
 }
 
-function updateImageUrl(
-  prevState: StateType,
-  payload: AddImageUrlPayload
-): StateType {
-  const { url, linkId } = payload;
-
-  const newLinks = modifyLink(prevState.links, linkId, (link: LinkData) => ({
-    ...link,
-    imageUrl: url,
-  }));
-
-  setStoredLinks(newLinks);
-  return {
-    ...prevState,
-    links: newLinks,
-  };
-}
-
 function deleteLink(prevState: StateType, linkKeyIndex: number): StateType {
   const newLinkKeys = [...prevState.linkKeys];
   const [deletedLinkKey] = newLinkKeys.splice(linkKeyIndex, 1);
@@ -192,15 +172,6 @@ type ReorderLinksAction = {
   payload: ReorderLinksPayload;
 };
 
-type AddImageUrlPayload = {
-  url: string;
-  linkId: number;
-};
-type UpdateImageUrlAction = {
-  type: typeof LinkAction.UPDATE_IMAGE_URL;
-  payload: AddImageUrlPayload;
-};
-
 type DeleteLinkAction = {
   type: typeof LinkAction.DELETE_LINK;
   payload: number;
@@ -211,7 +182,6 @@ export type LinkActionTypes =
   | AddLinkAction
   | UpdateLinkAction
   | ReorderLinksAction
-  | UpdateImageUrlAction
   | DeleteLinkAction;
 
 export type StateType = {
@@ -225,7 +195,6 @@ export enum LinkAction {
   ADD_LINK,
   UPDATE_LINK,
   REORDER_LINKS,
-  UPDATE_IMAGE_URL,
   DELETE_LINK,
 }
 

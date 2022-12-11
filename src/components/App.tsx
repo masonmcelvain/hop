@@ -1,9 +1,9 @@
+import { useColorMode } from "@chakra-ui/react";
 import * as React from "react";
 import browser from "webextension-polyfill";
-import { useColorMode } from "@chakra-ui/react";
-import Page from "./components/Page";
-import { setStoredColorMode, StorageKey } from "./lib/webextension";
-import { LinksProvider } from "./contexts/Links";
+import { LinksProvider } from "../contexts/Links";
+import { setStoredColorMode, StorageKey } from "../lib/webextension";
+import Page from "./Page";
 
 export default function App(): JSX.Element {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -16,6 +16,8 @@ export default function App(): JSX.Element {
         ? storedColorMode !== colorMode && toggleColorMode()
         : setStoredColorMode(colorMode);
     });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
