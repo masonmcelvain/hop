@@ -18,7 +18,7 @@
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}'",
     "test": "playwright test",
     "test:debug": "playwright test --debug",
-    "type-check": "cd src && tsc --pretty --noEmit && cd ../tests && tsc --pretty --noEmit",
+    "type-check": "tsc --project src/ --noEmit && tsc --project tests/ --noEmit",
     "clean": "rm -rf dist tmp-web-ext-profile"
   },
   "author": "Mason McElvain",
