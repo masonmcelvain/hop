@@ -37,7 +37,7 @@ module.exports = (env) => {
 
   return {
     entry: {
-      app: "./src/index.js",
+      app: "./src/public/index.js",
     },
     resolve: {
       extensions: [".js", ".jsx", ".ts", ".tsx"],
@@ -52,7 +52,7 @@ module.exports = (env) => {
         },
         manifest: "manifest.json",
         filename: "index.html",
-        template: "./src/index.html",
+        template: "./src/public/index.html",
         hash: true,
       }),
       new CopyPlugin({
