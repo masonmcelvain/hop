@@ -27,7 +27,7 @@ export default function CardImage({ linkData }: CardImageProps): JSX.Element {
       };
       fetchAndSetFaviconUrl();
     }
-  }, [id, url, imageUrl]);
+  }, [dispatch, id, imageUrl, url]);
 
   return imageUrl ? (
     <Image src={imageUrl} alt={name} w={8} />

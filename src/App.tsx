@@ -16,6 +16,8 @@ export default function App(): JSX.Element {
         ? storedColorMode !== colorMode && toggleColorMode()
         : setStoredColorMode(colorMode);
     });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

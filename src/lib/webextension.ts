@@ -3,7 +3,7 @@ import { ColorMode } from "@chakra-ui/react";
 import { LinkData } from "../contexts/Links/reducer";
 
 export function setStoredColorMode(colorMode: ColorMode): void {
-  setStorageWithKey(StorageKey.COLOR_MODE, colorMode);
+  storage.set({ [StorageKey.COLOR_MODE]: colorMode });
 }
 
 export function setStoredLinksAndKeys(
@@ -15,17 +15,17 @@ export function setStoredLinksAndKeys(
 }
 
 export function setStoredLinkKeys(linkKeys: string[]): void {
-  setStorageWithKey(StorageKey.LINK_STORAGE_KEYS, linkKeys);
+  storage.set({ [StorageKey.LINK_STORAGE_KEYS]: linkKeys });
 }
 
 export function setStoredLinks(links: LinkData[]): void {
   links.forEach((link) => {
-    setStorageWithKey(getStorageKeyForLink(link), link);
+    storage.set({ [getStorageKeyForLink(link)]: link });
   });
 }
 
 export function setNextStoredLinkId(id: number): void {
-  setStorageWithKey(StorageKey.NEXT_LINK_ID, id);
+  storage.set({ [StorageKey.NEXT_LINK_ID]: id });
 }
 
 export async function navigateCurrentTab(url: string): Promise<void> {
@@ -52,11 +52,7 @@ export function getLinkIdForStorageKey(key: string): number {
   return parseInt(key.replace(StorageKey.LINK_STORAGE_PREFIX, ""), 10);
 }
 
-function setStorageWithKey(key: string, value: any) {
-  const storageObj: Record<string, any> = {};
-  storageObj[key] = value;
-  browser.storage.local.set(storageObj);
-}
+const storage = browser.storage.local;
 
 /**
  * Keys for values in chrome storage
