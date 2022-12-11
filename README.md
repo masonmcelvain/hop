@@ -25,20 +25,26 @@ If you'd like to see a new feature or you've spotted a bug, please check to see 
 
 If there's an issue you'd like to tackle, please fork this repository, make your changes in a series of well documented commits, and open a pull request. I appreciate your interest in contributing to this project.
 
-### Develop Locally
+### Installation
 
 - Clone the repository and navigate to it's root directory with `git clone https://github.com/masonmcelvain/hop.git && cd hop`
-- Install dependencies with `npm install`
-  - You'll need version 16 of [Node.js](https://nodejs.org/en/download/) installed, and `npm` version 8. I recommend using [`nvm`](https://github.com/nvm-sh/nvm) to switch between versions quickly.
-- Start a development server with `npm run start:chrome` or `npm run start:firefox`.
+- Install dependencies with `pnpm install`
+  - You'll need version 16 of [Node.js](https://nodejs.org/en/download/) installed, and `pnpm` version 7.
+
+### Running a dev server
+
+- Start a development server with `pnpm start:chrome` or `pnpm start:firefox`.
 - Special Chrome instructions:
   - Navigate to `chrome://extensions` in your browser. You can also access this page by clicking on the Chrome menu on the top right side of the Omnibox, hovering over More Tools and selecting Extensions.
   - Check the box next to Developer Mode.
   - Click Load Unpacked Extension and select the `dist` directory in the top level directory of this repository.
 - Open the extension in your browser to see the app.
   - Note: When you make code changes, you most close the extension popup (i.e. click anything but the extension window) and re-open it to see those changes reflected.
-- Have fun!
 
-### Building for Production
+### Running tests
 
-- Run `npm run build`, which will output minified projects in `dist/chrome`, `dist/firefox`, and zipped projects in `dist/zip/chrome.zip` and `dist/zip/firefox.zip`.
+- Run [Playwright tests](https://playwright.dev/docs/intro) with `pnpm test`.
+
+### Building for production
+
+- Run `pnpm build`, which will output minified projects in `dist/chrome`, `dist/firefox`, and zipped projects in `dist/zip/chrome.zip` and `dist/zip/firefox.zip`.
