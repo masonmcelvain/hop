@@ -1,10 +1,10 @@
-name: Lint
+name: Type Check
 
 on:
   - push
 
 jobs:
-  eslint:
+  tsc:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -36,5 +36,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Run ESLint
-        run: pnpm lint
+      - name: Run tsc
+        run: pnpm type-check
