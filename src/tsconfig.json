@@ -12,5 +12,5 @@
     "allowJs": true,
     "checkJs": true,
     "forceConsistentCasingInFileNames": true
-  },
+  }
 }
