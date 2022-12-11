@@ -17,10 +17,9 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import * as React from "react";
+import { LINK_NAME_MAX_LENGTH } from "../config/constants";
 import { LinksContext } from "../contexts/Links";
 import { LinkAction, LinkData } from "../contexts/Links/reducer";
-
-const LINK_NAME_MAX_LENGTH = 32;
 
 function getFormValuesForLink(link: LinkData | null): FormFields {
   return {
