@@ -20,6 +20,7 @@ import * as React from "react";
 import { LINK_NAME_MAX_LENGTH } from "../config/constants";
 import { LinksContext } from "../contexts/Links";
 import { LinkAction, LinkData } from "../contexts/Links/reducer";
+import { getCurrentTab } from "../lib/webextension";
 
 function getFormValuesForLink(link: LinkData | null): FormFields {
   return {
@@ -56,9 +57,25 @@ export default function LinkEditModal({
     getFormValuesForLink(link)
   );
 
+  const populateFormWithTab = React.useCallback(async () => {
+    const tab = await getCurrentTab();
+    setFormValues({
+      name: tab.title?.slice(0, LINK_NAME_MAX_LENGTH) ?? "",
+      nameError: "",
+      url: tab?.url ?? "",
+      urlError: "",
+      imageUrl: tab?.favIconUrl ?? "",
+      imageUrlError: "",
+    });
+  }, [setFormValues]);
+
   React.useEffect(() => {
-    setFormValues(getFormValuesForLink(link));
-  }, [link]);
+    if (link) {
+      setFormValues(getFormValuesForLink(link));
+    } else if (isOpen) {
+      populateFormWithTab();
+    }
+  }, [isOpen, link, populateFormWithTab]);
 
   const handleNameChange = React.useCallback<
     React.ChangeEventHandler<HTMLInputElement>
