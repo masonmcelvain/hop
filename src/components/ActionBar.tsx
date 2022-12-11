@@ -11,11 +11,11 @@ import { setStoredColorMode } from "../lib/webextension";
 
 type ActionBarProps = {
   toggleEditMode: () => void;
-  onAddLinkModalOpen: () => void;
+  onLinkEditModalOpen: () => void;
 };
 function ActionBar({
   toggleEditMode,
-  onAddLinkModalOpen,
+  onLinkEditModalOpen,
 }: ActionBarProps): JSX.Element {
   const { colorMode, toggleColorMode } = useColorMode();
 
@@ -37,7 +37,7 @@ function ActionBar({
         <IconButton
           aria-label="Create new link"
           icon={<Plus size={32} />}
-          onClick={onAddLinkModalOpen}
+          onClick={onLinkEditModalOpen}
         />
 
         <IconButton
