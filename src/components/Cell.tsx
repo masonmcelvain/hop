@@ -91,7 +91,7 @@ function Cell({
         <VStack pos="absolute" top={0} left={0} zIndex="docked" spacing="px">
           <IconButton
             icon={<Edit2 size={16} />}
-            aria-label="Edit this card"
+            aria-label="Edit this link"
             onClick={() => openUpdateLinkModal(index)}
             variant="ghost"
             size="xs"

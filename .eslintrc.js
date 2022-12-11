@@ -23,6 +23,15 @@ module.exports = {
   rules: {
     // https://github.com/microsoft/playwright/issues/8798
     "no-empty-pattern": "off",
+    // Allow unused symbols that start with an underscore.
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+        caughtErrorsIgnorePattern: "^_",
+      },
+    ],
   },
   settings: {
     react: {

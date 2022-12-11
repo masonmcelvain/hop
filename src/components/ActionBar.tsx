@@ -29,7 +29,7 @@ function ActionBar({
       <Divider />
       <ButtonGroup variant="ghost" spacing={2}>
         <IconButton
-          aria-label="Choose links to edit"
+          aria-label="Edit links"
           icon={<Edit size={24} />}
           onClick={toggleEditMode}
         />
