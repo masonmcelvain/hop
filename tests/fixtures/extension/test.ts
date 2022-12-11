@@ -7,6 +7,7 @@ export const test = base.extend<{
   extensionId: string;
   page: Page;
   links: typeof links;
+  pageWithLinks: Page;
 }>({
   context: async ({}, use) => {
     const pathToExtension = path.join(__dirname, "../../../dist/chrome");
@@ -33,6 +34,20 @@ export const test = base.extend<{
   },
   links: async ({}, use) => {
     await use(links);
+  },
+  pageWithLinks: async ({ context, extensionId, links }, use) => {
+    const page = await context.newPage();
+    await page.goto(`chrome-extension://${extensionId}/index.html`);
+
+    for (const { name, url, imageUrl } of links) {
+      await page.getByRole("button", { name: "Create new link" }).click();
+      await page.getByPlaceholder("Name").fill(name);
+      await page.getByPlaceholder("Link URL").fill(url);
+      await page.getByPlaceholder("Image URL").fill(imageUrl);
+      await page.getByRole("button", { name: "Create", exact: true }).click();
+    }
+
+    await use(page);
   },
 });
 export const expect = test.expect;
