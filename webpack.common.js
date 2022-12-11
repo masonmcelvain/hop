@@ -5,8 +5,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const WebpackExtensionManifestPlugin = require("webpack-extension-manifest-plugin");
 const ZipPlugin = require("zip-webpack-plugin");
-const chromeManifest = require("./src/chrome/manifest.json");
-const firefoxManifest = require("./src/firefox/manifest.json");
+const chromeManifest = require("./src/public/chrome/manifest.json");
+const firefoxManifest = require("./src/public/firefox/manifest.json");
 
 const CHROME = "chrome";
 const FIREFOX = "firefox";
@@ -21,14 +21,14 @@ module.exports = (env) => {
   switch (env.target) {
     case CHROME:
       iconPattern = {
-        from: "src/chrome/icons",
+        from: "src/public/chrome/icons",
         to: "icons",
       };
       baseManifest = chromeManifest;
       break;
     case FIREFOX:
       iconPattern = {
-        from: "src/firefox/icon.svg",
+        from: "src/public/firefox/icon.svg",
         to: "icon.svg",
       };
       baseManifest = firefoxManifest;
