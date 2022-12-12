@@ -26,9 +26,11 @@ export const test = base.extend<{
     await page.goto("chrome://extensions/");
     await page.getByRole("button", { name: "Details" }).click();
     const extensionId = page.url().split("?id=")[1];
+    await page.close();
     await use(extensionId);
   },
-  page: async ({ extensionId, page }, use) => {
+  page: async ({ context, extensionId }, use) => {
+    const [page] = context.pages();
     await page.goto(`chrome-extension://${extensionId}/index.html`);
     await use(page);
   },
@@ -36,7 +38,7 @@ export const test = base.extend<{
     await use(links);
   },
   pageWithLinks: async ({ context, extensionId, links }, use) => {
-    const page = await context.newPage();
+    const [page] = context.pages();
     await page.goto(`chrome-extension://${extensionId}/index.html`);
 
     for (const { name, url, imageUrl } of links) {
