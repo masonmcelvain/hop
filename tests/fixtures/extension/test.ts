@@ -40,7 +40,6 @@ export const test = base.extend<{
   pageWithLinks: async ({ context, extensionId, links }, use) => {
     const [page] = context.pages();
     await page.goto(`chrome-extension://${extensionId}/index.html`);
-
     for (const { name, url, imageUrl } of links) {
       await page.getByRole("button", { name: "Create new link" }).click();
       await page.getByPlaceholder("Name").fill(name);
@@ -48,7 +47,6 @@ export const test = base.extend<{
       await page.getByPlaceholder("Image URL").fill(imageUrl);
       await page.getByRole("button", { name: "Create", exact: true }).click();
     }
-
     await use(page);
   },
 });
