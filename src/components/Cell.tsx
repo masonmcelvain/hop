@@ -98,7 +98,7 @@ function Cell({
           />
           <IconButton
             icon={<X size={20} />}
-            aria-label="Delete this card"
+            aria-label="Delete this link"
             onClick={deleteChildCard}
             colorScheme="red"
             variant="ghost"
