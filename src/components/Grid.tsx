@@ -37,10 +37,10 @@ export default function Grid({
   const numCells = getNumCells(state.linkKeys ? state.linkKeys.length : 0);
 
   function renderCell(i: number) {
-    const cellHasACard = i < state.linkKeys.length;
+    const isEmpty = i >= state.linkKeys.length;
 
     let card = null;
-    if (cellHasACard) {
+    if (!isEmpty) {
       const linkKey = state.linkKeys[i];
       const link = state.links.find(
         (link) => link && getStorageKeyForLink(link) === linkKey
@@ -56,6 +56,7 @@ export default function Grid({
         manageIsOverEmpty={[isOverEmpty, setIsOverEmpty]}
         isInEditMode={isInEditMode}
         openUpdateLinkModal={openUpdateLinkModal}
+        data-testid={isEmpty ? "empty-cell" : "non-empty-cell"}
       >
         {card}
       </Cell>
