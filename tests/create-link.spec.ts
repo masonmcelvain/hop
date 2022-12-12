@@ -1,5 +1,12 @@
 import { test, expect } from "@fixtures/extension";
 
+test("new link modal is prepopulated", async ({ page }) => {
+  await page.getByRole("button", { name: "Create new link" }).click();
+  await expect(page.getByPlaceholder("Name")).not.toBeEmpty();
+  await expect(page.getByPlaceholder("Link URL")).not.toBeEmpty();
+  // The favicon URL is inaccessible for chrome-extension pages.
+});
+
 test("can create new link", async ({ page, links }) => {
   const [{ name, url, imageUrl }] = links;
   await page.getByRole("button", { name: "Create new link" }).click();
