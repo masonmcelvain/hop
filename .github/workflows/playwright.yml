@@ -37,7 +37,7 @@ jobs:
         run: pnpm install
 
       - name: Install Playwright browsers
-        run: pnpm playwright install --with-deps
+        run: pnpm playwright install chrome chromium --with-deps
 
       - name: Build for Chrome
         run: pnpm build:chrome
