@@ -53,3 +53,17 @@ test("can drag link down", async ({ links, pageWithLinks: page }) => {
     ...rest,
   ]);
 });
+
+test("can drag over empty cell", async ({ links, pageWithLinks: page }) => {
+  const [name1, name2, name3, name4, ...rest] = links.map(({ name }) => name);
+  await page
+    .getByRole("link", { name: name1 })
+    .dragTo(page.getByTestId("empty-cell").first());
+  await expect(page.getByRole("link")).toHaveText([
+    name2,
+    name3,
+    name4,
+    name1,
+    ...rest,
+  ]);
+});

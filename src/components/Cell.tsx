@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Center, IconButton, VStack } from "@chakra-ui/react";
+import { BoxProps, Center, IconButton, VStack } from "@chakra-ui/react";
 import { CardDragItem, DragItemTypes } from "./Card";
 import { useDrop } from "react-dnd";
 import { Edit2, X } from "react-feather";
@@ -8,7 +8,7 @@ import { LinkAction } from "../contexts/Links/reducer";
 import { openUpdateLinkModalForCellType } from "../components/Page";
 import { setStoredLinkKeys } from "../lib/webextension";
 
-type CellProps = {
+type CellProps = BoxProps & {
   index: number;
   zIndex: number;
   manageIsOverEmpty: [
@@ -31,6 +31,7 @@ function Cell({
   isInEditMode,
   openUpdateLinkModal,
   children,
+  ...boxProps
 }: CellProps): JSX.Element {
   const { state, dispatch } = React.useContext(LinksContext);
   const [isOverEmpty, setIsOverEmpty] = manageIsOverEmpty;
@@ -86,6 +87,7 @@ function Cell({
       w={sideLength}
       h={sideLength}
       zIndex={zIndex}
+      {...boxProps}
     >
       {children && isInEditMode ? (
         <VStack pos="absolute" top={0} left={0} zIndex="docked" spacing="px">
