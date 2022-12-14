@@ -1,6 +1,6 @@
 import browser from "webextension-polyfill";
 import { ColorMode } from "@chakra-ui/react";
-import { LinkData } from "../contexts/Links/reducer";
+import { LinkData } from "../models/link-state";
 
 export function setStoredColorMode(colorMode: ColorMode): void {
   storage.set({ [StorageKey.COLOR_MODE]: colorMode });

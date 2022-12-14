@@ -5,9 +5,15 @@ import {
   setStoredLinksAndKeys,
   StorageKey,
 } from "../../lib/webextension";
-import { Reducer, LinkAction, StateType, LinkActionTypes } from "./reducer";
+import {
+  LinkState,
+  parseLinkKeys,
+  parseNextLinkId,
+  parseStoredLinks,
+} from "../../models/link-state";
+import { LinkAction, LinkActionTypes, Reducer } from "./reducer";
 
-const InitialState: StateType = {
+const InitialState: LinkState = {
   linkKeys: [],
   links: [],
   nextLinkId: 0,
@@ -19,7 +25,7 @@ function cleanseStoredState(): void {
 }
 
 export const LinksContext = React.createContext<{
-  state: StateType;
+  state: LinkState;
   dispatch: React.Dispatch<LinkActionTypes>;
 }>({
   state: InitialState,
@@ -36,17 +42,22 @@ export const LinksProvider = ({
   React.useEffect(() => {
     const initializeState = async () => {
       const {
-        [StorageKey.NEXT_LINK_ID]: nextLinkId,
-        [StorageKey.LINK_STORAGE_KEYS]: linkKeys,
+        [StorageKey.NEXT_LINK_ID]: storedNextLinkId,
+        [StorageKey.LINK_STORAGE_KEYS]: storedLinkKeys,
       } = await browser.storage.local.get([
         StorageKey.LINK_STORAGE_KEYS,
         StorageKey.NEXT_LINK_ID,
       ]);
+      const nextLinkId = parseNextLinkId(storedNextLinkId);
+      const linkKeys = parseLinkKeys(storedLinkKeys);
 
-      if (nextLinkId && linkKeys?.length > 0) {
-        const storedLinks = await browser.storage.local.get(linkKeys);
-        const links = linkKeys.map((key: string) => storedLinks[key]) ?? [];
-        if (links.length > 0) {
+      if (nextLinkId && linkKeys?.length) {
+        const storedLinks = parseStoredLinks(
+          await browser.storage.local.get(linkKeys)
+        );
+        const links =
+          (storedLinks && linkKeys.map((key) => storedLinks[key])) ?? [];
+        if (links.length) {
           dispatch({
             type: LinkAction.SET_STATE_FROM_STORAGE,
             payload: {

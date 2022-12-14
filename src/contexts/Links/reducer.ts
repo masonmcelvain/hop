@@ -5,11 +5,12 @@ import {
   setStoredLinks,
   setStoredLinksAndKeys,
 } from "../../lib/webextension";
+import { LinkData, LinkState } from "../../models/link-state";
 
 export const Reducer = (
-  state: StateType,
+  state: LinkState,
   action: LinkActionTypes
-): StateType => {
+): LinkState => {
   switch (action.type) {
     case LinkAction.SET_STATE_FROM_STORAGE:
       return setStateFromStorage(action.payload);
@@ -24,11 +25,11 @@ export const Reducer = (
   }
 };
 
-function setStateFromStorage(payload: StateType): StateType {
+function setStateFromStorage(payload: LinkState): LinkState {
   return payload;
 }
 
-function addLink(prevState: StateType, payload: AddLinkPayload): StateType {
+function addLink(prevState: LinkState, payload: AddLinkPayload): LinkState {
   const { name, url, imageUrl } = payload;
 
   const currentLinkId = prevState.nextLinkId;
@@ -54,9 +55,9 @@ function addLink(prevState: StateType, payload: AddLinkPayload): StateType {
 }
 
 function updateLink(
-  prevState: StateType,
+  prevState: LinkState,
   payload: UpdateLinkPayload
-): StateType {
+): LinkState {
   const { id, name, url, imageUrl } = payload;
   const newLinks = modifyLink(prevState.links, id, () => ({
     id,
@@ -73,9 +74,9 @@ function updateLink(
  * The caller must save the links to local storage.
  */
 function reorderLinks(
-  prevState: StateType,
+  prevState: LinkState,
   payload: ReorderLinksPayload
-): StateType {
+): LinkState {
   const { sourceId } = payload;
   let { newLinkKeyIndex } = payload;
   const newLinkKeys = [...prevState.linkKeys];
@@ -104,7 +105,7 @@ function reorderLinks(
   };
 }
 
-function deleteLink(prevState: StateType, linkKeyIndex: number): StateType {
+function deleteLink(prevState: LinkState, linkKeyIndex: number): LinkState {
   const newLinkKeys = [...prevState.linkKeys];
   const [deletedLinkKey] = newLinkKeys.splice(linkKeyIndex, 1);
 
@@ -139,7 +140,7 @@ function modifyLink(
 
 type SetStateFromStorageAction = {
   type: typeof LinkAction.SET_STATE_FROM_STORAGE;
-  payload: StateType;
+  payload: LinkState;
 };
 
 type AddLinkPayload = {
@@ -184,12 +185,6 @@ export type LinkActionTypes =
   | ReorderLinksAction
   | DeleteLinkAction;
 
-export type StateType = {
-  linkKeys: string[];
-  links: LinkData[];
-  nextLinkId: number;
-};
-
 export enum LinkAction {
   SET_STATE_FROM_STORAGE,
   ADD_LINK,
@@ -197,10 +192,3 @@ export enum LinkAction {
   REORDER_LINKS,
   DELETE_LINK,
 }
-
-export type LinkData = {
-  id: number;
-  name: string;
-  url: string;
-  imageUrl: string;
-};
