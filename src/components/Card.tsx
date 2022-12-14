@@ -42,16 +42,17 @@ export default function Card({
       }
     : {};
 
-  async function clickHandler(
-    event: React.MouseEvent<HTMLButtonElement>
-  ): Promise<void> {
-    if (event.ctrlKey) {
-      event.preventDefault();
-      await openInNewTab(url.toString());
-    } else {
-      await navigateCurrentTab(url.toString());
-    }
-  }
+  const clickHandler = React.useCallback<React.MouseEventHandler>(
+    (event) => {
+      if (event.ctrlKey) {
+        event.preventDefault();
+        openInNewTab(url.toString());
+      } else {
+        navigateCurrentTab(url.toString());
+      }
+    },
+    [url]
+  );
 
   return (
     <Button

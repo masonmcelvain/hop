@@ -35,8 +35,8 @@ export async function navigateCurrentTab(url: string): Promise<void> {
   window.close();
 }
 
-export async function openInNewTab(url: string): Promise<void> {
-  await browser.tabs.create({ url, active: false });
+export function openInNewTab(url: string): void {
+  browser.tabs.create({ url, active: false });
 }
 
 export async function getCurrentTab(): Promise<browser.Tabs.Tab> {
