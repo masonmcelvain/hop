@@ -18,7 +18,7 @@ type CellProps = {
 
 const SIDE_LENGTH = 90;
 
-function Cell({
+export default function Cell({
   index,
   isOverEmpty,
   setIsOverEmpty,
@@ -41,7 +41,7 @@ function Cell({
     [isInEditMode, link]
   );
 
-  const [{ isOver, dragItem }, drop] = useDrop(
+  const [{ isOver }, drop] = useDrop(
     () => ({
       accept: DragItemTypes.CARD,
       hover: (item: CardDragItem) =>
@@ -56,22 +56,15 @@ function Cell({
         setStoredLinkKeys(state.linkKeys);
       },
       collect: (monitor) => ({
-        isOver: !!monitor.isOver(),
-        dragItem: monitor.getItem(),
+        isOver: monitor.isOver(),
       }),
     }),
     [index, state, dispatch]
   );
 
   React.useEffect(() => {
-    if (isOver && !card) {
-      setIsOverEmpty.on();
-    } else if (isOver && card) {
-      setIsOverEmpty.off();
-    } else if (!dragItem) {
-      setIsOverEmpty.off();
-    }
-  }, [card, isOver, dragItem, setIsOverEmpty]);
+    isOver && !card ? setIsOverEmpty.on() : setIsOverEmpty.off();
+  }, [card, isOver, setIsOverEmpty]);
 
   const deleteChildCard: React.MouseEventHandler = React.useCallback(
     (event) => {
@@ -117,5 +110,3 @@ function Cell({
     </Square>
   );
 }
-
-export default Cell;
