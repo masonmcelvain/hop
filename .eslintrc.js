@@ -33,6 +33,7 @@ module.exports = {
         caughtErrorsIgnorePattern: "^_",
       },
     ],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
   },
   settings: {
     react: {
