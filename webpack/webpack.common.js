@@ -37,7 +37,7 @@ module.exports = (env) => {
 
   return {
     entry: {
-      app: "./src/public/index.js",
+      app: "./src/public/index.tsx",
     },
     resolve: {
       extensions: [".tsx", ".ts", ".js"],
