@@ -1,5 +1,5 @@
 import { Center, useBoolean, useDisclosure, VStack } from "@chakra-ui/react";
-import { LinksContext } from "@contexts/Links";
+import { LinksContext } from "@contexts/links";
 import { LinkData } from "@models/link-state";
 import * as React from "react";
 import { DndProvider } from "react-dnd";

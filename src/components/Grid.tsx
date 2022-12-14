@@ -1,5 +1,5 @@
 import { SimpleGrid, useBoolean } from "@chakra-ui/react";
-import { LinksContext } from "@contexts/Links";
+import { LinksContext } from "@contexts/links";
 import * as React from "react";
 import Cell from "./Cell";
 import { openUpdateLinkModalForCellType } from "./Page";

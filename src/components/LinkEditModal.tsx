@@ -14,10 +14,10 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
 import { LINK_NAME_MAX_LENGTH } from "@config/constants";
-import { LinkAction, LinksContext } from "@contexts/Links";
+import { LinkAction, LinksContext } from "@contexts/links";
 import { getCurrentTab } from "@lib/webextension";
 import { LinkData } from "@models/link-state";
 import * as React from "react";

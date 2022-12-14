@@ -1,5 +1,5 @@
 import { useColorMode, useTheme } from "@chakra-ui/react";
-import { LinksProvider } from "@contexts/Links";
+import { LinksProvider } from "@contexts/links";
 import { setStoredColorMode, StorageKey } from "@lib/webextension";
 import { parseColorMode } from "@models/color-mode";
 import * as React from "react";
