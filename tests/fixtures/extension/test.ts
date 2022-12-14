@@ -7,6 +7,7 @@ export const test = base.extend<{
   extensionId: string;
   page: Page;
   links: typeof links;
+  pageWithOneLink: Page;
   pageWithLinks: Page;
 }>({
   context: async ({}, use) => {
@@ -31,15 +32,21 @@ export const test = base.extend<{
   },
   page: async ({ context, extensionId }, use) => {
     const [page] = context.pages();
-    await page.goto(`chrome-extension://${extensionId}/index.html`);
+    await page.goto(extensionUrl(extensionId));
     await use(page);
   },
   links: async ({}, use) => {
     await use(links);
   },
+  pageWithOneLink: async ({ context, extensionId, links }, use) => {
+    const [page] = context.pages();
+    await page.goto(extensionUrl(extensionId));
+    await addLink(page, links[0]);
+    await use(page);
+  },
   pageWithLinks: async ({ context, extensionId, links }, use) => {
     const [page] = context.pages();
-    await page.goto(`chrome-extension://${extensionId}/index.html`);
+    await page.goto(extensionUrl(extensionId));
     for (const link of links) {
       await addLink(page, link);
     }
@@ -54,4 +61,8 @@ async function addLink(page: Page, link: typeof links[0]) {
   await page.getByPlaceholder("Link URL").fill(link.url);
   await page.getByPlaceholder("Image URL").fill(link.imageUrl);
   await page.getByRole("button", { name: "Create", exact: true }).click();
+}
+
+function extensionUrl(extensionId: string) {
+  return `chrome-extension://${extensionId}/index.html`;
 }
