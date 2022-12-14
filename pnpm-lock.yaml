@@ -52,16 +52,12 @@ dependencies:
   '@chakra-ui/react': 1.8.9_ui5vjjhbvcimrhoqe7n3pr2gqe
   '@emotion/react': 11.10.5_czskpwcgwtkufrblwuek25f2b4
   '@emotion/styled': 11.10.5_sebsp7644knzvh4a72jultvi6e
-  '@types/node': 14.18.34
-  '@types/react': 17.0.52
-  '@types/react-dom': 17.0.18
   framer-motion: 4.1.17_sfoxds7t5ydpegc3knd667wn6m
   react: 17.0.2
   react-dnd: 14.0.5_y5jr4lkvtd6y6vu4yz4ux2gqmu
   react-dnd-html5-backend: 14.1.0
   react-dom: 17.0.2_react@17.0.2
   react-feather: 2.0.10_react@17.0.2
-  typescript: 4.9.4
   zod: 3.20.2
 
 devDependencies:
@@ -72,6 +68,9 @@ devDependencies:
   '@babel/preset-typescript': 7.18.6_@babel+core@7.20.5
   '@babel/runtime': 7.20.6
   '@playwright/test': 1.28.1
+  '@types/node': 14.18.34
+  '@types/react': 17.0.52
+  '@types/react-dom': 17.0.18
   '@types/webextension-polyfill': 0.8.3
   '@typescript-eslint/eslint-plugin': 4.33.0_thyv6urrmcfyirt6hwk42bhgva
   '@typescript-eslint/parser': 4.33.0_yfqovispp7u7jaktymfaqwl2py
@@ -90,6 +89,7 @@ devDependencies:
   mini-css-extract-plugin: 2.7.2_webpack@5.75.0
   prettier: 2.8.1
   style-loader: 2.0.0_webpack@5.75.0
+  typescript: 4.9.4
   web-ext: 7.4.0
   webextension-polyfill: 0.10.0
   webpack: 5.75.0_webpack-cli@4.10.0
@@ -2598,13 +2598,12 @@ packages:
 
   /@types/prop-types/15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
-    dev: false
 
   /@types/react-dom/17.0.18:
     resolution: {integrity: sha512-rLVtIfbwyur2iFKykP2w0pl/1unw26b5td16d5xMgp7/yjTHomkyxPYChFoCr/FtEX1lN9wY6lFj1qvKdS5kDw==}
     dependencies:
       '@types/react': 17.0.52
-    dev: false
+    dev: true
 
   /@types/react/17.0.52:
     resolution: {integrity: sha512-vwk8QqVODi0VaZZpDXQCmEmiOuyjEFPY7Ttaw5vjM112LOq37yz1CDJGrRJwA1fYEq4Iitd5rnjd1yWAc/bT+A==}
@@ -2612,11 +2611,9 @@ packages:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
       csstype: 3.1.1
-    dev: false
 
   /@types/scheduler/0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
-    dev: false
 
   /@types/warning/3.0.0:
     resolution: {integrity: sha512-t/Tvs5qR47OLOr+4E9ckN8AmP2Tf16gWq+/qA4iUGS/OOyHVO8wv2vjJuX8SNOUTJyWb+2t7wJm6cXILFnOROA==}
@@ -3913,7 +3910,6 @@ packages:
 
   /csstype/3.1.1:
     resolution: {integrity: sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==}
-    dev: false
 
   /dashdash/1.14.1:
     resolution: {integrity: sha512-jRFi8UDGo6j+odZiEpjazZaWqEal3w/basFjQHQEwVtZJGDpxbH1MeYluwCS8Xq5wmLJooDlMgvVarmWfGM44g==}
@@ -7897,6 +7893,7 @@ packages:
     resolution: {integrity: sha512-Uz+dTXYzxXXbsFpM86Wh3dKCxrQqUcVMxwU54orwlJjOpO3ao8L7j5lH+dWfTwgCwIuM9GQ2kvVotzYJMXTBZg==}
     engines: {node: '>=4.2.0'}
     hasBin: true
+    dev: true
 
   /unbox-primitive/1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}
