@@ -40,7 +40,7 @@ module.exports = (env) => {
       app: "./src/public/index.js",
     },
     resolve: {
-      extensions: [".js", ".jsx", ".ts", ".tsx"],
+      extensions: [".tsx", ".ts", ".js"],
     },
     plugins: [
       new HtmlWebpackPlugin({
@@ -71,12 +71,9 @@ module.exports = (env) => {
     module: {
       rules: [
         {
-          test: /\.(js|jsx|ts|tsx)$/,
+          test: /\.(js|tsx?)$/,
           exclude: /node_modules/,
-          loader: "babel-loader",
-          options: {
-            plugins: ["@babel/transform-runtime"],
-          },
+          loader: "ts-loader",
         },
         {
           test: /\.css$/,
