@@ -3,7 +3,6 @@ import { Button, Text, VStack, useBoolean } from "@chakra-ui/react";
 import { useDrag } from "react-dnd";
 import CardImage from "./CardImage";
 import { LinkData } from "../contexts/Links/reducer";
-import { LinksContext } from "../contexts/Links";
 import { navigateCurrentTab, openInNewTab } from "../lib/webextension";
 
 export const DragItemTypes = {
@@ -22,7 +21,6 @@ export default function Card({
   isInEditMode,
 }: CardProps): JSX.Element {
   const { id, name, url } = linkData;
-  const { dispatch } = React.useContext(LinksContext);
   const [isMouseOver, setIsMouseOver] = useBoolean();
   const [{ isDragEventInProgress }, drag] = useDrag(
     () => ({
@@ -33,7 +31,7 @@ export default function Card({
         isDragEventInProgress: !!monitor.getItem(),
       }),
     }),
-    [linkData, dispatch]
+    [id]
   );
 
   const conditionalButtonProps = isDragEventInProgress
