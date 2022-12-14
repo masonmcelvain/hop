@@ -5,13 +5,7 @@ import {
   setStoredLinksAndKeys,
   StorageKey,
 } from "../../lib/webextension";
-import {
-  Reducer,
-  LinkAction,
-  StateType,
-  LinkActionTypes,
-  LinkData,
-} from "./reducer";
+import { Reducer, LinkAction, StateType, LinkActionTypes } from "./reducer";
 
 const InitialState: StateType = {
   linkKeys: [],
@@ -39,43 +33,35 @@ export const LinksProvider = ({
 }): JSX.Element => {
   const [state, dispatch] = React.useReducer(Reducer, InitialState);
 
-  const initializeState = React.useCallback(async (): Promise<void> => {
-    const payload: StateType = {
-      linkKeys: state.linkKeys,
-      links: state.links,
-      nextLinkId: state.nextLinkId,
-    };
-
-    browser.storage.local
-      .get([StorageKey.LINK_STORAGE_KEYS, StorageKey.NEXT_LINK_ID])
-      .then((result) => {
-        const nextLinkId = result[StorageKey.NEXT_LINK_ID];
-        const storedLinkKeys = result[StorageKey.LINK_STORAGE_KEYS];
-
-        if (nextLinkId && storedLinkKeys && storedLinkKeys.length > 0) {
-          payload.nextLinkId = nextLinkId;
-          payload.linkKeys = storedLinkKeys;
-          browser.storage.local.get(storedLinkKeys).then((result) => {
-            const storedLinks = storedLinkKeys.map(
-              (key: string) => result[key] as LinkData
-            );
-            payload.links = storedLinks;
-
-            dispatch({
-              type: LinkAction.SET_STATE_FROM_STORAGE,
-              payload,
-            });
-          });
-        } else {
-          cleanseStoredState();
-        }
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   React.useEffect(() => {
+    const initializeState = async () => {
+      const {
+        [StorageKey.NEXT_LINK_ID]: nextLinkId,
+        [StorageKey.LINK_STORAGE_KEYS]: linkKeys,
+      } = await browser.storage.local.get([
+        StorageKey.LINK_STORAGE_KEYS,
+        StorageKey.NEXT_LINK_ID,
+      ]);
+
+      if (nextLinkId && linkKeys?.length > 0) {
+        const storedLinks = await browser.storage.local.get(linkKeys);
+        const links = linkKeys.map((key: string) => storedLinks[key]) ?? [];
+        if (links.length > 0) {
+          dispatch({
+            type: LinkAction.SET_STATE_FROM_STORAGE,
+            payload: {
+              nextLinkId,
+              linkKeys,
+              links,
+            },
+          });
+          return;
+        }
+      }
+      cleanseStoredState();
+    };
     initializeState();
-  }, [initializeState]);
+  }, []);
 
   return (
     <LinksContext.Provider value={{ state, dispatch }}>
