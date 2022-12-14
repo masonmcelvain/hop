@@ -1,8 +1,7 @@
 {
+  "extends": "../shared.tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
     "paths": {
       "@fixtures/*": ["fixtures/*"]
     }
