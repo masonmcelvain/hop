@@ -13,16 +13,17 @@ type ActionBarProps = {
   toggleEditMode: () => void;
   onLinkEditModalOpen: () => void;
 };
-function ActionBar({
+
+export default function ActionBar({
   toggleEditMode,
   onLinkEditModalOpen,
 }: ActionBarProps): JSX.Element {
   const { colorMode, toggleColorMode } = useColorMode();
 
-  function toggleAndStoreColorMode(): void {
+  const onColorModeClick = React.useCallback(() => {
     setStoredColorMode(colorMode === "light" ? "dark" : "light");
     toggleColorMode();
-  }
+  }, [colorMode, toggleColorMode]);
 
   return (
     <>
@@ -43,11 +44,9 @@ function ActionBar({
         <IconButton
           aria-label="Toggle color mode"
           icon={useColorModeValue(<Moon size={24} />, <Sun size={24} />)}
-          onClick={toggleAndStoreColorMode}
+          onClick={onColorModeClick}
         />
       </ButtonGroup>
     </>
   );
 }
-
-export default ActionBar;
