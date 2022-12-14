@@ -1,13 +1,13 @@
-import * as React from "react";
 import {
-  IconButton,
   ButtonGroup,
   Divider,
+  IconButton,
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { Edit, Plus, Moon, Sun } from "react-feather";
 import { setStoredColorMode } from "@lib/webextension";
+import * as React from "react";
+import { Edit, Moon, Plus, Sun } from "react-feather";
 
 type ActionBarProps = {
   toggleEditMode: () => void;
@@ -17,7 +17,7 @@ type ActionBarProps = {
 export default function ActionBar({
   toggleEditMode,
   onLinkEditModalOpen,
-}: ActionBarProps): JSX.Element {
+}: ActionBarProps) {
   const { colorMode, toggleColorMode } = useColorMode();
 
   const onColorModeClick = React.useCallback(() => {

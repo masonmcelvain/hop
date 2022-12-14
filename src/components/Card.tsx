@@ -1,8 +1,8 @@
-import * as React from "react";
-import { Button, Text, VStack, useBoolean } from "@chakra-ui/react";
-import { useDrag } from "react-dnd";
+import { Button, Text, useBoolean, VStack } from "@chakra-ui/react";
 import { navigateCurrentTab, openInNewTab } from "@lib/webextension";
 import { LinkData } from "@models/link-state";
+import * as React from "react";
+import { useDrag } from "react-dnd";
 import CardImage from "./CardImage";
 
 export const DragItemTypes = {
@@ -16,7 +16,7 @@ type CardProps = {
   linkData: LinkData;
   isInEditMode: boolean;
 };
-export function Card({ linkData, isInEditMode }: CardProps): JSX.Element {
+export function Card({ linkData, isInEditMode }: CardProps) {
   const { id, name, url } = linkData;
   const [isMouseOver, setIsMouseOver] = useBoolean();
   const [{ isDragEventInProgress }, drag] = useDrag(

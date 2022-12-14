@@ -1,9 +1,9 @@
-import * as React from "react";
 import { IconButton, Square, useBoolean, VStack } from "@chakra-ui/react";
-import { useDrop } from "react-dnd";
-import { Edit2, X } from "react-feather";
 import { LinkAction, LinksContext } from "@contexts/Links";
 import { getStorageKeyForLink, setStoredLinkKeys } from "@lib/webextension";
+import * as React from "react";
+import { useDrop } from "react-dnd";
+import { Edit2, X } from "react-feather";
 import { Card, CardDragItem, DragItemTypes } from "./Card";
 import { openUpdateLinkModalForCellType } from "./Page";
 
@@ -23,7 +23,7 @@ export default function Cell({
   setIsOverEmpty,
   isInEditMode,
   openUpdateLinkModal,
-}: CellProps): JSX.Element {
+}: CellProps) {
   const { state, dispatch } = React.useContext(LinksContext);
 
   const isEmpty = index >= state.linkKeys.length;

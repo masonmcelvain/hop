@@ -16,11 +16,11 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import * as React from "react";
 import { LINK_NAME_MAX_LENGTH } from "@config/constants";
 import { LinkAction, LinksContext } from "@contexts/Links";
 import { getCurrentTab } from "@lib/webextension";
 import { LinkData } from "@models/link-state";
+import * as React from "react";
 
 function getFormValuesForLink(link: LinkData | null): FormFields {
   return {
@@ -51,7 +51,7 @@ export default function LinkEditModal({
   link,
   isOpen,
   onClose,
-}: LinkEditModalProps): JSX.Element {
+}: LinkEditModalProps) {
   const { dispatch } = React.useContext(LinksContext);
   const [formValues, setFormValues] = React.useState<FormFields>(
     getFormValuesForLink(link)
