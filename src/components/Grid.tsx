@@ -1,27 +1,10 @@
 import * as React from "react";
 import { SimpleGrid, useBoolean } from "@chakra-ui/react";
-import Card from "./Card";
 import Cell from "./Cell";
 import { openUpdateLinkModalForCellType } from "../components/Page";
 import { LinksContext } from "../contexts/Links";
-import { getStorageKeyForLink } from "../lib/webextension";
 
-const numColumns = 3;
-
-/**
- * Get the number of cells needed for this grid based on the number of cards
- * provided.
- *
- * @param numCards The number of cards to go in this grid
- */
-function getNumCells(numCards: number) {
-  if (!numCards) {
-    return 0;
-  }
-  const largestFactorOfWidth = numCards - (numCards % numColumns);
-  const cellsFromRemainder = numCards % numColumns ? numColumns : 0;
-  return largestFactorOfWidth + cellsFromRemainder;
-}
+const COL_COUNT = 3;
 
 type GridProps = {
   isInEditMode: boolean;
@@ -34,39 +17,29 @@ export default function Grid({
 }: GridProps): JSX.Element {
   const { state } = React.useContext(LinksContext);
   const [isOverEmpty, setIsOverEmpty] = useBoolean();
-  const numCells = getNumCells(state.linkKeys ? state.linkKeys.length : 0);
 
-  function renderCell(i: number) {
-    const isEmpty = i >= state.linkKeys.length;
-
-    let card = null;
-    if (!isEmpty) {
-      const linkKey = state.linkKeys[i];
-      const link = state.links.find(
-        (link) => link && getStorageKeyForLink(link) === linkKey
-      );
-      card = link ? <Card linkData={link} isInEditMode={isInEditMode} /> : null;
+  const length = React.useMemo(() => {
+    const linkCount = state.linkKeys.length;
+    if (linkCount === 0) {
+      return 0;
     }
+    const largestFactorOfWidth = linkCount - (linkCount % COL_COUNT);
+    const cellsFromRemainder = linkCount % COL_COUNT ? COL_COUNT : 0;
+    return largestFactorOfWidth + cellsFromRemainder;
+  }, [state.linkKeys.length]);
 
-    return (
-      <Cell
-        key={i}
-        index={i}
-        zIndex={state.links.length - i}
-        manageIsOverEmpty={[isOverEmpty, setIsOverEmpty]}
-        isInEditMode={isInEditMode}
-        openUpdateLinkModal={openUpdateLinkModal}
-        data-testid={isEmpty ? "empty-cell" : "non-empty-cell"}
-      >
-        {card}
-      </Cell>
-    );
-  }
-
-  const cells = [];
-  for (let i = 0; i < numCells; i++) {
-    cells.push(renderCell(i));
-  }
-
-  return <SimpleGrid columns={numColumns}>{cells}</SimpleGrid>;
+  return (
+    <SimpleGrid columns={COL_COUNT}>
+      {Array.from({ length }).map((_, i) => (
+        <Cell
+          key={i}
+          index={i}
+          isOverEmpty={isOverEmpty}
+          setIsOverEmpty={setIsOverEmpty}
+          isInEditMode={isInEditMode}
+          openUpdateLinkModal={openUpdateLinkModal}
+        />
+      ))}
+    </SimpleGrid>
+  );
 }

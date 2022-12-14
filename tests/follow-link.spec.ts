@@ -3,7 +3,7 @@ import { test, expect } from "@fixtures/extension";
 test("can open link in new tab", async ({
   context,
   links,
-  pageWithLinks: page,
+  pageWithOneLink: page,
 }) => {
   const [{ url }] = links;
   const [newPage] = await Promise.all([

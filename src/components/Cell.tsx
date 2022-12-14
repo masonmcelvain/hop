@@ -1,43 +1,47 @@
 import * as React from "react";
-import { BoxProps, Center, IconButton, VStack } from "@chakra-ui/react";
-import { CardDragItem, DragItemTypes } from "./Card";
+import { IconButton, Square, useBoolean, VStack } from "@chakra-ui/react";
+import Card, { CardDragItem, DragItemTypes } from "./Card";
 import { useDrop } from "react-dnd";
 import { Edit2, X } from "react-feather";
 import { LinksContext } from "../contexts/Links";
 import { LinkAction } from "../contexts/Links/reducer";
 import { openUpdateLinkModalForCellType } from "../components/Page";
-import { setStoredLinkKeys } from "../lib/webextension";
+import { getStorageKeyForLink, setStoredLinkKeys } from "../lib/webextension";
 
-type CellProps = BoxProps & {
+type CellProps = {
   index: number;
-  zIndex: number;
-  manageIsOverEmpty: [
-    boolean,
-    {
-      readonly on: () => void;
-      readonly off: () => void;
-      readonly toggle: () => void;
-    }
-  ];
+  isOverEmpty: boolean;
+  setIsOverEmpty: ReturnType<typeof useBoolean>[1];
   isInEditMode: boolean;
   openUpdateLinkModal: openUpdateLinkModalForCellType;
-  children: React.ReactNode;
 };
 
-function Cell({
+const SIDE_LENGTH = 90;
+
+export default function Cell({
   index,
-  zIndex,
-  manageIsOverEmpty,
+  isOverEmpty,
+  setIsOverEmpty,
   isInEditMode,
   openUpdateLinkModal,
-  children,
-  ...boxProps
 }: CellProps): JSX.Element {
   const { state, dispatch } = React.useContext(LinksContext);
-  const [isOverEmpty, setIsOverEmpty] = manageIsOverEmpty;
-  const sideLength = 90;
 
-  const [{ isOver, dragItem }, drop] = useDrop(
+  const isEmpty = index >= state.linkKeys.length;
+  const link = React.useMemo(
+    () =>
+      !isEmpty &&
+      state.links.find(
+        (link) => link && getStorageKeyForLink(link) === state.linkKeys[index]
+      ),
+    [isEmpty, index, state]
+  );
+  const card = React.useMemo(
+    () => link && <Card linkData={link} isInEditMode={isInEditMode} />,
+    [isInEditMode, link]
+  );
+
+  const [{ isOver }, drop] = useDrop(
     () => ({
       accept: DragItemTypes.CARD,
       hover: (item: CardDragItem) =>
@@ -52,44 +56,38 @@ function Cell({
         setStoredLinkKeys(state.linkKeys);
       },
       collect: (monitor) => ({
-        isOver: !!monitor.isOver(),
-        dragItem: monitor.getItem(),
+        isOver: monitor.isOver(),
       }),
     }),
     [index, state, dispatch]
   );
 
   React.useEffect(() => {
-    if (isOver && !children) {
-      setIsOverEmpty.on();
-    } else if (isOver && children) {
-      setIsOverEmpty.off();
-    } else if (!dragItem) {
-      setIsOverEmpty.off();
-    }
-  }, [children, isOver, dragItem, setIsOverEmpty]);
+    isOver && !card ? setIsOverEmpty.on() : setIsOverEmpty.off();
+  }, [card, isOver, setIsOverEmpty]);
 
-  function deleteChildCard(event: React.MouseEvent<HTMLButtonElement>): void {
-    event.preventDefault();
-    dispatch({
-      type: LinkAction.DELETE_LINK,
-      payload: index,
-    });
-  }
+  const deleteChildCard: React.MouseEventHandler = React.useCallback(
+    (event) => {
+      event.preventDefault();
+      dispatch({
+        type: LinkAction.DELETE_LINK,
+        payload: index,
+      });
+    },
+    [dispatch, index]
+  );
 
   const isLastCellWithCard = index === state.links.length - 1;
   const shouldHideChildren = isOver || (isLastCellWithCard && isOverEmpty);
 
   return (
-    <Center
+    <Square
       ref={drop}
       pos="relative"
-      w={sideLength}
-      h={sideLength}
-      zIndex={zIndex}
-      {...boxProps}
+      size={SIDE_LENGTH}
+      data-testid={isEmpty ? "empty-cell" : "non-empty-cell"}
     >
-      {children && isInEditMode ? (
+      {card && isInEditMode ? (
         <VStack pos="absolute" top={0} left={0} zIndex="docked" spacing="px">
           <IconButton
             icon={<Edit2 size={16} />}
@@ -108,9 +106,7 @@ function Cell({
           />
         </VStack>
       ) : null}
-      {shouldHideChildren ? null : children}
-    </Center>
+      {shouldHideChildren ? null : card}
+    </Square>
   );
 }
-
-export default Cell;

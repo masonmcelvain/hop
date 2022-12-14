@@ -1,6 +1,6 @@
 import browser from "webextension-polyfill";
 import { ColorMode } from "@chakra-ui/react";
-import { LinkData } from "../contexts/Links/reducer";
+import { LinkData } from "../models/link-state";
 
 export function setStoredColorMode(colorMode: ColorMode): void {
   storage.set({ [StorageKey.COLOR_MODE]: colorMode });
@@ -35,8 +35,8 @@ export async function navigateCurrentTab(url: string): Promise<void> {
   window.close();
 }
 
-export async function openInNewTab(url: string): Promise<void> {
-  await browser.tabs.create({ url, active: false });
+export function openInNewTab(url: string): void {
+  browser.tabs.create({ url, active: false });
 }
 
 export async function getCurrentTab(): Promise<browser.Tabs.Tab> {

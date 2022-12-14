@@ -19,8 +19,9 @@ import {
 import * as React from "react";
 import { LINK_NAME_MAX_LENGTH } from "../config/constants";
 import { LinksContext } from "../contexts/Links";
-import { LinkAction, LinkData } from "../contexts/Links/reducer";
+import { LinkAction } from "../contexts/Links/reducer";
 import { getCurrentTab } from "../lib/webextension";
+import { LinkData } from "../models/link-state";
 
 function getFormValuesForLink(link: LinkData | null): FormFields {
   return {

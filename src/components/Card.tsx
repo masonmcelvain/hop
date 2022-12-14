@@ -2,9 +2,8 @@ import * as React from "react";
 import { Button, Text, VStack, useBoolean } from "@chakra-ui/react";
 import { useDrag } from "react-dnd";
 import CardImage from "./CardImage";
-import { LinkData } from "../contexts/Links/reducer";
-import { LinksContext } from "../contexts/Links";
 import { navigateCurrentTab, openInNewTab } from "../lib/webextension";
+import { LinkData } from "../models/link-state";
 
 export const DragItemTypes = {
   CARD: "card",
@@ -22,7 +21,6 @@ export default function Card({
   isInEditMode,
 }: CardProps): JSX.Element {
   const { id, name, url } = linkData;
-  const { dispatch } = React.useContext(LinksContext);
   const [isMouseOver, setIsMouseOver] = useBoolean();
   const [{ isDragEventInProgress }, drag] = useDrag(
     () => ({
@@ -33,7 +31,7 @@ export default function Card({
         isDragEventInProgress: !!monitor.getItem(),
       }),
     }),
-    [linkData, dispatch]
+    [id]
   );
 
   const conditionalButtonProps = isDragEventInProgress
@@ -44,16 +42,17 @@ export default function Card({
       }
     : {};
 
-  async function clickHandler(
-    event: React.MouseEvent<HTMLButtonElement>
-  ): Promise<void> {
-    if (event.ctrlKey) {
-      event.preventDefault();
-      await openInNewTab(url.toString());
-    } else {
-      await navigateCurrentTab(url.toString());
-    }
-  }
+  const clickHandler = React.useCallback<React.MouseEventHandler>(
+    (event) => {
+      if (event.ctrlKey) {
+        event.preventDefault();
+        openInNewTab(url.toString());
+      } else {
+        navigateCurrentTab(url.toString());
+      }
+    },
+    [url]
+  );
 
   return (
     <Button
