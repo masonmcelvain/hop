@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Button, Text, VStack, useBoolean } from "@chakra-ui/react";
 import { useDrag } from "react-dnd";
+import { navigateCurrentTab, openInNewTab } from "@lib/webextension";
+import { LinkData } from "@models/link-state";
 import CardImage from "./CardImage";
-import { navigateCurrentTab, openInNewTab } from "../lib/webextension";
-import { LinkData } from "../models/link-state";
 
 export const DragItemTypes = {
   CARD: "card",

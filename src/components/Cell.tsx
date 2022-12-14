@@ -1,12 +1,11 @@
 import * as React from "react";
 import { IconButton, Square, useBoolean, VStack } from "@chakra-ui/react";
-import Card, { CardDragItem, DragItemTypes } from "./Card";
 import { useDrop } from "react-dnd";
 import { Edit2, X } from "react-feather";
-import { LinksContext } from "../contexts/Links";
-import { LinkAction } from "../contexts/Links/reducer";
-import { openUpdateLinkModalForCellType } from "../components/Page";
-import { getStorageKeyForLink, setStoredLinkKeys } from "../lib/webextension";
+import { LinkAction, LinksContext } from "@contexts/Links";
+import { getStorageKeyForLink, setStoredLinkKeys } from "@lib/webextension";
+import Card, { CardDragItem, DragItemTypes } from "./Card";
+import { openUpdateLinkModalForCellType } from "./Page";
 
 type CellProps = {
   index: number;

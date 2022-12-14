@@ -7,7 +7,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { Edit, Plus, Moon, Sun } from "react-feather";
-import { setStoredColorMode } from "../lib/webextension";
+import { setStoredColorMode } from "@lib/webextension";
 
 type ActionBarProps = {
   toggleEditMode: () => void;

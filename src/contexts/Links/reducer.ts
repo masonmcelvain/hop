@@ -4,8 +4,8 @@ import {
   setNextStoredLinkId,
   setStoredLinks,
   setStoredLinksAndKeys,
-} from "../../lib/webextension";
-import { LinkData, LinkState } from "../../models/link-state";
+} from "@lib/webextension";
+import { LinkData, LinkState } from "@models/link-state";
 
 export const Reducer = (
   state: LinkState,

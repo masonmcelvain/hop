@@ -1,9 +1,9 @@
 import { useColorMode, useTheme } from "@chakra-ui/react";
 import * as React from "react";
 import browser from "webextension-polyfill";
-import { LinksProvider } from "../contexts/Links";
-import { setStoredColorMode, StorageKey } from "../lib/webextension";
-import { parseColorMode } from "../models/color-mode";
+import { LinksProvider } from "@contexts/Links";
+import { setStoredColorMode, StorageKey } from "@lib/webextension";
+import { parseColorMode } from "@models/color-mode";
 import Page from "./Page";
 
 export default function App(): JSX.Element {

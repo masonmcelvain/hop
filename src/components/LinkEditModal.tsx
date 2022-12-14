@@ -17,11 +17,10 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { LINK_NAME_MAX_LENGTH } from "../config/constants";
-import { LinksContext } from "../contexts/Links";
-import { LinkAction } from "../contexts/Links/reducer";
-import { getCurrentTab } from "../lib/webextension";
-import { LinkData } from "../models/link-state";
+import { LINK_NAME_MAX_LENGTH } from "@config/constants";
+import { LinkAction, LinksContext } from "@contexts/Links";
+import { getCurrentTab } from "@lib/webextension";
+import { LinkData } from "@models/link-state";
 
 function getFormValuesForLink(link: LinkData | null): FormFields {
   return {

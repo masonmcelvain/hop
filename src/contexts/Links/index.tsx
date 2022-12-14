@@ -4,14 +4,16 @@ import {
   setNextStoredLinkId,
   setStoredLinksAndKeys,
   StorageKey,
-} from "../../lib/webextension";
+} from "@lib/webextension";
 import {
   LinkState,
   parseLinkKeys,
   parseNextLinkId,
   parseStoredLinks,
-} from "../../models/link-state";
+} from "@models/link-state";
 import { LinkAction, LinkActionTypes, Reducer } from "./reducer";
+
+export * from "./reducer";
 
 const InitialState: LinkState = {
   linkKeys: [],

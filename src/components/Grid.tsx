@@ -1,8 +1,8 @@
 import * as React from "react";
 import { SimpleGrid, useBoolean } from "@chakra-ui/react";
+import { LinksContext } from "@contexts/Links";
 import Cell from "./Cell";
-import { openUpdateLinkModalForCellType } from "../components/Page";
-import { LinksContext } from "../contexts/Links";
+import { openUpdateLinkModalForCellType } from "./Page";
 
 const COL_COUNT = 3;
 
