@@ -4,7 +4,7 @@ import { useDrop } from "react-dnd";
 import { Edit2, X } from "react-feather";
 import { LinkAction, LinksContext } from "@contexts/Links";
 import { getStorageKeyForLink, setStoredLinkKeys } from "@lib/webextension";
-import Card, { CardDragItem, DragItemTypes } from "./Card";
+import { Card, CardDragItem, DragItemTypes } from "./Card";
 import { openUpdateLinkModalForCellType } from "./Page";
 
 type CellProps = {

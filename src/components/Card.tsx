@@ -16,10 +16,7 @@ type CardProps = {
   linkData: LinkData;
   isInEditMode: boolean;
 };
-export default function Card({
-  linkData,
-  isInEditMode,
-}: CardProps): JSX.Element {
+export function Card({ linkData, isInEditMode }: CardProps): JSX.Element {
   const { id, name, url } = linkData;
   const [isMouseOver, setIsMouseOver] = useBoolean();
   const [{ isDragEventInProgress }, drag] = useDrag(
