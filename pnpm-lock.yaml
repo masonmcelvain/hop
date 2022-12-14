@@ -38,6 +38,7 @@ specifiers:
   react-dom: ^17.0.2
   react-feather: ^2.0.9
   style-loader: ^2.0.0
+  ts-loader: ^9.4.2
   typescript: ^4.9.4
   web-ext: ^7.1.1
   webextension-polyfill: ^0.10.0
@@ -89,6 +90,7 @@ devDependencies:
   mini-css-extract-plugin: 2.7.2_webpack@5.75.0
   prettier: 2.8.1
   style-loader: 2.0.0_webpack@5.75.0
+  ts-loader: 9.4.2_3fkjkrd3audxnith3e7fo4fnxi
   typescript: 4.9.4
   web-ext: 7.4.0
   webextension-polyfill: 0.10.0
@@ -7824,6 +7826,21 @@ packages:
   /tree-kill/1.2.2:
     resolution: {integrity: sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==}
     hasBin: true
+    dev: true
+
+  /ts-loader/9.4.2_3fkjkrd3audxnith3e7fo4fnxi:
+    resolution: {integrity: sha512-OmlC4WVmFv5I0PpaxYb+qGeGOdm5giHU7HwDDUjw59emP2UYMHy9fFSDcYgSNoH8sXcj4hGCSEhlDZ9ULeDraA==}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      typescript: '*'
+      webpack: ^5.0.0
+    dependencies:
+      chalk: 4.1.2
+      enhanced-resolve: 5.12.0
+      micromatch: 4.0.5
+      semver: 7.3.8
+      typescript: 4.9.4
+      webpack: 5.75.0_webpack-cli@4.10.0
     dev: true
 
   /tslib/1.14.1:
