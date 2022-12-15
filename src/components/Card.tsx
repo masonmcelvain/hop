@@ -18,11 +18,12 @@ type CardProps = {
 };
 export function Card({ linkData, isInEditMode }: CardProps) {
   const { id, name, url } = linkData;
+  const item: CardDragItem = { id };
   const [isMouseOver, setIsMouseOver] = useBoolean();
   const [{ isDragEventInProgress }, drag] = useDrag(
     () => ({
       type: DragItemTypes.CARD,
-      item: { id },
+      item,
       isDragging: (monitor) => id === monitor.getItem().id,
       collect: (monitor) => ({
         isDragEventInProgress: !!monitor.getItem(),
