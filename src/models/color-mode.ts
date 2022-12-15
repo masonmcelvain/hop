@@ -1,5 +1,5 @@
+import { safeParse } from "@helpers/generic-helpers";
 import { z } from "zod";
-import { safeParse } from "../helpers/generic-helpers";
 
 const ColorModeSchema = z.union([z.literal("light"), z.literal("dark")]);
 

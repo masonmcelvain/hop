@@ -1,16 +1,16 @@
 {
+  "extends": "../shared.tsconfig.json",
   "compilerOptions": {
-    "target": "es2021",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "strict": true,
-    "strictNullChecks": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "noImplicitAny": true,
-    "jsx": "react-jsx",
-    "allowJs": true,
-    "checkJs": true,
-    "forceConsistentCasingInFileNames": true
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@config/*": ["config/*"],
+      "@contexts/*": ["contexts/*"],
+      "@helpers/*": ["helpers/*"],
+      "@lib/*": ["lib/*"],
+      "@models/*": ["models/*"],
+      "@ui/*": ["ui/*"]
+    }
   }
 }

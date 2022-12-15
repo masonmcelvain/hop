@@ -1,8 +1,8 @@
-import * as React from "react";
 import { SimpleGrid, useBoolean } from "@chakra-ui/react";
+import { LinksContext } from "@contexts/links";
+import * as React from "react";
 import Cell from "./Cell";
-import { openUpdateLinkModalForCellType } from "../components/Page";
-import { LinksContext } from "../contexts/Links";
+import { openUpdateLinkModalForCellType } from "./Page";
 
 const COL_COUNT = 3;
 
@@ -11,10 +11,7 @@ type GridProps = {
   openUpdateLinkModal: openUpdateLinkModalForCellType;
 };
 
-export default function Grid({
-  isInEditMode,
-  openUpdateLinkModal,
-}: GridProps): JSX.Element {
+export default function Grid({ isInEditMode, openUpdateLinkModal }: GridProps) {
   const { state } = React.useContext(LinksContext);
   const [isOverEmpty, setIsOverEmpty] = useBoolean();
 

@@ -37,10 +37,19 @@ module.exports = (env) => {
 
   return {
     entry: {
-      app: "./src/public/index.js",
+      app: "./src/public/index.tsx",
     },
     resolve: {
       extensions: [".tsx", ".ts", ".js"],
+      alias: {
+        "@components": "/src/components",
+        "@config": "/src/config",
+        "@contexts": "/src/contexts",
+        "@helpers": "/src/helpers",
+        "@lib": "/src/lib",
+        "@models": "/src/models",
+        "@ui": "/src/ui",
+      },
     },
     plugins: [
       new HtmlWebpackPlugin({

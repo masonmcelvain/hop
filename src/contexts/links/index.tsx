@@ -1,17 +1,19 @@
-import * as React from "react";
-import browser from "webextension-polyfill";
 import {
   setNextStoredLinkId,
   setStoredLinksAndKeys,
   StorageKey,
-} from "../../lib/webextension";
+} from "@lib/webextension";
 import {
   LinkState,
   parseLinkKeys,
   parseNextLinkId,
   parseStoredLinks,
-} from "../../models/link-state";
+} from "@models/link-state";
+import * as React from "react";
+import browser from "webextension-polyfill";
 import { LinkAction, LinkActionTypes, Reducer } from "./reducer";
+
+export * from "./reducer";
 
 const InitialState: LinkState = {
   linkKeys: [],
@@ -32,11 +34,7 @@ export const LinksContext = React.createContext<{
   dispatch: () => null,
 });
 
-export const LinksProvider = ({
-  children,
-}: {
-  children: React.ReactChild;
-}): JSX.Element => {
+export const LinksProvider = ({ children }: { children: React.ReactChild }) => {
   const [state, dispatch] = React.useReducer(Reducer, InitialState);
 
   React.useEffect(() => {

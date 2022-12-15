@@ -2,7 +2,7 @@
   "name": "hop",
   "version": "1.1.11",
   "description": "An icon-first bookmark manager",
-  "main": "src/public/index.js",
+  "main": "src/public/index.tsx",
   "packageManager": "pnpm@7.5.2",
   "engines": {
     "node": ">= 16.17.1"
@@ -10,16 +10,15 @@
   "scripts": {
     "start:chrome": "webpack watch --config webpack/webpack.dev.js --env target=chrome",
     "start:firefox": "concurrently --kill-others \"webpack watch --config webpack/webpack.dev.js --env target=firefox\" \"cd dist/firefox && ../../node_modules/.bin/web-ext run -p=\"../../tmp-web-ext-profile\" --profile-create-if-missing --keep-profile-changes\"",
-    "build": "pnpm build:chrome && pnpm build:firefox",
+    "build": "concurrently \"pnpm build:chrome\" \"pnpm build:firefox\"",
     "build:chrome": "webpack --config webpack/webpack.prod.js --env target=chrome",
     "build:firefox": "webpack --config webpack/webpack.prod.js --env target=firefox",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}'",
     "test": "playwright test",
-    "test:debug": "playwright test --debug",
     "type-check": "tsc --project src/ --noEmit && tsc --project tests/ --noEmit",
-    "clean": "rm -rf dist tmp-web-ext-profile"
+    "clean": "rm -rf dist playwright-report tmp-web-ext-profile"
   },
   "author": "Mason McElvain",
   "license": "MIT",
