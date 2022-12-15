@@ -14,7 +14,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
-  VStack
+  VStack,
 } from "@chakra-ui/react";
 import { LINK_NAME_MAX_LENGTH } from "@config/constants";
 import { LinkAction, LinksContext } from "@contexts/links";
