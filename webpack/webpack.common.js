@@ -80,9 +80,11 @@ module.exports = (env) => {
     module: {
       rules: [
         {
-          test: /\.(js|tsx?)$/,
-          exclude: /node_modules/,
-          loader: "ts-loader",
+          test: /\.tsx?$/,
+          exclude: /(node_modules)/,
+          use: {
+            loader: "swc-loader",
+          },
         },
         {
           test: /\.css$/,
