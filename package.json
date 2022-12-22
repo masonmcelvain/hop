@@ -8,11 +8,11 @@
     "node": ">= 16.17.1"
   },
   "scripts": {
-    "start:chrome": "webpack watch --config webpack/webpack.dev.js --env target=chrome",
-    "start:firefox": "concurrently --kill-others \"webpack watch --config webpack/webpack.dev.js --env target=firefox\" \"cd dist/firefox && ../../node_modules/.bin/web-ext run -p=\"../../tmp-web-ext-profile\" --profile-create-if-missing --keep-profile-changes\"",
+    "start:chrome": "NODE_ENV=development TARGET=chrome ./build.ts",
+    "start:firefox": "NODE_ENV=development TARGET=firefox concurrently --kill-others \"./build.ts\" \"cd dist/firefox && ../../node_modules/.bin/web-ext run -p=\"../../tmp-web-ext-profile\" --profile-create-if-missing --keep-profile-changes\"",
     "build": "concurrently \"pnpm build:chrome\" \"pnpm build:firefox\"",
-    "build:chrome": "webpack --config webpack/webpack.prod.js --env target=chrome",
-    "build:firefox": "webpack --config webpack/webpack.prod.js --env target=firefox",
+    "build:chrome": "NODE_ENV=production TARGET=chrome ./build.ts",
+    "build:firefox": "NODE_ENV=production TARGET=firefox ./build.ts",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}'",
