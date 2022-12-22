@@ -1,6 +1,7 @@
 {
   "extends": "../shared.tsconfig.json",
   "compilerOptions": {
+    "isolatedModules": true,
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
