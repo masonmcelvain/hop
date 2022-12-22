@@ -47,4 +47,4 @@ If there's an issue you'd like to tackle, please fork this repository, make your
 
 ### Building for production
 
-- Run `pnpm build`, which will output minified projects in `dist/chrome`, `dist/firefox`, and zipped projects in `dist/zip/chrome.zip` and `dist/zip/firefox.zip`.
+- Run `pnpm build`, which will output minified projects in `dist/chrome`, `dist/firefox`, and zipped projects in `dist/chrome.zip` and `dist/firefox.zip`.
