@@ -17,6 +17,7 @@ specifiers:
   copy-webpack-plugin: ^8.1.0
   css-loader: ^5.2.0
   esbuild: ^0.16.10
+  esbuild-plugin-copy: ^2.0.1
   eslint: ^7.32.0
   eslint-config-prettier: ^8.5.0
   eslint-plugin-prettier: ^4.0.0
@@ -69,6 +70,7 @@ devDependencies:
   copy-webpack-plugin: 8.1.1_webpack@5.75.0
   css-loader: 5.2.7_webpack@5.75.0
   esbuild: 0.16.10
+  esbuild-plugin-copy: 2.0.1_esbuild@0.16.10
   eslint: 7.32.0
   eslint-config-prettier: 8.5.0_eslint@7.32.0
   eslint-plugin-prettier: 4.2.1_azklrodwt66esftms4odwjmsay
@@ -3302,6 +3304,17 @@ packages:
   /es6-promisify/7.0.0:
     resolution: {integrity: sha512-ginqzK3J90Rd4/Yz7qRrqUeIpe3TwSXTPPZtPne7tGBPeAaQiU8qt4fpKApnxHcq1AwtUdHVg5P77x/yrggG8Q==}
     engines: {node: '>=6'}
+    dev: true
+
+  /esbuild-plugin-copy/2.0.1_esbuild@0.16.10:
+    resolution: {integrity: sha512-/mvriqGv2QAyrkui3REZaLEjwqESBKWZQQJtOZEausI8C4QMChREXGASNzmWpTlHo/v+ipLW73QCiNemBKggMw==}
+    peerDependencies:
+      esbuild: '>= 0.14.0'
+    dependencies:
+      chalk: 4.1.2
+      esbuild: 0.16.10
+      fs-extra: 10.1.0
+      globby: 11.1.0
     dev: true
 
   /esbuild/0.16.10:
