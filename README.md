@@ -33,11 +33,17 @@ If there's an issue you'd like to tackle, please fork this repository, make your
 
 ### Running a dev server
 
-- Start a development server with `pnpm start:chrome` or `pnpm start:firefox`.
+- Start a development server with `pnpm dev:chrome` or `pnpm dev:firefox`.
 - Special Chrome instructions:
   - Navigate to `chrome://extensions` in your browser. You can also access this page by clicking on the Chrome menu on the top right side of the Omnibox, hovering over More Tools and selecting Extensions.
   - Check the box next to Developer Mode.
-  - Click Load Unpacked Extension and select the `dist` directory in the top level directory of this repository.
+  - Click Load Unpacked Extension and select the `dist/chrome` directory in the top level directory of this repository.
+- Special Firefox instructions:
+  - You can preview the extension with `pnpm preview:firefox`.
+  - To install the extension manually:
+    - Visit `about:debugging#/runtime/this-firefox`.
+    - Click "Load Temporary Add-on..."
+    - Select the generated `firefox.zip` file. The extension should now be installed.
 - Open the extension in your browser to see the app.
   - Note: When you make code changes, you most close the extension popup (i.e. click anything but the extension window) and re-open it to see those changes reflected.
 
