@@ -8,11 +8,12 @@
     "node": ">= 16.17.1"
   },
   "scripts": {
-    "start:chrome": "NODE_ENV=development TARGET=chrome ./build.ts",
-    "start:firefox": "NODE_ENV=development TARGET=firefox concurrently --kill-others \"./build.ts\" \"cd dist/firefox && ../../node_modules/.bin/web-ext run -p=\"../../tmp-web-ext-profile\" --profile-create-if-missing --keep-profile-changes\"",
-    "build": "concurrently \"pnpm build:chrome\" \"pnpm build:firefox\"",
-    "build:chrome": "NODE_ENV=production TARGET=chrome ./build.ts",
-    "build:firefox": "NODE_ENV=production TARGET=firefox ./build.ts",
+    "dev:chrome": "env-cmd -e dev-chrome ./build.ts",
+    "dev:firefox": "env-cmd -e dev-firefox ./build.ts",
+    "preview:firefox": "env-cmd -e preview-firefox web-ext run",
+    "build": "conc \"pnpm build:chrome\" \"pnpm build:firefox\"",
+    "build:chrome": "env-cmd -e prod-chrome ./build.ts",
+    "build:firefox": "env-cmd -e prod-firefox ./build.ts",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}'",
