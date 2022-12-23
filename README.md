@@ -47,6 +47,10 @@ If there's an issue you'd like to tackle, please fork this repository, make your
 - Open the extension in your browser to see the app.
   - Note: When you make code changes, you most close the extension popup (i.e. click anything but the extension window) and re-open it to see those changes reflected.
 
+### Environment Variables
+
+- No additional environment variables are need to develop or build the app. Should you need to add or override any though, place them in a `.env` file and they will be automatically loaded into package scripts.
+
 ### Running tests
 
 - Run [Playwright tests](https://playwright.dev/docs/intro) with `pnpm test`.
