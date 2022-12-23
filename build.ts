@@ -8,6 +8,7 @@ import { z } from "zod";
 
 const TargetSchema = z.union([z.literal("chrome"), z.literal("firefox")]);
 type Target = z.infer<typeof TargetSchema>;
+const target = TargetSchema.parse(process.env.TARGET);
 
 const zipPlugin = ({ target }: { target: Target }): Plugin => ({
   name: "zip",
@@ -18,34 +19,30 @@ const zipPlugin = ({ target }: { target: Target }): Plugin => ({
   },
 });
 
-async function build(target: Target) {
-  execSync(`rm -rf dist/${target}`);
+execSync(`rm -rf dist/${target}`);
 
-  await esbuild({
-    entryPoints: ["src/public/index.tsx"],
-    bundle: true,
-    watch: process.env.NODE_ENV !== "production",
-    minify: true,
-    sourcemap: process.env.NODE_ENV !== "production",
-    target: ["chrome58", "firefox57"],
-    outfile: `dist/${target}/hop.bundle.js`,
-    plugins: [
-      copy({
-        assets: [
-          {
-            from: "src/public/index.html",
-            to: ".",
-          },
-          {
-            from: `src/public/${target}/**/*`,
-            to: ".",
-          },
-        ],
-        once: true,
-      }),
-      zipPlugin({ target }),
-    ],
-  });
-}
-
-build(TargetSchema.parse(process.env.TARGET));
+esbuild({
+  entryPoints: ["src/public/index.tsx"],
+  bundle: true,
+  watch: process.env.NODE_ENV !== "production",
+  minify: process.env.NODE_ENV === "production",
+  sourcemap: process.env.NODE_ENV !== "production",
+  target: ["chrome58", "firefox57"],
+  outfile: `dist/${target}/hop.bundle.js`,
+  plugins: [
+    copy({
+      assets: [
+        {
+          from: "src/public/index.html",
+          to: ".",
+        },
+        {
+          from: `src/public/${target}/**/*`,
+          to: ".",
+        },
+      ],
+      once: true,
+    }),
+    zipPlugin({ target }),
+  ],
+});
