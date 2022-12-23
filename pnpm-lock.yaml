@@ -13,6 +13,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^4.29.3
   '@typescript-eslint/parser': ^4.29.3
   concurrently: ^7.1.0
+  dotenv: ^16.0.3
   env-cmd: ^10.1.0
   esbuild: ^0.16.10
   esbuild-plugin-copy: ^2.0.1
@@ -56,6 +57,7 @@ devDependencies:
   '@typescript-eslint/eslint-plugin': 4.33.0_thyv6urrmcfyirt6hwk42bhgva
   '@typescript-eslint/parser': 4.33.0_yfqovispp7u7jaktymfaqwl2py
   concurrently: 7.6.0
+  dotenv: 16.0.3
   env-cmd: 10.1.0
   esbuild: 0.16.10
   esbuild-plugin-copy: 2.0.1_esbuild@0.16.10
@@ -2748,6 +2750,11 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       is-obj: 2.0.0
+    dev: true
+
+  /dotenv/16.0.3:
+    resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
+    engines: {node: '>=12'}
     dev: true
 
   /dtrace-provider/0.8.8:
