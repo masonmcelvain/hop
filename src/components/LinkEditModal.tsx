@@ -20,6 +20,7 @@ import { LINK_NAME_MAX_LENGTH } from "@config/constants";
 import { LinkAction, LinksContext } from "@contexts/links";
 import { getCurrentTab } from "@lib/webextension";
 import { LinkData } from "@models/link-state";
+import { useLinkStore } from "hooks/useLinkStore";
 import * as React from "react";
 
 function getFormValuesForLink(link: LinkData | null): FormFields {
@@ -125,6 +126,7 @@ export default function LinkEditModal({
     [formValues, setFormValues]
   );
 
+  const addLink = useLinkStore((state) => state.addLink);
   const handleSubmit = React.useCallback<React.FormEventHandler>(
     (event) => {
       event.preventDefault();
@@ -141,13 +143,10 @@ export default function LinkEditModal({
               ...payload,
             },
           })
-        : dispatch({
-            type: LinkAction.ADD_LINK,
-            payload,
-          });
+        : addLink(payload);
       onClose();
     },
-    [dispatch, formValues, link, onClose]
+    [addLink, dispatch, formValues, link, onClose]
   );
 
   return (

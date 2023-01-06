@@ -1,7 +1,6 @@
 import {
   getLinkIdForStorageKey,
   getStorageKeyForLink,
-  setNextStoredLinkId,
   setStoredLinks,
   setStoredLinksAndKeys,
 } from "@lib/webextension";
@@ -14,8 +13,6 @@ export const Reducer = (
   switch (action.type) {
     case LinkAction.SET_STATE_FROM_STORAGE:
       return setStateFromStorage(action.payload);
-    case LinkAction.ADD_LINK:
-      return addLink(state, action.payload);
     case LinkAction.UPDATE_LINK:
       return updateLink(state, action.payload);
     case LinkAction.REORDER_LINKS:
@@ -27,31 +24,6 @@ export const Reducer = (
 
 function setStateFromStorage(payload: LinkState): LinkState {
   return payload;
-}
-
-function addLink(prevState: LinkState, payload: AddLinkPayload): LinkState {
-  const { name, url, imageUrl } = payload;
-
-  const currentLinkId = prevState.nextLinkId;
-  const nextLinkId = currentLinkId + 1;
-
-  const newLink: LinkData = {
-    id: currentLinkId,
-    name,
-    url,
-    imageUrl,
-  };
-  const newLinks = [...prevState.links, newLink];
-  const newLinkKeys = [...prevState.linkKeys, getStorageKeyForLink(newLink)];
-
-  setStoredLinksAndKeys(newLinks, newLinkKeys);
-  setNextStoredLinkId(nextLinkId);
-  return {
-    ...prevState,
-    linkKeys: newLinkKeys,
-    links: newLinks,
-    nextLinkId,
-  };
 }
 
 function updateLink(
@@ -143,16 +115,6 @@ type SetStateFromStorageAction = {
   payload: LinkState;
 };
 
-type AddLinkPayload = {
-  name: string;
-  url: string;
-  imageUrl: string;
-};
-type AddLinkAction = {
-  type: typeof LinkAction.ADD_LINK;
-  payload: AddLinkPayload;
-};
-
 type UpdateLinkPayload = {
   id: number;
   name: string;
@@ -180,14 +142,12 @@ type DeleteLinkAction = {
 
 export type LinkActionTypes =
   | SetStateFromStorageAction
-  | AddLinkAction
   | UpdateLinkAction
   | ReorderLinksAction
   | DeleteLinkAction;
 
 export enum LinkAction {
   SET_STATE_FROM_STORAGE,
-  ADD_LINK,
   UPDATE_LINK,
   REORDER_LINKS,
   DELETE_LINK,
