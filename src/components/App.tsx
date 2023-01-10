@@ -1,3 +1,4 @@
+import { useLinkStore } from "@hooks/useLinkStore";
 import { useColorMode, useTheme } from "@chakra-ui/react";
 import {
   setNextStoredLinkId,
@@ -11,7 +12,6 @@ import {
   parseNextLinkId,
   parseStoredLinks,
 } from "@models/link-state";
-import { useLinkStore } from "hooks/useLinkStore";
 import * as React from "react";
 import browser from "webextension-polyfill";
 import Page from "./Page";

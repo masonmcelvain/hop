@@ -8,6 +8,7 @@
       "@components/*": ["components/*"],
       "@config/*": ["config/*"],
       "@helpers/*": ["helpers/*"],
+      "@hooks/*": ["hooks/*"],
       "@lib/*": ["lib/*"],
       "@models/*": ["models/*"],
       "@ui/*": ["ui/*"]

@@ -17,9 +17,9 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { LINK_NAME_MAX_LENGTH } from "@config/constants";
+import { useLinkStore } from "@hooks/useLinkStore";
 import { getCurrentTab } from "@lib/webextension";
 import { LinkData } from "@models/link-state";
-import { useLinkStore } from "hooks/useLinkStore";
 import * as React from "react";
 
 function getFormValuesForLink(link: LinkData | null): FormFields {

@@ -1,6 +1,6 @@
 import { Center, useBoolean, useDisclosure, VStack } from "@chakra-ui/react";
+import { useLinkStore } from "@hooks/useLinkStore";
 import { LinkData } from "@models/link-state";
-import { useLinkStore } from "hooks/useLinkStore";
 import * as React from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";

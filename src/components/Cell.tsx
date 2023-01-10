@@ -1,6 +1,6 @@
 import { IconButton, Square, useBoolean, VStack } from "@chakra-ui/react";
+import { useLinkStore } from "@hooks/useLinkStore";
 import { getStorageKeyForLink, setStoredLinkKeys } from "@lib/webextension";
-import { useLinkStore } from "hooks/useLinkStore";
 import * as React from "react";
 import { useDrop } from "react-dnd";
 import { Edit2, X } from "react-feather";
