@@ -12,7 +12,7 @@ import {
 import { useLinkStore } from "hooks/useLinkStore";
 import * as React from "react";
 import browser from "webextension-polyfill";
-import { LinkAction, LinkActionTypes, Reducer } from "./reducer";
+import { LinkActionTypes, Reducer } from "./reducer";
 
 export * from "./reducer";
 

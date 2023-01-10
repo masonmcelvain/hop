@@ -1,6 +1,7 @@
 import {
   addLink,
   AddLinkData,
+  deleteLink,
   reorderLinks,
   ReorderLinksData,
   updateLink,
@@ -11,6 +12,7 @@ import create from "zustand/react";
 
 interface LinkStore extends LinkState {
   addLink: (link: AddLinkData) => void;
+  deleteLink: (linkKeyId: number) => void;
   reorderLinks: (data: ReorderLinksData) => void;
   setLinks: (links: LinkState) => void;
   updateLink: (links: UpdateLinkData) => void;
@@ -21,6 +23,8 @@ export const useLinkStore = create<LinkStore>()((set) => ({
   links: [],
   nextLinkId: 0,
   addLink: (link: AddLinkData) => set((state) => addLink(state, link)),
+  deleteLink: (linkKeyId: number) =>
+    set((state) => deleteLink(state, linkKeyId)),
   reorderLinks: (data: ReorderLinksData) =>
     set((state) => reorderLinks(state, data)),
   setLinks: (links: LinkState) => set(() => links),

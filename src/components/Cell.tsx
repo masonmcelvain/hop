@@ -1,5 +1,5 @@
 import { IconButton, Square, useBoolean, VStack } from "@chakra-ui/react";
-import { LinkAction, LinksContext } from "@contexts/links";
+import { LinksContext } from "@contexts/links";
 import { getStorageKeyForLink, setStoredLinkKeys } from "@lib/webextension";
 import { useLinkStore } from "hooks/useLinkStore";
 import * as React from "react";
@@ -25,7 +25,7 @@ export default function Cell({
   isInEditMode,
   openUpdateLinkModal,
 }: CellProps) {
-  const { state, dispatch } = React.useContext(LinksContext);
+  const { state } = React.useContext(LinksContext);
 
   const isEmpty = index >= state.linkKeys.length;
   const link = React.useMemo(
@@ -58,7 +58,7 @@ export default function Cell({
         isOver: monitor.isOver(),
       }),
     }),
-    [index, state, dispatch]
+    [index, state]
   );
 
   React.useEffect(() => {
@@ -69,15 +69,13 @@ export default function Cell({
     }
   }, [card, dragItem, isOver, setIsOverEmpty]);
 
+  const deleteLink = useLinkStore((state) => state.deleteLink);
   const deleteChildCard: React.MouseEventHandler = React.useCallback(
     (event) => {
       event.preventDefault();
-      dispatch({
-        type: LinkAction.DELETE_LINK,
-        payload: index,
-      });
+      deleteLink(index);
     },
-    [dispatch, index]
+    [deleteLink, index]
   );
 
   const isLastCellWithCard = index === state.links.length - 1;
