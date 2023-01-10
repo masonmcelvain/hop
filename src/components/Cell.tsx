@@ -1,5 +1,4 @@
 import { IconButton, Square, useBoolean, VStack } from "@chakra-ui/react";
-import { LinksContext } from "@contexts/links";
 import { getStorageKeyForLink, setStoredLinkKeys } from "@lib/webextension";
 import { useLinkStore } from "hooks/useLinkStore";
 import * as React from "react";
@@ -25,16 +24,17 @@ export default function Cell({
   isInEditMode,
   openUpdateLinkModal,
 }: CellProps) {
-  const { state } = React.useContext(LinksContext);
+  const links = useLinkStore((state) => state.links);
+  const linkKeys = useLinkStore((state) => state.linkKeys);
 
-  const isEmpty = index >= state.linkKeys.length;
+  const isEmpty = index >= linkKeys.length;
   const link = React.useMemo(
     () =>
       !isEmpty &&
-      state.links.find(
-        (link) => link && getStorageKeyForLink(link) === state.linkKeys[index]
+      links.find(
+        (link) => link && getStorageKeyForLink(link) === linkKeys[index]
       ),
-    [isEmpty, index, state]
+    [isEmpty, index, links, linkKeys]
   );
   const card = React.useMemo(
     () => link && <Card linkData={link} isInEditMode={isInEditMode} />,
@@ -51,14 +51,14 @@ export default function Cell({
           newLinkKeyIndex: index,
         }),
       drop: () => {
-        setStoredLinkKeys(state.linkKeys);
+        setStoredLinkKeys(linkKeys);
       },
       collect: (monitor) => ({
         dragItem: monitor.getItem<CardDragItem>(),
         isOver: monitor.isOver(),
       }),
     }),
-    [index, state]
+    [index, linkKeys]
   );
 
   React.useEffect(() => {
@@ -78,7 +78,7 @@ export default function Cell({
     [deleteLink, index]
   );
 
-  const isLastCellWithCard = index === state.links.length - 1;
+  const isLastCellWithCard = index === links.length - 1;
   const shouldHideChildren = isOver || (isLastCellWithCard && isOverEmpty);
 
   return (

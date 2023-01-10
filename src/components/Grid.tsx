@@ -1,5 +1,5 @@
 import { SimpleGrid, useBoolean } from "@chakra-ui/react";
-import { LinksContext } from "@contexts/links";
+import { useLinkStore } from "hooks/useLinkStore";
 import * as React from "react";
 import Cell from "./Cell";
 import { openUpdateLinkModalForCellType } from "./Page";
@@ -12,18 +12,18 @@ type GridProps = {
 };
 
 export default function Grid({ isInEditMode, openUpdateLinkModal }: GridProps) {
-  const { state } = React.useContext(LinksContext);
+  const linkKeys = useLinkStore((state) => state.linkKeys);
   const [isOverEmpty, setIsOverEmpty] = useBoolean();
 
   const length = React.useMemo(() => {
-    const linkCount = state.linkKeys.length;
+    const linkCount = linkKeys.length;
     if (linkCount === 0) {
       return 0;
     }
     const largestFactorOfWidth = linkCount - (linkCount % COL_COUNT);
     const cellsFromRemainder = linkCount % COL_COUNT ? COL_COUNT : 0;
     return largestFactorOfWidth + cellsFromRemainder;
-  }, [state.linkKeys.length]);
+  }, [linkKeys.length]);
 
   return (
     <SimpleGrid columns={COL_COUNT}>

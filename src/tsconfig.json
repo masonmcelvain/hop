@@ -7,7 +7,6 @@
     "paths": {
       "@components/*": ["components/*"],
       "@config/*": ["config/*"],
-      "@contexts/*": ["contexts/*"],
       "@helpers/*": ["helpers/*"],
       "@lib/*": ["lib/*"],
       "@models/*": ["models/*"],
