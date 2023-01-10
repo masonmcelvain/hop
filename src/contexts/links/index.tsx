@@ -9,6 +9,7 @@ import {
   parseNextLinkId,
   parseStoredLinks,
 } from "@models/link-state";
+import { useLinkStore } from "hooks/useLinkStore";
 import * as React from "react";
 import browser from "webextension-polyfill";
 import { LinkAction, LinkActionTypes, Reducer } from "./reducer";
@@ -36,6 +37,7 @@ export const LinksContext = React.createContext<{
 
 export const LinksProvider = ({ children }: { children: React.ReactChild }) => {
   const [state, dispatch] = React.useReducer(Reducer, InitialState);
+  const setLinks = useLinkStore((state) => state.setLinks);
 
   React.useEffect(() => {
     const initializeState = async () => {
@@ -56,14 +58,7 @@ export const LinksProvider = ({ children }: { children: React.ReactChild }) => {
         const links =
           (storedLinks && linkKeys.map((key) => storedLinks[key])) ?? [];
         if (links.length) {
-          dispatch({
-            type: LinkAction.SET_STATE_FROM_STORAGE,
-            payload: {
-              nextLinkId,
-              linkKeys,
-              links,
-            },
-          });
+          setLinks({ nextLinkId, linkKeys, links });
           return;
         }
       }

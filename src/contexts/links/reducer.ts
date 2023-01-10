@@ -11,8 +11,6 @@ export const Reducer = (
   action: LinkActionTypes
 ): LinkState => {
   switch (action.type) {
-    case LinkAction.SET_STATE_FROM_STORAGE:
-      return setStateFromStorage(action.payload);
     case LinkAction.UPDATE_LINK:
       return updateLink(state, action.payload);
     case LinkAction.REORDER_LINKS:
@@ -21,10 +19,6 @@ export const Reducer = (
       return deleteLink(state, action.payload);
   }
 };
-
-function setStateFromStorage(payload: LinkState): LinkState {
-  return payload;
-}
 
 function updateLink(
   prevState: LinkState,
@@ -110,11 +104,6 @@ function modifyLink(
   return newLinks;
 }
 
-type SetStateFromStorageAction = {
-  type: typeof LinkAction.SET_STATE_FROM_STORAGE;
-  payload: LinkState;
-};
-
 type UpdateLinkPayload = {
   id: number;
   name: string;
@@ -141,13 +130,11 @@ type DeleteLinkAction = {
 };
 
 export type LinkActionTypes =
-  | SetStateFromStorageAction
   | UpdateLinkAction
   | ReorderLinksAction
   | DeleteLinkAction;
 
 export enum LinkAction {
-  SET_STATE_FROM_STORAGE,
   UPDATE_LINK,
   REORDER_LINKS,
   DELETE_LINK,
