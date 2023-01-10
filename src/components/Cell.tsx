@@ -1,6 +1,7 @@
 import { IconButton, Square, useBoolean, VStack } from "@chakra-ui/react";
 import { LinkAction, LinksContext } from "@contexts/links";
 import { getStorageKeyForLink, setStoredLinkKeys } from "@lib/webextension";
+import { useLinkStore } from "hooks/useLinkStore";
 import * as React from "react";
 import { useDrop } from "react-dnd";
 import { Edit2, X } from "react-feather";
@@ -40,16 +41,14 @@ export default function Cell({
     [isInEditMode, link]
   );
 
+  const reorderLinks = useLinkStore((state) => state.reorderLinks);
   const [{ dragItem, isOver }, drop] = useDrop(
     () => ({
       accept: DragItemTypes.CARD,
       hover: (item: CardDragItem) =>
-        dispatch({
-          type: LinkAction.REORDER_LINKS,
-          payload: {
-            sourceId: item.id,
-            newLinkKeyIndex: index,
-          },
+        reorderLinks({
+          sourceId: item.id,
+          newLinkKeyIndex: index,
         }),
       drop: () => {
         setStoredLinkKeys(state.linkKeys);
