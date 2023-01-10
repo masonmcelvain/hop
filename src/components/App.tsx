@@ -60,7 +60,7 @@ export default function App() {
       setNextStoredLinkId(0);
     };
     initializeState();
-  }, []);
+  }, [setLinks]);
 
   return <Page />;
 }
