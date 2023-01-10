@@ -1,5 +1,5 @@
 import { Center, useBoolean, useDisclosure, VStack } from "@chakra-ui/react";
-import { LinksContext } from "@contexts/links";
+import { useLinkStore } from "@hooks/useLinkStore";
 import { LinkData } from "@models/link-state";
 import * as React from "react";
 import { DndProvider } from "react-dnd";
@@ -9,7 +9,7 @@ import Grid from "./Grid";
 import LinkEditModal from "./LinkEditModal";
 
 export default function Page() {
-  const { state } = React.useContext(LinksContext);
+  const links = useLinkStore((state) => state.links);
   const [isInEditMode, { toggle: toggleEditMode, off: offEditMode }] =
     useBoolean();
   const [linkToEdit, setLinkToEdit] = React.useState<LinkData | null>(null);
@@ -27,7 +27,7 @@ export default function Page() {
           <Grid
             isInEditMode={isInEditMode}
             openUpdateLinkModal={(cellIndex: number) => {
-              setLinkToEdit(state.links[cellIndex]);
+              setLinkToEdit(links[cellIndex]);
               onLinkEditModalOpen();
             }}
           />

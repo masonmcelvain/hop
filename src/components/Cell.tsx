@@ -1,5 +1,5 @@
 import { IconButton, Square, useBoolean, VStack } from "@chakra-ui/react";
-import { LinkAction, LinksContext } from "@contexts/links";
+import { useLinkStore } from "@hooks/useLinkStore";
 import { getStorageKeyForLink, setStoredLinkKeys } from "@lib/webextension";
 import * as React from "react";
 import { useDrop } from "react-dnd";
@@ -24,42 +24,41 @@ export default function Cell({
   isInEditMode,
   openUpdateLinkModal,
 }: CellProps) {
-  const { state, dispatch } = React.useContext(LinksContext);
+  const links = useLinkStore((state) => state.links);
+  const linkKeys = useLinkStore((state) => state.linkKeys);
 
-  const isEmpty = index >= state.linkKeys.length;
+  const isEmpty = index >= linkKeys.length;
   const link = React.useMemo(
     () =>
       !isEmpty &&
-      state.links.find(
-        (link) => link && getStorageKeyForLink(link) === state.linkKeys[index]
+      links.find(
+        (link) => link && getStorageKeyForLink(link) === linkKeys[index]
       ),
-    [isEmpty, index, state]
+    [isEmpty, index, links, linkKeys]
   );
   const card = React.useMemo(
     () => link && <Card linkData={link} isInEditMode={isInEditMode} />,
     [isInEditMode, link]
   );
 
+  const reorderLinks = useLinkStore((state) => state.reorderLinks);
   const [{ dragItem, isOver }, drop] = useDrop(
     () => ({
       accept: DragItemTypes.CARD,
       hover: (item: CardDragItem) =>
-        dispatch({
-          type: LinkAction.REORDER_LINKS,
-          payload: {
-            sourceId: item.id,
-            newLinkKeyIndex: index,
-          },
+        reorderLinks({
+          sourceId: item.id,
+          newLinkKeyIndex: index,
         }),
       drop: () => {
-        setStoredLinkKeys(state.linkKeys);
+        setStoredLinkKeys(linkKeys);
       },
       collect: (monitor) => ({
         dragItem: monitor.getItem<CardDragItem>(),
         isOver: monitor.isOver(),
       }),
     }),
-    [index, state, dispatch]
+    [index, linkKeys]
   );
 
   React.useEffect(() => {
@@ -70,18 +69,16 @@ export default function Cell({
     }
   }, [card, dragItem, isOver, setIsOverEmpty]);
 
+  const deleteLink = useLinkStore((state) => state.deleteLink);
   const deleteChildCard: React.MouseEventHandler = React.useCallback(
     (event) => {
       event.preventDefault();
-      dispatch({
-        type: LinkAction.DELETE_LINK,
-        payload: index,
-      });
+      deleteLink(index);
     },
-    [dispatch, index]
+    [deleteLink, index]
   );
 
-  const isLastCellWithCard = index === state.links.length - 1;
+  const isLastCellWithCard = index === links.length - 1;
   const shouldHideChildren = isOver || (isLastCellWithCard && isOverEmpty);
 
   return (

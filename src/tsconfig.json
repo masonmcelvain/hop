@@ -7,8 +7,8 @@
     "paths": {
       "@components/*": ["components/*"],
       "@config/*": ["config/*"],
-      "@contexts/*": ["contexts/*"],
       "@helpers/*": ["helpers/*"],
+      "@hooks/*": ["hooks/*"],
       "@lib/*": ["lib/*"],
       "@models/*": ["models/*"],
       "@ui/*": ["ui/*"]

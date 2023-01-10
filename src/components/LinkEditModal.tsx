@@ -17,7 +17,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { LINK_NAME_MAX_LENGTH } from "@config/constants";
-import { LinkAction, LinksContext } from "@contexts/links";
+import { useLinkStore } from "@hooks/useLinkStore";
 import { getCurrentTab } from "@lib/webextension";
 import { LinkData } from "@models/link-state";
 import * as React from "react";
@@ -52,7 +52,6 @@ export default function LinkEditModal({
   isOpen,
   onClose,
 }: LinkEditModalProps) {
-  const { dispatch } = React.useContext(LinksContext);
   const [formValues, setFormValues] = React.useState<FormFields>(
     getFormValuesForLink(link)
   );
@@ -125,6 +124,8 @@ export default function LinkEditModal({
     [formValues, setFormValues]
   );
 
+  const addLink = useLinkStore((state) => state.addLink);
+  const updateLink = useLinkStore((state) => state.updateLink);
   const handleSubmit = React.useCallback<React.FormEventHandler>(
     (event) => {
       event.preventDefault();
@@ -134,20 +135,14 @@ export default function LinkEditModal({
         imageUrl: formValues.imageUrl,
       };
       link
-        ? dispatch({
-            type: LinkAction.UPDATE_LINK,
-            payload: {
-              id: link.id,
-              ...payload,
-            },
+        ? updateLink({
+            id: link.id,
+            ...payload,
           })
-        : dispatch({
-            type: LinkAction.ADD_LINK,
-            payload,
-          });
+        : addLink(payload);
       onClose();
     },
-    [dispatch, formValues, link, onClose]
+    [addLink, formValues, link, onClose, updateLink]
   );
 
   return (
