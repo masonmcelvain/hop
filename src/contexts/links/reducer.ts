@@ -1,40 +1,21 @@
 import {
   getLinkIdForStorageKey,
   getStorageKeyForLink,
-  setStoredLinks,
   setStoredLinksAndKeys,
 } from "@lib/webextension";
-import { LinkData, LinkState } from "@models/link-state";
+import { LinkState } from "@models/link-state";
 
 export const Reducer = (
   state: LinkState,
   action: LinkActionTypes
 ): LinkState => {
   switch (action.type) {
-    case LinkAction.UPDATE_LINK:
-      return updateLink(state, action.payload);
     case LinkAction.REORDER_LINKS:
       return reorderLinks(state, action.payload);
     case LinkAction.DELETE_LINK:
       return deleteLink(state, action.payload);
   }
 };
-
-function updateLink(
-  prevState: LinkState,
-  payload: UpdateLinkPayload
-): LinkState {
-  const { id, name, url, imageUrl } = payload;
-  const newLinks = modifyLink(prevState.links, id, () => ({
-    id,
-    name,
-    url,
-    imageUrl,
-  }));
-
-  setStoredLinks(newLinks);
-  return { ...prevState, links: newLinks };
-}
 
 /**
  * The caller must save the links to local storage.
@@ -87,34 +68,6 @@ function deleteLink(prevState: LinkState, linkKeyIndex: number): LinkState {
   };
 }
 
-function modifyLink(
-  prevLinks: LinkData[],
-  linkId: number,
-  callback: (link: LinkData) => LinkData
-): LinkData[] {
-  const newLinks = [...prevLinks];
-
-  newLinks.forEach((link, i) => {
-    if (link.id === linkId) {
-      newLinks[i] = callback(link);
-      return;
-    }
-  });
-
-  return newLinks;
-}
-
-type UpdateLinkPayload = {
-  id: number;
-  name: string;
-  url: string;
-  imageUrl: string;
-};
-type UpdateLinkAction = {
-  type: typeof LinkAction.UPDATE_LINK;
-  payload: UpdateLinkPayload;
-};
-
 type ReorderLinksPayload = {
   sourceId: number;
   newLinkKeyIndex: number;
@@ -129,13 +82,9 @@ type DeleteLinkAction = {
   payload: number;
 };
 
-export type LinkActionTypes =
-  | UpdateLinkAction
-  | ReorderLinksAction
-  | DeleteLinkAction;
+export type LinkActionTypes = ReorderLinksAction | DeleteLinkAction;
 
 export enum LinkAction {
-  UPDATE_LINK,
   REORDER_LINKS,
   DELETE_LINK,
 }
