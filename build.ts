@@ -11,38 +11,38 @@ type Target = z.infer<typeof TargetSchema>;
 const target = TargetSchema.parse(process.env.TARGET);
 
 const zipPlugin = ({ target }: { target: Target }): Plugin => ({
-  name: "zip",
-  setup(build) {
-    build.onEnd(() => {
-      execSync(`zip -r ${target}.zip ${target}`, { cwd: "dist" });
-    });
-  },
+   name: "zip",
+   setup(build) {
+      build.onEnd(() => {
+         execSync(`zip -r ${target}.zip ${target}`, { cwd: "dist" });
+      });
+   },
 });
 
 execSync(`rm -rf dist/${target}`);
 
 esbuild({
-  entryPoints: ["src/public/index.tsx"],
-  bundle: true,
-  watch: process.env.NODE_ENV !== "production",
-  minify: process.env.NODE_ENV === "production",
-  sourcemap: process.env.NODE_ENV !== "production",
-  target: ["chrome58", "firefox57"],
-  outfile: `dist/${target}/hop.bundle.js`,
-  plugins: [
-    copy({
-      assets: [
-        {
-          from: "src/public/index.html",
-          to: ".",
-        },
-        {
-          from: `src/public/${target}/**/*`,
-          to: ".",
-        },
-      ],
-      once: true,
-    }),
-    zipPlugin({ target }),
-  ],
+   entryPoints: ["src/public/index.tsx"],
+   bundle: true,
+   watch: process.env.NODE_ENV !== "production",
+   minify: process.env.NODE_ENV === "production",
+   sourcemap: process.env.NODE_ENV !== "production",
+   target: ["chrome58", "firefox57"],
+   outfile: `dist/${target}/hop.bundle.js`,
+   plugins: [
+      copy({
+         assets: [
+            {
+               from: "src/public/index.html",
+               to: ".",
+            },
+            {
+               from: `src/public/${target}/**/*`,
+               to: ".",
+            },
+         ],
+         once: true,
+      }),
+      zipPlugin({ target }),
+   ],
 });

@@ -1,23 +1,23 @@
 {
-  "name": "Hop",
-  "description": "An icon-first bookmark manager",
-  "version": "1.1.11",
-  "manifest_version": 3,
-  "action": {
-    "default_title": "Hop",
-    "default_popup": "index.html",
-    "default_icon": {
+   "name": "Hop",
+   "description": "An icon-first bookmark manager",
+   "version": "1.1.11",
+   "manifest_version": 3,
+   "action": {
+      "default_title": "Hop",
+      "default_popup": "index.html",
+      "default_icon": {
+         "16": "/icons/hop16.png",
+         "32": "/icons/hop32.png",
+         "48": "/icons/hop48.png",
+         "128": "/icons/hop128.png"
+      }
+   },
+   "icons": {
       "16": "/icons/hop16.png",
       "32": "/icons/hop32.png",
       "48": "/icons/hop48.png",
       "128": "/icons/hop128.png"
-    }
-  },
-  "icons": {
-    "16": "/icons/hop16.png",
-    "32": "/icons/hop32.png",
-    "48": "/icons/hop48.png",
-    "128": "/icons/hop128.png"
-  },
-  "permissions": ["storage", "tabs"]
+   },
+   "permissions": ["storage", "tabs"]
 }

@@ -6,11 +6,11 @@ import theme from "@ui/theme";
 import App from "@components/App";
 
 ReactDOM.render(
-  <>
-    <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-    <ChakraProvider theme={theme}>
-      <App />
-    </ChakraProvider>
-  </>,
-  document.querySelector("#root")
+   <>
+      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+      <ChakraProvider theme={theme}>
+         <App />
+      </ChakraProvider>
+   </>,
+   document.querySelector("#root")
 );

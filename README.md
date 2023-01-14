@@ -27,34 +27,34 @@ If there's an issue you'd like to tackle, please fork this repository, make your
 
 ### Installation
 
-- Clone the repository and navigate to it's root directory with `git clone https://github.com/masonmcelvain/hop.git && cd hop`
-- Install dependencies with `pnpm install`
-  - You'll need version 16 of [Node.js](https://nodejs.org/en/download/) installed, and `pnpm` version 7.
+-  Clone the repository and navigate to it's root directory with `git clone https://github.com/masonmcelvain/hop.git && cd hop`
+-  Install dependencies with `pnpm install`
+   -  You'll need version 16 of [Node.js](https://nodejs.org/en/download/) installed, and `pnpm` version 7.
 
 ### Running a dev server
 
-- Start a development server with `pnpm dev:chrome` or `pnpm dev:firefox`.
-- Special Chrome instructions:
-  - Navigate to `chrome://extensions` in your browser. You can also access this page by clicking on the Chrome menu on the top right side of the Omnibox, hovering over More Tools and selecting Extensions.
-  - Check the box next to Developer Mode.
-  - Click Load Unpacked Extension and select the `dist/chrome` directory in the top level directory of this repository.
-- Special Firefox instructions:
-  - You can preview the extension with `pnpm preview:firefox`.
-  - To install the extension manually:
-    - Visit `about:debugging#/runtime/this-firefox`.
-    - Click "Load Temporary Add-on..."
-    - Select the generated `firefox.zip` file. The extension should now be installed.
-- Open the extension in your browser to see the app.
-  - Note: When you make code changes, you most close the extension popup (i.e. click anything but the extension window) and re-open it to see those changes reflected.
+-  Start a development server with `pnpm dev:chrome` or `pnpm dev:firefox`.
+-  Special Chrome instructions:
+   -  Navigate to `chrome://extensions` in your browser. You can also access this page by clicking on the Chrome menu on the top right side of the Omnibox, hovering over More Tools and selecting Extensions.
+   -  Check the box next to Developer Mode.
+   -  Click Load Unpacked Extension and select the `dist/chrome` directory in the top level directory of this repository.
+-  Special Firefox instructions:
+   -  You can preview the extension with `pnpm preview:firefox`.
+   -  To install the extension manually:
+      -  Visit `about:debugging#/runtime/this-firefox`.
+      -  Click "Load Temporary Add-on..."
+      -  Select the generated `firefox.zip` file. The extension should now be installed.
+-  Open the extension in your browser to see the app.
+   -  Note: When you make code changes, you most close the extension popup (i.e. click anything but the extension window) and re-open it to see those changes reflected.
 
 ### Environment Variables
 
-- No additional environment variables are need to develop or build the app. Should you need to add or override any though, place them in a `.env` file and they will be automatically loaded into package scripts.
+-  No additional environment variables are need to develop or build the app. Should you need to add or override any though, place them in a `.env` file and they will be automatically loaded into package scripts.
 
 ### Running tests
 
-- Run [Playwright tests](https://playwright.dev/docs/intro) with `pnpm test`.
+-  Run [Playwright tests](https://playwright.dev/docs/intro) with `pnpm test`.
 
 ### Building for production
 
-- Run `pnpm build`, which will output minified projects in `dist/chrome`, `dist/firefox`, and zipped projects in `dist/chrome.zip` and `dist/firefox.zip`.
+-  Run `pnpm build`, which will output minified projects in `dist/chrome`, `dist/firefox`, and zipped projects in `dist/chrome.zip` and `dist/firefox.zip`.
