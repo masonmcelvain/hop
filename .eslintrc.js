@@ -1,9 +1,6 @@
 module.exports = {
-  env: {
-    browser: true,
-    es2021: true,
-    node: true,
-  },
+  parser: "@typescript-eslint/parser",
+  plugins: ["react", "@typescript-eslint"],
   extends: [
     "eslint:recommended",
     "plugin:react/recommended",
@@ -11,15 +8,16 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "prettier",
   ],
-  parser: "@typescript-eslint/parser",
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
-    ecmaVersion: 12,
-    sourceType: "module",
+  env: {
+    browser: true,
+    es2021: true,
+    node: true,
   },
-  plugins: ["react", "@typescript-eslint"],
+  settings: {
+    react: {
+      version: "detect",
+    },
+  },
   ignorePatterns: ["**/node_modules/**", "**/dist/**", "**/tmp-*/**"],
   rules: {
     // https://github.com/microsoft/playwright/issues/8798
@@ -34,10 +32,5 @@ module.exports = {
       },
     ],
     "@typescript-eslint/explicit-module-boundary-types": "off",
-  },
-  settings: {
-    react: {
-      version: "detect",
-    },
   },
 };
