@@ -1,22 +1,22 @@
 [
-  {
-    "name": "Hop",
-    "url": "https://github.com/masonmcelvain/hop",
-    "imageUrl": "https://user-images.githubusercontent.com/52104630/138492652-531cc551-f07c-4e63-9146-3c9352d34847.png"
-  },
-  {
-    "name": "GitHub",
-    "url": "https://github.com/",
-    "imageUrl": "https://github.githubassets.com/favicons/favicon.svg"
-  },
-  {
-    "name": "Chakra UI",
-    "url": "https://chakra-ui.com/",
-    "imageUrl": "https://chakra-ui.com/favicon.png"
-  },
-  {
-    "name": "Playwright",
-    "url": "https://playwright.dev/",
-    "imageUrl": "https://playwright.dev/img/playwright-logo.svg"
-  }
+   {
+      "name": "Hop",
+      "url": "https://github.com/masonmcelvain/hop",
+      "imageUrl": "https://user-images.githubusercontent.com/52104630/138492652-531cc551-f07c-4e63-9146-3c9352d34847.png"
+   },
+   {
+      "name": "GitHub",
+      "url": "https://github.com/",
+      "imageUrl": "https://github.githubassets.com/favicons/favicon.svg"
+   },
+   {
+      "name": "Chakra UI",
+      "url": "https://chakra-ui.com/",
+      "imageUrl": "https://chakra-ui.com/favicon.png"
+   },
+   {
+      "name": "Playwright",
+      "url": "https://playwright.dev/",
+      "imageUrl": "https://playwright.dev/img/playwright-logo.svg"
+   }
 ]

@@ -6,90 +6,90 @@ import { useDrag } from "react-dnd";
 import CardImage from "./CardImage";
 
 export const DragItemTypes = {
-  CARD: "card",
+   CARD: "card",
 };
 export type CardDragItem = {
-  id: number;
+   id: number;
 };
 
 type CardProps = {
-  linkData: LinkData;
-  isInEditMode: boolean;
+   linkData: LinkData;
+   isInEditMode: boolean;
 };
 export function Card({ linkData, isInEditMode }: CardProps) {
-  const { id, name, url } = linkData;
-  const item: CardDragItem = { id };
-  const [isMouseOver, setIsMouseOver] = useBoolean();
-  const [{ isDragEventInProgress }, drag] = useDrag(
-    () => ({
-      type: DragItemTypes.CARD,
-      item,
-      isDragging: (monitor) => id === monitor.getItem().id,
-      collect: (monitor) => ({
-        isDragEventInProgress: !!monitor.getItem(),
+   const { id, name, url } = linkData;
+   const item: CardDragItem = { id };
+   const [isMouseOver, setIsMouseOver] = useBoolean();
+   const [{ isDragEventInProgress }, drag] = useDrag(
+      () => ({
+         type: DragItemTypes.CARD,
+         item,
+         isDragging: (monitor) => id === monitor.getItem().id,
+         collect: (monitor) => ({
+            isDragEventInProgress: !!monitor.getItem(),
+         }),
       }),
-    }),
-    [id]
-  );
+      [id]
+   );
 
-  const conditionalButtonProps = isDragEventInProgress
-    ? {
-        _hover: {},
-        _active: {},
-        _focus: {},
-      }
-    : {};
+   const conditionalButtonProps = isDragEventInProgress
+      ? {
+           _hover: {},
+           _active: {},
+           _focus: {},
+        }
+      : {};
 
-  const clickHandler = React.useCallback<React.MouseEventHandler>(
-    (event) => {
-      if (event.ctrlKey) {
-        event.preventDefault();
-        openInNewTab(url.toString());
-      } else {
-        navigateCurrentTab(url.toString());
-      }
-    },
-    [url]
-  );
+   const clickHandler = React.useCallback<React.MouseEventHandler>(
+      (event) => {
+         if (event.ctrlKey) {
+            event.preventDefault();
+            openInNewTab(url.toString());
+         } else {
+            navigateCurrentTab(url.toString());
+         }
+      },
+      [url]
+   );
 
-  return (
-    <Button
-      pos="absolute"
-      top={0}
-      as="a"
-      target="_self"
-      href={url.toString()}
-      onClick={clickHandler}
-      variant="ghost"
-      w="92%"
-      minH="92%"
-      h="max-content"
-      pt={4}
-      px={1}
-      display="flex"
-      flexDir="column"
-      alignItems="center"
-      justifyContent="flex-start"
-      gridRowGap={2}
-      onMouseEnter={setIsMouseOver.on}
-      onMouseLeave={setIsMouseOver.off}
-      disabled={isInEditMode}
-      ref={drag}
-      transform="translate(0, 0)" // Prevents React DnD background color bug
-      {...conditionalButtonProps}
-    >
-      <VStack w="full">
-        <CardImage linkData={linkData} />
-        <Text
-          align="center"
-          fontSize="sm"
-          maxW="full"
-          whiteSpace="normal"
-          isTruncated={!isMouseOver}
-        >
-          {name}
-        </Text>
-      </VStack>
-    </Button>
-  );
+   return (
+      <Button
+         pos="absolute"
+         top={0}
+         as="a"
+         target="_self"
+         href={url.toString()}
+         onClick={clickHandler}
+         variant="ghost"
+         w="92%"
+         minH="92%"
+         h="max-content"
+         pt={4}
+         px={1}
+         display="flex"
+         flexDir="column"
+         alignItems="center"
+         justifyContent="flex-start"
+         gridRowGap={2}
+         onMouseEnter={setIsMouseOver.on}
+         onMouseLeave={setIsMouseOver.off}
+         disabled={isInEditMode}
+         ref={drag}
+         transform="translate(0, 0)" // Prevents React DnD background color bug
+         {...conditionalButtonProps}
+      >
+         <VStack w="full">
+            <CardImage linkData={linkData} />
+            <Text
+               align="center"
+               fontSize="sm"
+               maxW="full"
+               whiteSpace="normal"
+               isTruncated={!isMouseOver}
+            >
+               {name}
+            </Text>
+         </VStack>
+      </Button>
+   );
 }

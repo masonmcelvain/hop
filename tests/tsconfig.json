@@ -1,9 +1,9 @@
 {
-  "extends": "../shared.tsconfig.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@fixtures/*": ["fixtures/*"]
-    }
-  }
+   "extends": "../shared.tsconfig.json",
+   "compilerOptions": {
+      "baseUrl": ".",
+      "paths": {
+         "@fixtures/*": ["fixtures/*"]
+      }
+   }
 }

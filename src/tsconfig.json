@@ -1,17 +1,17 @@
 {
-  "extends": "../shared.tsconfig.json",
-  "compilerOptions": {
-    "isolatedModules": true,
-    "jsx": "react",
-    "baseUrl": ".",
-    "paths": {
-      "@components/*": ["components/*"],
-      "@config/*": ["config/*"],
-      "@helpers/*": ["helpers/*"],
-      "@hooks/*": ["hooks/*"],
-      "@lib/*": ["lib/*"],
-      "@models/*": ["models/*"],
-      "@ui/*": ["ui/*"]
-    }
-  }
+   "extends": "../shared.tsconfig.json",
+   "compilerOptions": {
+      "isolatedModules": true,
+      "jsx": "react",
+      "baseUrl": ".",
+      "paths": {
+         "@components/*": ["components/*"],
+         "@config/*": ["config/*"],
+         "@helpers/*": ["helpers/*"],
+         "@hooks/*": ["hooks/*"],
+         "@lib/*": ["lib/*"],
+         "@models/*": ["models/*"],
+         "@ui/*": ["ui/*"]
+      }
+   }
 }

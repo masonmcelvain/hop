@@ -1,35 +1,35 @@
 * {
-  margin: 0;
-  padding: 0;
+   margin: 0;
+   padding: 0;
 }
 
 html,
 body {
-  height: 436px;
-  width: 318px;
-  overflow-x: hidden;
-  display: flex;
+   height: 436px;
+   width: 318px;
+   overflow-x: hidden;
+   display: flex;
 }
 
 @media (prefers-color-scheme: light) {
-  html,
-  body {
-    background-color: #fff;
-  }
+   html,
+   body {
+      background-color: #fff;
+   }
 }
 
 @media (prefers-color-scheme: dark) {
-  html,
-  body {
-    background-color: #20242c;
-  }
+   html,
+   body {
+      background-color: #20242c;
+   }
 }
 
 #root {
-  height: 100%;
-  width: 100%;
+   height: 100%;
+   width: 100%;
 }
 
 a {
-  text-decoration: none;
+   text-decoration: none;
 }
