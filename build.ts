@@ -14,12 +14,13 @@ const zipPlugin = ({ target }: { target: Target }): Plugin => ({
    name: "zip",
    setup(build) {
       build.onEnd(() => {
-         execSync(`zip -r ${target}.zip ${target}`, { cwd: "dist" });
+         execSync(`zip -r ../${target}.zip *`, { cwd: `dist/${target}` });
       });
    },
 });
 
 execSync(`rm -rf dist/${target}`);
+execSync(`rm -f dist/${target}.zip`);
 
 esbuild({
    entryPoints: ["src/public/index.tsx"],
