@@ -13,6 +13,14 @@
       "96": "icon.svg"
    },
    "permissions": ["storage", "tabs"],
+   "commands": {
+      "_execute_browser_action": {
+         "suggested_key": {
+            "default": "Alt+Shift+O"
+         },
+         "description": "Toggle Hop popup"
+      }
+   },
    "browser_specific_settings": {
       "gecko": {
          "id": "hop@masonmcelvain.com"

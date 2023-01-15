@@ -19,5 +19,13 @@
       "48": "/icons/hop48.png",
       "128": "/icons/hop128.png"
    },
-   "permissions": ["storage", "tabs"]
+   "permissions": ["storage", "tabs"],
+   "commands": {
+      "_execute_action": {
+         "suggested_key": {
+            "default": "Alt+Shift+O"
+         },
+         "description": "Toggle Hop popup"
+      }
+   }
 }
