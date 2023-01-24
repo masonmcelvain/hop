@@ -1,5 +1,5 @@
 {
-   "extends": "../shared.tsconfig.json",
+   "extends": "../tsconfig.json",
    "compilerOptions": {
       "isolatedModules": true,
       "jsx": "react",
