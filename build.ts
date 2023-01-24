@@ -1,16 +1,15 @@
-#!/usr/bin/env -S node -r "ts-node/register"
+#!/usr/bin/env ts-node
 
 import { execSync } from "child_process";
 import { copy } from "esbuild-plugin-copy";
-import { build as esbuild } from "esbuild";
-import type { Plugin } from "esbuild";
+import * as esbuild from "esbuild";
 import { z } from "zod";
 
 const TargetSchema = z.union([z.literal("chrome"), z.literal("firefox")]);
 type Target = z.infer<typeof TargetSchema>;
 const target = TargetSchema.parse(process.env.TARGET);
 
-const zipPlugin = ({ target }: { target: Target }): Plugin => ({
+const zipPlugin = ({ target }: { target: Target }): esbuild.Plugin => ({
    name: "zip",
    setup(build) {
       build.onEnd(() => {
@@ -22,12 +21,9 @@ const zipPlugin = ({ target }: { target: Target }): Plugin => ({
 execSync(`rm -rf dist/${target}`);
 execSync(`rm -f dist/${target}.zip`);
 
-esbuild({
+const baseOptions: esbuild.BuildOptions = {
    entryPoints: ["src/public/index.tsx"],
    bundle: true,
-   watch: process.env.NODE_ENV !== "production",
-   minify: process.env.NODE_ENV === "production",
-   sourcemap: process.env.NODE_ENV !== "production",
    target: ["chrome58", "firefox57"],
    outfile: `dist/${target}/hop.bundle.js`,
    plugins: [
@@ -46,4 +42,22 @@ esbuild({
       }),
       zipPlugin({ target }),
    ],
-});
+};
+
+async function build() {
+   if (process.env.NODE_ENV === "production") {
+      esbuild.build({
+         ...baseOptions,
+         minify: true,
+      });
+   } else {
+      const context = await esbuild.context({
+         ...baseOptions,
+         sourcemap: true,
+      });
+      await context.watch();
+      console.log("Watching for changes...");
+   }
+}
+
+build();
