@@ -1,13 +1,29 @@
 #!/usr/bin/env ts-node
 
 import { execSync } from "child_process";
-import { copy } from "esbuild-plugin-copy";
 import * as esbuild from "esbuild";
 import { z } from "zod";
 
 const TargetSchema = z.union([z.literal("chrome"), z.literal("firefox")]);
 type Target = z.infer<typeof TargetSchema>;
 const target = TargetSchema.parse(process.env.TARGET);
+
+const cleanupPlugin = ({ target }: { target: Target }): esbuild.Plugin => ({
+   name: "cleanup",
+   setup() {
+      execSync(`rm -rf dist/${target}`);
+      execSync(`rm -f dist/${target}.zip`);
+   },
+});
+
+const copyAssetsPlugin = ({ target }: { target: Target }): esbuild.Plugin => ({
+   name: "copy-assets",
+   setup(build) {
+      build.onEnd(() => {
+         execSync(`cp -r src/public/${target}/* dist/${target}`);
+      });
+   },
+});
 
 const zipPlugin = ({ target }: { target: Target }): esbuild.Plugin => ({
    name: "zip",
@@ -18,9 +34,6 @@ const zipPlugin = ({ target }: { target: Target }): esbuild.Plugin => ({
    },
 });
 
-execSync(`rm -rf dist/${target}`);
-execSync(`rm -f dist/${target}.zip`);
-
 const baseOptions: esbuild.BuildOptions = {
    entryPoints: ["src/public/index.tsx", "src/public/index.html"],
    bundle: true,
@@ -30,15 +43,8 @@ const baseOptions: esbuild.BuildOptions = {
    target: ["chrome58", "firefox57"],
    outdir: `dist/${target}`,
    plugins: [
-      copy({
-         assets: [
-            {
-               from: `src/public/${target}/**/*`,
-               to: ".",
-            },
-         ],
-         once: true,
-      }),
+      cleanupPlugin({ target }),
+      copyAssetsPlugin({ target }),
       zipPlugin({ target }),
    ],
 };

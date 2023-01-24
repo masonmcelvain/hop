@@ -16,7 +16,6 @@ specifiers:
   dotenv: 16.0.3
   env-cmd: 10.1.0
   esbuild: 0.17.4
-  esbuild-plugin-copy: 2.0.2
   eslint: 8.32.0
   eslint-config-prettier: 8.6.0
   eslint-plugin-react: 7.32.1
@@ -61,7 +60,6 @@ devDependencies:
   dotenv: 16.0.3
   env-cmd: 10.1.0
   esbuild: 0.17.4
-  esbuild-plugin-copy: 2.0.2_esbuild@0.17.4
   eslint: 8.32.0
   eslint-config-prettier: 8.6.0_eslint@8.32.0
   eslint-plugin-react: 7.32.1_eslint@8.32.0
@@ -3109,17 +3107,6 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /esbuild-plugin-copy/2.0.2_esbuild@0.17.4:
-    resolution: {integrity: sha512-HlDgkHXagBCwaoB8tlQFeH08/i5a2ey6Pc26annV1YcG5CkAHzzRzmCwp3wdi5KHI//HVUgipS+Zsy2tQmn9gQ==}
-    peerDependencies:
-      esbuild: '>= 0.14.0'
-    dependencies:
-      chalk: 4.1.2
-      esbuild: 0.17.4
-      fs-extra: 10.1.0
-      globby: 11.1.0
-    dev: true
-
   /esbuild/0.17.4:
     resolution: {integrity: sha512-zBn9MeCwT7W5F1a3lXClD61ip6vQM+H8Msb0w8zMT4ZKBpDg+rFAraNyWCDelB/2L6M3g6AXHPnsyvjMFnxtFw==}
     engines: {node: '>=12'}
@@ -3551,15 +3538,6 @@ packages:
     dependencies:
       tslib: 2.4.0
     dev: false
-
-  /fs-extra/10.1.0:
-    resolution: {integrity: sha512-oRXApq54ETRj4eMiFzGnHWGy+zo5raudjuxN0b8H7s/RU2oW0Wvsx9O0ACRN/kRq9E8Vu/ReskGB5o3ji+FzHQ==}
-    engines: {node: '>=12'}
-    dependencies:
-      graceful-fs: 4.2.10
-      jsonfile: 6.1.0
-      universalify: 2.0.0
-    dev: true
 
   /fs-extra/11.1.0:
     resolution: {integrity: sha512-0rcTq621PD5jM/e0a3EJoGC/1TC5ZBCERW82LQuwfGnCa1V8w7dpYH1yNu+SLb6E5dkeCBzKEyLGlFrnr+dUyw==}
