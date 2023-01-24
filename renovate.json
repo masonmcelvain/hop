@@ -6,5 +6,6 @@
          "matchPackagePatterns": ["framer-motion"],
          "allowedVersions": "<7"
       }
-   ]
+   ],
+   "rangeStrategy": "pin"
 }
