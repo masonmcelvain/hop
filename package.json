@@ -40,7 +40,7 @@
       "@babel/core": "^7.13.14",
       "@playwright/test": "^1.28.1",
       "@types/node": "^18.0.0",
-      "@types/react": "^17.0.3",
+      "@types/react": "^18.0.0",
       "@types/react-dom": "^17.0.3",
       "@types/webextension-polyfill": "^0.10.0",
       "@typescript-eslint/eslint-plugin": "^5.0.0",
