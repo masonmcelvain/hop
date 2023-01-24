@@ -39,7 +39,7 @@
    "devDependencies": {
       "@babel/core": "^7.13.14",
       "@playwright/test": "^1.28.1",
-      "@types/node": "^14.14.41",
+      "@types/node": "^18.0.0",
       "@types/react": "^17.0.3",
       "@types/react-dom": "^17.0.3",
       "@types/webextension-polyfill": "^0.10.0",
