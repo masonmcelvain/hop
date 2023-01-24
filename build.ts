@@ -22,17 +22,16 @@ execSync(`rm -rf dist/${target}`);
 execSync(`rm -f dist/${target}.zip`);
 
 const baseOptions: esbuild.BuildOptions = {
-   entryPoints: ["src/public/index.tsx"],
+   entryPoints: ["src/public/index.tsx", "src/public/index.html"],
    bundle: true,
+   loader: {
+      ".html": "copy",
+   },
    target: ["chrome58", "firefox57"],
-   outfile: `dist/${target}/hop.bundle.js`,
+   outdir: `dist/${target}`,
    plugins: [
       copy({
          assets: [
-            {
-               from: "src/public/index.html",
-               to: ".",
-            },
             {
                from: `src/public/${target}/**/*`,
                to: ".",
