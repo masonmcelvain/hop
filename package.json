@@ -47,7 +47,7 @@
       "concurrently": "7.6.0",
       "dotenv": "16.0.3",
       "env-cmd": "10.1.0",
-      "esbuild": "0.17.5",
+      "esbuild": "0.17.7",
       "eslint": "8.34.0",
       "eslint-config-prettier": "8.6.0",
       "eslint-plugin-react": "7.32.2",
