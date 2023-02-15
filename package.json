@@ -23,7 +23,7 @@
    "author": "Mason McElvain",
    "license": "MIT",
    "dependencies": {
-      "@chakra-ui/react": "2.5.0",
+      "@chakra-ui/react": "2.5.1",
       "@emotion/react": "11.10.5",
       "@emotion/styled": "11.10.5",
       "framer-motion": "6.5.1",
