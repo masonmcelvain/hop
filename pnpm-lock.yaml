@@ -5,7 +5,7 @@ specifiers:
   '@chakra-ui/react': 2.5.1
   '@emotion/react': 11.10.6
   '@emotion/styled': 11.10.6
-  '@playwright/test': 1.30.0
+  '@playwright/test': 1.31.0
   '@types/node': 18.14.0
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
@@ -49,7 +49,7 @@ dependencies:
 
 devDependencies:
   '@babel/core': 7.21.0
-  '@playwright/test': 1.30.0
+  '@playwright/test': 1.31.0
   '@types/node': 18.14.0
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
@@ -1850,13 +1850,15 @@ packages:
       fastq: 1.14.0
     dev: true
 
-  /@playwright/test/1.30.0:
-    resolution: {integrity: sha512-SVxkQw1xvn/Wk/EvBnqWIq6NLo1AppwbYOjNLmyU0R1RoQ3rLEBtmjTnElcnz8VEtn11fptj1ECxK0tgURhajw==}
+  /@playwright/test/1.31.0:
+    resolution: {integrity: sha512-Ys5s/06Dg9g3zAIdCIb/UOBYim3U7Zjb3DvC6XBtnRmnglH5O47iwYzmtxXu9fhSyzI2Jn28apkXIOD81GgCdw==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
       '@types/node': 18.14.0
-      playwright-core: 1.30.0
+      playwright-core: 1.31.0
+    optionalDependencies:
+      fsevents: 2.3.2
     dev: true
 
   /@pnpm/network.ca-file/1.0.2:
@@ -3623,6 +3625,14 @@ packages:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
     dev: true
 
+  /fsevents/2.3.2:
+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
   /function-bind/1.1.1:
     resolution: {integrity: sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==}
 
@@ -4907,8 +4917,8 @@ packages:
       thread-stream: 2.2.0
     dev: true
 
-  /playwright-core/1.30.0:
-    resolution: {integrity: sha512-7AnRmTCf+GVYhHbLJsGUtskWTE33SwMZkybJ0v6rqR1boxq2x36U7p1vDRV7HO2IwTZgmycracLxPEJI49wu4g==}
+  /playwright-core/1.31.0:
+    resolution: {integrity: sha512-/KquBjS5DcASCh8cGeNVHuC0kyb7c9plKTwaKxgOGtxT7+DZO2fjmFvPDBSXslEIK5CeOO/2kk5rOCktFXKEdA==}
     engines: {node: '>=14'}
     hasBin: true
     dev: true
