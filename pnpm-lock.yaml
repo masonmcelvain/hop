@@ -32,7 +32,7 @@ specifiers:
   web-ext: 7.5.0
   webextension-polyfill: 0.10.0
   zod: 3.21.2
-  zustand: 4.3.5
+  zustand: 4.3.6
 
 dependencies:
   '@chakra-ui/react': 2.5.1_j67epygnvuadckncmqi3unwoce
@@ -45,7 +45,7 @@ dependencies:
   react-dom: 18.2.0_react@18.2.0
   react-feather: 2.0.10_react@18.2.0
   zod: 3.21.2
-  zustand: 4.3.5_react@18.2.0
+  zustand: 4.3.6_react@18.2.0
 
 devDependencies:
   '@babel/core': 7.21.0
@@ -6287,8 +6287,8 @@ packages:
     resolution: {integrity: sha512-0Ygy2/IZNIxHterZdHjE5Vb8hp1fUHJD/BGvSHj8QJx+UipEVNvo9WLchoyBpz5JIaN6KmdGDGYdloGzpFK98g==}
     dev: false
 
-  /zustand/4.3.5_react@18.2.0:
-    resolution: {integrity: sha512-2iPUzfwx+g3f0PagOMz2vDO9mZzEp2puFpNe7vrAymVPOEIEUjCPkC4/zy84eAscxIWmTU4j9g6upXYkJdzEFQ==}
+  /zustand/4.3.6_react@18.2.0:
+    resolution: {integrity: sha512-6J5zDxjxLE+yukC2XZWf/IyWVKnXT9b9HUv09VJ/bwGCpKNcaTqp7Ws28Xr8jnbvnZcdRaidztAPsXFBIqufiw==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
       immer: '>=9.0'
