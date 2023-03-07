@@ -31,7 +31,7 @@ specifiers:
   typescript: 4.9.5
   web-ext: 7.5.0
   webextension-polyfill: 0.10.0
-  zod: 3.21.2
+  zod: 3.21.3
   zustand: 4.3.6
 
 dependencies:
@@ -44,7 +44,7 @@ dependencies:
   react-dnd-html5-backend: 16.0.1
   react-dom: 18.2.0_react@18.2.0
   react-feather: 2.0.10_react@18.2.0
-  zod: 3.21.2
+  zod: 3.21.3
   zustand: 4.3.6_react@18.2.0
 
 devDependencies:
@@ -6283,8 +6283,8 @@ packages:
       jszip: 3.10.1
     dev: true
 
-  /zod/3.21.2:
-    resolution: {integrity: sha512-0Ygy2/IZNIxHterZdHjE5Vb8hp1fUHJD/BGvSHj8QJx+UipEVNvo9WLchoyBpz5JIaN6KmdGDGYdloGzpFK98g==}
+  /zod/3.21.3:
+    resolution: {integrity: sha512-tz1QgJomEhMTQhOBvQxnnrTo8q77EjpGLlaWicCoEEkMzScuONzDkJKIHr83CS89fGY24iGCStj2ZOCHpPOEyA==}
     dev: false
 
   /zustand/4.3.6_react@18.2.0:
