@@ -5,7 +5,7 @@ specifiers:
   '@chakra-ui/react': 2.5.3
   '@emotion/react': 11.10.6
   '@emotion/styled': 11.10.6
-  '@playwright/test': 1.31.2
+  '@playwright/test': 1.32.1
   '@types/node': 18.15.9
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
@@ -49,7 +49,7 @@ dependencies:
 
 devDependencies:
   '@babel/core': 7.21.3
-  '@playwright/test': 1.31.2
+  '@playwright/test': 1.32.1
   '@types/node': 18.15.9
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
@@ -1882,13 +1882,13 @@ packages:
       fastq: 1.14.0
     dev: true
 
-  /@playwright/test/1.31.2:
-    resolution: {integrity: sha512-BYVutxDI4JeZKV1+ups6dt5WiqKhjBtIYowyZIJ3kBDmJgsuPKsqqKNIMFbUePLSCmp2cZu+BDL427RcNKTRYw==}
+  /@playwright/test/1.32.1:
+    resolution: {integrity: sha512-FTwjCuhlm1qHUGf4hWjfr64UMJD/z0hXYbk+O387Ioe6WdyZQ+0TBDAc6P+pHjx2xCv1VYNgrKbYrNixFWy4Dg==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
       '@types/node': 18.15.9
-      playwright-core: 1.31.2
+      playwright-core: 1.32.1
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
@@ -4888,8 +4888,8 @@ packages:
       thread-stream: 2.2.0
     dev: true
 
-  /playwright-core/1.31.2:
-    resolution: {integrity: sha512-a1dFgCNQw4vCsG7bnojZjDnPewZcw7tZUNFN0ZkcLYKj+mPmXvg4MpaaKZ5SgqPsOmqIf2YsVRkgqiRDxD+fDQ==}
+  /playwright-core/1.32.1:
+    resolution: {integrity: sha512-KZYUQC10mXD2Am1rGlidaalNGYk3LU1vZqqNk0gT4XPty1jOqgup8KDP8l2CUlqoNKhXM5IfGjWgW37xvGllBA==}
     engines: {node: '>=14'}
     hasBin: true
     dev: true
