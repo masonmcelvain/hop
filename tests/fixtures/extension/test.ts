@@ -55,7 +55,7 @@ export const test = base.extend<{
 });
 export const expect = test.expect;
 
-async function addLink(page: Page, link: typeof links[0]) {
+async function addLink(page: Page, link: (typeof links)[0]) {
    await page.getByRole("button", { name: "Create new link" }).click();
    await page.getByPlaceholder("Name").fill(link.name);
    await page.getByPlaceholder("Link URL").fill(link.url);
