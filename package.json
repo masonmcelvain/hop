@@ -62,9 +62,6 @@
       "webextension-polyfill": "0.10.0"
    },
    "lint-staged": {
-      "*": [
-         "eslint --fix",
-         "prettier --write --ignore-unknown"
-      ]
+      "*": "prettier --write --ignore-unknown"
    }
 }
