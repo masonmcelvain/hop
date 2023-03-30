@@ -17,6 +17,7 @@ It's available for use on the [Chrome Web Store](https://chrome.google.com/webst
 [![Playwright Tests](https://github.com/masonmcelvain/hop/actions/workflows/playwright.yml/badge.svg?branch=main)](https://github.com/masonmcelvain/hop/actions/workflows/playwright.yml)
 [![Type Check](https://github.com/masonmcelvain/hop/actions/workflows/tsc.yml/badge.svg)](https://github.com/masonmcelvain/hop/actions/workflows/tsc.yml)
 [![Lint](https://github.com/masonmcelvain/hop/actions/workflows/lint.yml/badge.svg)](https://github.com/masonmcelvain/hop/actions/workflows/lint.yml)
+[![Style](https://github.com/masonmcelvain/hop/actions/workflows/style.yml/badge.svg)](https://github.com/masonmcelvain/hop/actions/workflows/style.yml)
 [![CodeQL](https://github.com/masonmcelvain/hop/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/masonmcelvain/hop/actions/workflows/codeql-analysis.yml)
 
 If you'd like to see a new feature or you've spotted a bug, please check to see if there are any [closed issues](https://github.com/masonmcelvain/hop/issues?q=is%3Aissue+is%3Aclosed) that might address your concern before opening a new issue on this repository.
