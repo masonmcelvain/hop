@@ -25,7 +25,7 @@ export const test = base.extend<{
    extensionId: async ({ context }, use) => {
       const page = await context.newPage();
       await page.goto("chrome://extensions/");
-      await page.getByRole("button", { name: "Details" }).click();
+      await page.click("#detailsButton");
       const extensionId = page.url().split("?id=")[1];
       await page.close();
       await use(extensionId);
