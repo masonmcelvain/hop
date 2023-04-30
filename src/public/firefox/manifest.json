@@ -23,7 +23,8 @@
    },
    "browser_specific_settings": {
       "gecko": {
-         "id": "hop@masonmcelvain.com"
+         "id": "hop@masonmcelvain.com",
+         "strict_min_version": "109.0"
       }
    }
 }
