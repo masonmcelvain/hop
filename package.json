@@ -19,7 +19,7 @@
       "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}'",
       "prepare": "husky install",
       "test": "playwright test",
-      "type-check": "tsc --project src/ --noEmit && tsc --project tests/ --noEmit"
+      "type-check": "tsc --project src/ --noEmit & tsc --project tests/ --noEmit & wait"
    },
    "author": "Mason McElvain",
    "license": "MIT",
