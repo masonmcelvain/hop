@@ -30,7 +30,8 @@ If there's an issue you'd like to tackle, please fork this repository, make your
 
 -  Clone the repository and navigate to it's root directory with `git clone https://github.com/masonmcelvain/hop.git && cd hop`
 -  Install dependencies with `pnpm install`
-   -  You'll need version 16 of [Node.js](https://nodejs.org/en/download/) installed, and `pnpm` version 7.
+   -  You'll need version 19 of [Node.js](https://nodejs.org/en/download/) installed, and `pnpm` version 8.
+   -  `nvm use` for [Node Version Manager](https://github.com/nvm-sh/nvm) is supported.
 
 ### Running a dev server
 
