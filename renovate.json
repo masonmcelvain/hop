@@ -3,9 +3,11 @@
    "extends": ["config:base"],
    "packageRules": [
       {
-         "matchPackagePatterns": ["framer-motion"],
-         "allowedVersions": "<7"
+         "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+         "automerge": true
       }
    ],
-   "rangeStrategy": "pin"
+   "rangeStrategy": "pin",
+   "schedule": ["every weekend"],
+   "timezone": "America/Los_Angeles"
 }
