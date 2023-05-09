@@ -5,6 +5,10 @@
       {
          "matchPackagePatterns": ["framer-motion"],
          "allowedVersions": "<7"
+      },
+      {
+         "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+         "automerge": true
       }
    ],
    "rangeStrategy": "pin",
