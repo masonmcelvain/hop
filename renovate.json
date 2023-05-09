@@ -7,5 +7,7 @@
          "allowedVersions": "<7"
       }
    ],
-   "rangeStrategy": "pin"
+   "rangeStrategy": "pin",
+   "schedule": ["every weekend"],
+   "timezone": "America/Los_Angeles"
 }
