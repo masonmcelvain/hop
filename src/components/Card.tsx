@@ -15,8 +15,9 @@ export type CardDragItem = {
 type CardProps = {
    linkData: LinkData;
    isInEditMode: boolean;
+   onClick: React.MouseEventHandler;
 };
-export function Card({ linkData, isInEditMode }: CardProps) {
+export function Card({ linkData, isInEditMode, onClick }: CardProps) {
    const { id, name, url } = linkData;
    const item: CardDragItem = { id };
    const [isMouseOver, setIsMouseOver] = useBoolean();
@@ -40,18 +41,6 @@ export function Card({ linkData, isInEditMode }: CardProps) {
         }
       : {};
 
-   const clickHandler = React.useCallback<React.MouseEventHandler>(
-      (event) => {
-         if (event.ctrlKey) {
-            event.preventDefault();
-            openInNewTab(url.toString());
-         } else {
-            navigateCurrentTab(url.toString());
-         }
-      },
-      [url]
-   );
-
    return (
       <Button
          pos="absolute"
@@ -59,7 +48,7 @@ export function Card({ linkData, isInEditMode }: CardProps) {
          as="a"
          target="_self"
          href={url.toString()}
-         onClick={clickHandler}
+         onClick={onClick}
          variant="ghost"
          w="92%"
          minH="92%"
