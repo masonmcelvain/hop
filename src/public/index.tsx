@@ -1,16 +1,17 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import "./index.css";
 import theme from "@ui/theme";
 import App from "@components/App";
 
-ReactDOM.render(
-   <>
+const domNode = document.getElementById("root");
+if (!domNode) throw new Error("No root element found");
+createRoot(domNode).render(
+   <div>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <ChakraProvider theme={theme}>
          <App />
       </ChakraProvider>
-   </>,
-   document.querySelector("#root")
+   </div>
 );

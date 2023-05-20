@@ -20,6 +20,23 @@ export default function Page() {
       onClose: onLinkEditModalClose,
    } = useDisclosure();
 
+   const onKeyDown = React.useCallback(
+      (event: KeyboardEvent) => {
+         if (event.key === "e") {
+            toggleEditMode();
+         } else if (event.key === "n") {
+            onLinkEditModalOpen();
+         }
+      },
+      [onLinkEditModalOpen, toggleEditMode]
+   );
+   React.useEffect(() => {
+      document.addEventListener("keydown", onKeyDown);
+      return () => {
+         document.removeEventListener("keydown", onKeyDown);
+      };
+   }, [onKeyDown]);
+
    return (
       <VStack w="full" p={2}>
          <DndProvider backend={HTML5Backend}>

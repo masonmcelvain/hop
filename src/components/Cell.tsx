@@ -1,6 +1,11 @@
 import { IconButton, Square, useBoolean, VStack } from "@chakra-ui/react";
 import { useLinkStore } from "@hooks/useLinkStore";
-import { getStorageKeyForLink, setStoredLinkKeys } from "@lib/webextension";
+import {
+   getStorageKeyForLink,
+   navigateCurrentTab,
+   openInNewTab,
+   setStoredLinkKeys,
+} from "@lib/webextension";
 import * as React from "react";
 import { useDrop } from "react-dnd";
 import { Edit2, X } from "react-feather";
@@ -30,15 +35,56 @@ export default function Cell({
    const isEmpty = index >= linkKeys.length;
    const link = React.useMemo(
       () =>
-         !isEmpty &&
-         links.find(
-            (link) => link && getStorageKeyForLink(link) === linkKeys[index]
-         ),
+         (!isEmpty &&
+            links.find(
+               (link) => link && getStorageKeyForLink(link) === linkKeys[index]
+            )) ||
+         null,
       [isEmpty, index, links, linkKeys]
    );
+
+   const onClick = React.useCallback(
+      (event: React.MouseEvent | KeyboardEvent) => {
+         if (!link?.url) return;
+         if (event.ctrlKey) {
+            event.preventDefault();
+            openInNewTab(link.url);
+         } else {
+            navigateCurrentTab(link.url);
+         }
+      },
+      [link?.url]
+   );
+   const onKeyDown = React.useCallback(
+      (event: KeyboardEvent) => {
+         if (isEmpty) return;
+         if (String(index + 1) === event.key) {
+            event.preventDefault();
+            if (isInEditMode) {
+               openUpdateLinkModal(index);
+            } else {
+               onClick(event);
+            }
+         }
+      },
+      [index, isEmpty, isInEditMode, onClick, openUpdateLinkModal]
+   );
+   React.useEffect(() => {
+      document.addEventListener("keydown", onKeyDown);
+      return () => {
+         document.removeEventListener("keydown", onKeyDown);
+      };
+   }, [onKeyDown]);
    const card = React.useMemo(
-      () => link && <Card linkData={link} isInEditMode={isInEditMode} />,
-      [isInEditMode, link]
+      () =>
+         link && (
+            <Card
+               linkData={link}
+               isInEditMode={isInEditMode}
+               onClick={onClick}
+            />
+         ),
+      [isInEditMode, link, onClick]
    );
 
    const reorderLinks = useLinkStore((state) => state.reorderLinks);
