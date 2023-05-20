@@ -56,6 +56,16 @@ export default function LinkEditModal({
       getFormValuesForLink(link)
    );
 
+   const onKeyDown = React.useCallback<React.KeyboardEventHandler<HTMLElement>>(
+      (event) => {
+         if (isOpen && event.key === "Escape") {
+            event.preventDefault();
+            onClose();
+         }
+      },
+      [isOpen, onClose]
+   );
+
    const populateFormWithTab = React.useCallback(async () => {
       const tab = await getCurrentTab();
       setFormValues({
@@ -149,7 +159,7 @@ export default function LinkEditModal({
       <Modal isOpen={isOpen} onClose={onClose} size="full">
          <ModalOverlay />
          <form>
-            <ModalContent borderRadius="none">
+            <ModalContent borderRadius="none" onKeyDown={onKeyDown}>
                <ModalHeader>Update Link</ModalHeader>
                <ModalCloseButton />
                <ModalBody>
