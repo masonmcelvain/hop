@@ -13,13 +13,22 @@ export default function Page() {
    const [isInEditMode, { toggle: toggleEditMode, off: offEditMode }] =
       useBoolean();
    const [linkToEdit, setLinkToEdit] = React.useState<LinkData | null>(null);
+
+   const {
+      isOpen: isLinkEditModalOpen,
+      onOpen: onLinkEditModalOpen,
+      onClose: onLinkEditModalClose,
+   } = useDisclosure();
+
    const onKeyDown = React.useCallback(
       (event: KeyboardEvent) => {
          if (event.key === "e") {
             toggleEditMode();
+         } else if (event.key === "n") {
+            onLinkEditModalOpen();
          }
       },
-      [toggleEditMode]
+      [onLinkEditModalOpen, toggleEditMode]
    );
    React.useEffect(() => {
       document.addEventListener("keydown", onKeyDown);
@@ -27,12 +36,6 @@ export default function Page() {
          document.removeEventListener("keydown", onKeyDown);
       };
    }, [onKeyDown]);
-
-   const {
-      isOpen: isLinkEditModalOpen,
-      onOpen: onLinkEditModalOpen,
-      onClose: onLinkEditModalClose,
-   } = useDisclosure();
 
    return (
       <VStack w="full" p={2}>
