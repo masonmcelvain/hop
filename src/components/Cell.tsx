@@ -57,11 +57,17 @@ export default function Cell({
    );
    const onKeyDown = React.useCallback(
       (event: KeyboardEvent) => {
-         if (!isEmpty && String(index + 1) === event.key) {
-            onClick(event);
+         if (isEmpty) return;
+         if (String(index + 1) === event.key) {
+            event.preventDefault();
+            if (isInEditMode) {
+               openUpdateLinkModal(index);
+            } else {
+               onClick(event);
+            }
          }
       },
-      [index, isEmpty, onClick]
+      [index, isEmpty, isInEditMode, onClick, openUpdateLinkModal]
    );
    React.useEffect(() => {
       document.addEventListener("keydown", onKeyDown);
