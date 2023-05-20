@@ -8,7 +8,7 @@ import {
    UpdateLinkData,
 } from "@lib/links";
 import { LinkState } from "@models/link-state";
-import create from "zustand";
+import { create } from "zustand";
 
 interface LinkStore extends LinkState {
    addLink: (link: AddLinkData) => void;
