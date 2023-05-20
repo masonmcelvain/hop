@@ -13,6 +13,20 @@ export default function Page() {
    const [isInEditMode, { toggle: toggleEditMode, off: offEditMode }] =
       useBoolean();
    const [linkToEdit, setLinkToEdit] = React.useState<LinkData | null>(null);
+   const onKeyDown = React.useCallback(
+      (event: KeyboardEvent) => {
+         if (event.key === "e") {
+            toggleEditMode();
+         }
+      },
+      [toggleEditMode]
+   );
+   React.useEffect(() => {
+      document.addEventListener("keydown", onKeyDown);
+      return () => {
+         document.removeEventListener("keydown", onKeyDown);
+      };
+   }, [onKeyDown]);
 
    const {
       isOpen: isLinkEditModalOpen,
