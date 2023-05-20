@@ -14,6 +14,7 @@ import {
    ModalHeader,
    ModalOverlay,
    Text,
+   Tooltip,
    VStack,
 } from "@chakra-ui/react";
 import { LINK_NAME_MAX_LENGTH } from "@config/constants";
@@ -161,7 +162,9 @@ export default function LinkEditModal({
          <form>
             <ModalContent borderRadius="none" onKeyDown={onKeyDown}>
                <ModalHeader>Update Link</ModalHeader>
-               <ModalCloseButton />
+               <Tooltip label="Close (esc)" openDelay={750}>
+                  <ModalCloseButton />
+               </Tooltip>
                <ModalBody>
                   <VStack w="full" h="full" spacing={2}>
                      <FormControl isRequired>

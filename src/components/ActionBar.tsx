@@ -2,6 +2,7 @@ import {
    ButtonGroup,
    Divider,
    IconButton,
+   Tooltip,
    useColorMode,
    useColorModeValue,
 } from "@chakra-ui/react";
@@ -29,23 +30,30 @@ export default function ActionBar({
       <>
          <Divider />
          <ButtonGroup variant="ghost" spacing={2}>
-            <IconButton
-               aria-label="Edit links"
-               icon={<Edit size={24} />}
-               onClick={toggleEditMode}
-            />
-
-            <IconButton
-               aria-label="Create new link"
-               icon={<Plus size={32} />}
-               onClick={onLinkEditModalOpen}
-            />
-
-            <IconButton
-               aria-label="Toggle color mode"
-               icon={useColorModeValue(<Moon size={24} />, <Sun size={24} />)}
-               onClick={onColorModeClick}
-            />
+            <Tooltip label="Edit links (e)" openDelay={750}>
+               <IconButton
+                  aria-label="Edit links"
+                  icon={<Edit size={24} />}
+                  onClick={toggleEditMode}
+               />
+            </Tooltip>
+            <Tooltip label="Create new link (n)" openDelay={750}>
+               <IconButton
+                  aria-label="Create new link"
+                  icon={<Plus size={32} />}
+                  onClick={onLinkEditModalOpen}
+               />
+            </Tooltip>
+            <Tooltip label="Toggle color mode" openDelay={750}>
+               <IconButton
+                  aria-label="Toggle color mode"
+                  icon={useColorModeValue(
+                     <Moon size={24} />,
+                     <Sun size={24} />
+                  )}
+                  onClick={onColorModeClick}
+               />
+            </Tooltip>
          </ButtonGroup>
       </>
    );
