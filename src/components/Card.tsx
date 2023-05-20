@@ -1,5 +1,4 @@
 import { Button, Text, useBoolean, VStack } from "@chakra-ui/react";
-import { navigateCurrentTab, openInNewTab } from "@lib/webextension";
 import { LinkData } from "@models/link-state";
 import * as React from "react";
 import { useDrag } from "react-dnd";

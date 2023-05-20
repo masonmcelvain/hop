@@ -42,8 +42,9 @@ export default function Cell({
          null,
       [isEmpty, index, links, linkKeys]
    );
-   const onClick = React.useCallback<React.MouseEventHandler>(
-      (event) => {
+
+   const onClick = React.useCallback(
+      (event: React.MouseEvent | KeyboardEvent) => {
          if (!link?.url) return;
          if (event.ctrlKey) {
             event.preventDefault();
@@ -54,6 +55,20 @@ export default function Cell({
       },
       [link?.url]
    );
+   const onKeyDown = React.useCallback(
+      (event: KeyboardEvent) => {
+         if (!isEmpty && String(index + 1) === event.key) {
+            onClick(event);
+         }
+      },
+      [index, isEmpty, onClick]
+   );
+   React.useEffect(() => {
+      document.addEventListener("keydown", onKeyDown);
+      return () => {
+         document.removeEventListener("keydown", onKeyDown);
+      };
+   }, [onKeyDown]);
    const card = React.useMemo(
       () =>
          link && (
