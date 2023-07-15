@@ -37,7 +37,7 @@
       "zustand": "4.3.9"
    },
    "devDependencies": {
-      "@babel/core": "7.22.8",
+      "@babel/core": "7.22.9",
       "@playwright/test": "1.35.1",
       "@types/node": "18.16.19",
       "@types/react": "18.2.14",
