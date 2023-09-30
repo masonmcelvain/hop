@@ -22,7 +22,7 @@ dependencies:
     version: 18.2.0
   react-dnd:
     specifier: 16.0.1
-    version: 16.0.1(@types/node@18.17.19)(@types/react@18.2.23)(react@18.2.0)
+    version: 16.0.1(@types/node@18.18.1)(@types/react@18.2.23)(react@18.2.0)
   react-dnd-html5-backend:
     specifier: 16.0.1
     version: 16.0.1
@@ -47,8 +47,8 @@ devDependencies:
     specifier: 1.38.1
     version: 1.38.1
   '@types/node':
-    specifier: 18.17.19
-    version: 18.17.19
+    specifier: 18.18.1
+    version: 18.18.1
   '@types/react':
     specifier: 18.2.23
     version: 18.2.23
@@ -99,7 +99,7 @@ devDependencies:
     version: 2.8.8
   ts-node:
     specifier: 10.9.1
-    version: 10.9.1(@types/node@18.17.19)(typescript@5.2.2)
+    version: 10.9.1(@types/node@18.18.1)(typescript@5.2.2)
   typescript:
     specifier: 5.2.2
     version: 5.2.2
@@ -2037,8 +2037,8 @@ packages:
     resolution: {integrity: sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==}
     dev: true
 
-  /@types/node@18.17.19:
-    resolution: {integrity: sha512-+pMhShR3Or5GR0/sp4Da7FnhVmTalWm81M6MkEldbwjETSaPalw138Z4KdpQaistvqQxLB7Cy4xwYdxpbSOs9Q==}
+  /@types/node@18.18.1:
+    resolution: {integrity: sha512-3G42sxmm0fF2+Vtb9TJQpnjmP+uKlWvFa8KoEGquh4gqRmoUG/N0ufuhikw6HEsdG2G2oIKhog1GCTfz9v5NdQ==}
 
   /@types/parse-json@4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
@@ -2074,7 +2074,7 @@ packages:
   /@types/yauzl@2.10.0:
     resolution: {integrity: sha512-Cn6WYCm0tXv8p6k+A8PvbDG763EDpBoTzHdA+Q/MF6H3sapGjCm9NzoaJncJS9tUKSuCoDs9XHxYYsQDgxR6kw==}
     dependencies:
-      '@types/node': 18.17.19
+      '@types/node': 18.18.1
     dev: true
 
   /@typescript-eslint/eslint-plugin@6.7.3(@typescript-eslint/parser@6.7.3)(eslint@8.50.0)(typescript@5.2.2):
@@ -2723,7 +2723,7 @@ packages:
     engines: {node: '>=12.13.0'}
     hasBin: true
     dependencies:
-      '@types/node': 18.17.19
+      '@types/node': 18.18.1
       escape-string-regexp: 4.0.0
       is-wsl: 2.2.0
       lighthouse-logger: 1.3.0
@@ -5507,7 +5507,7 @@ packages:
       dnd-core: 16.0.1
     dev: false
 
-  /react-dnd@16.0.1(@types/node@18.17.19)(@types/react@18.2.23)(react@18.2.0):
+  /react-dnd@16.0.1(@types/node@18.18.1)(@types/react@18.2.23)(react@18.2.0):
     resolution: {integrity: sha512-QeoM/i73HHu2XF9aKksIUuamHPDvRglEwdHL4jsp784BgUuWcg6mzfxT0QDdQz8Wj0qyRKx2eMg8iZtWvU4E2Q==}
     peerDependencies:
       '@types/hoist-non-react-statics': '>= 3.3.1'
@@ -5524,7 +5524,7 @@ packages:
     dependencies:
       '@react-dnd/invariant': 4.0.2
       '@react-dnd/shallowequal': 4.0.2
-      '@types/node': 18.17.19
+      '@types/node': 18.18.1
       '@types/react': 18.2.23
       dnd-core: 16.0.1
       fast-deep-equal: 3.1.3
@@ -6308,7 +6308,7 @@ packages:
       typescript: 5.2.2
     dev: true
 
-  /ts-node@10.9.1(@types/node@18.17.19)(typescript@5.2.2):
+  /ts-node@10.9.1(@types/node@18.18.1)(typescript@5.2.2):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -6327,7 +6327,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.3
-      '@types/node': 18.17.19
+      '@types/node': 18.18.1
       acorn: 8.8.1
       acorn-walk: 8.2.0
       arg: 4.1.3
