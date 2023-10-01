@@ -104,8 +104,8 @@ devDependencies:
     specifier: 5.2.2
     version: 5.2.2
   web-ext:
-    specifier: 7.7.0
-    version: 7.7.0
+    specifier: 7.8.0
+    version: 7.8.0
   webextension-polyfill:
     specifier: 0.10.0
     version: 0.10.0
@@ -6586,8 +6586,8 @@ packages:
       defaults: 1.0.4
     dev: true
 
-  /web-ext@7.7.0:
-    resolution: {integrity: sha512-/jc0kbSLfw/ANra6v70I6QADrVYL0Wo98T0Cigt39EjVpXbiwES8zww/9QL7aE0L1tK0ISWYq45KNisDV+GKVA==}
+  /web-ext@7.8.0:
+    resolution: {integrity: sha512-ta+VjbNfK5q0pqRmrlH/DQMdJ89sAJFfgcvpqoUoe2gPxLu18zZ5mIakGvyjmfjrkJLOZ2NCNF7suj/qd6xaEQ==}
     engines: {node: '>=14.0.0', npm: '>=6.9.0'}
     hasBin: true
     dependencies:
