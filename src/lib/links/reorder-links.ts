@@ -11,14 +11,14 @@ export type ReorderLinksData = {
  */
 export function reorderLinks(
    prevState: LinkState,
-   data: ReorderLinksData
+   data: ReorderLinksData,
 ): LinkState {
    const { sourceId } = data;
    let { newLinkKeyIndex } = data;
    const newLinkKeys = [...prevState.linkKeys];
 
    const oldLinkKeyIndex = newLinkKeys.findIndex(
-      (key) => getLinkIdForStorageKey(key) === sourceId
+      (key) => getLinkIdForStorageKey(key) === sourceId,
    );
 
    // If dropped in an empty cell, put the card at the end of the array

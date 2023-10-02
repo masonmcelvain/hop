@@ -29,7 +29,7 @@ export function Card({ linkData, isInEditMode, onClick }: CardProps) {
             isDragEventInProgress: !!monitor.getItem(),
          }),
       }),
-      [id]
+      [id],
    );
 
    const conditionalButtonProps = isDragEventInProgress

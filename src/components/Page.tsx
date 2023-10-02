@@ -28,7 +28,7 @@ export default function Page() {
             onLinkEditModalOpen();
          }
       },
-      [onLinkEditModalOpen, toggleEditMode]
+      [onLinkEditModalOpen, toggleEditMode],
    );
    React.useEffect(() => {
       document.addEventListener("keydown", onKeyDown);
