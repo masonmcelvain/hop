@@ -8,7 +8,7 @@ export function setStoredColorMode(colorMode: ColorMode): void {
 
 export function setStoredLinksAndKeys(
    links: LinkData[],
-   linkKeys: string[]
+   linkKeys: string[],
 ): void {
    setStoredLinkKeys(linkKeys);
    setStoredLinks(links);

@@ -53,7 +53,7 @@ test("can escape new link modal", async ({ page }) => {
    await page.keyboard.down("n");
    await page.keyboard.down("Escape");
    await expect(
-      page.getByRole("button", { name: "Create new link" })
+      page.getByRole("button", { name: "Create new link" }),
    ).toBeVisible();
 });
 
@@ -61,6 +61,6 @@ test("can escape edit link modal", async ({ page }) => {
    await page.keyboard.down("e");
    await page.keyboard.down("Escape");
    await expect(
-      page.getByRole("button", { name: "Create new link" })
+      page.getByRole("button", { name: "Create new link" }),
    ).toBeVisible();
 });

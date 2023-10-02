@@ -37,10 +37,10 @@ export default function Cell({
       () =>
          (!isEmpty &&
             links.find(
-               (link) => link && getStorageKeyForLink(link) === linkKeys[index]
+               (link) => link && getStorageKeyForLink(link) === linkKeys[index],
             )) ||
          null,
-      [isEmpty, index, links, linkKeys]
+      [isEmpty, index, links, linkKeys],
    );
 
    const onClick = React.useCallback(
@@ -53,7 +53,7 @@ export default function Cell({
             navigateCurrentTab(link.url);
          }
       },
-      [link?.url]
+      [link?.url],
    );
    const onKeyDown = React.useCallback(
       (event: KeyboardEvent) => {
@@ -67,7 +67,7 @@ export default function Cell({
             }
          }
       },
-      [index, isEmpty, isInEditMode, onClick, openUpdateLinkModal]
+      [index, isEmpty, isInEditMode, onClick, openUpdateLinkModal],
    );
    React.useEffect(() => {
       document.addEventListener("keydown", onKeyDown);
@@ -84,7 +84,7 @@ export default function Cell({
                onClick={onClick}
             />
          ),
-      [isInEditMode, link, onClick]
+      [isInEditMode, link, onClick],
    );
 
    const reorderLinks = useLinkStore((state) => state.reorderLinks);
@@ -104,7 +104,7 @@ export default function Cell({
             isOver: monitor.isOver(),
          }),
       }),
-      [index, linkKeys]
+      [index, linkKeys],
    );
 
    React.useEffect(() => {
@@ -121,7 +121,7 @@ export default function Cell({
          event.preventDefault();
          deleteLink(index);
       },
-      [deleteLink, index]
+      [deleteLink, index],
    );
 
    const isLastCellWithCard = index === links.length - 1;

@@ -13,5 +13,5 @@ createRoot(domNode).render(
       <ChakraProvider theme={theme}>
          <App />
       </ChakraProvider>
-   </div>
+   </div>,
 );

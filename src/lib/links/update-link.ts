@@ -10,7 +10,7 @@ export type UpdateLinkData = {
 
 export function updateLink(
    prevState: LinkState,
-   data: UpdateLinkData
+   data: UpdateLinkData,
 ): LinkState {
    const { id, name, url, imageUrl } = data;
 

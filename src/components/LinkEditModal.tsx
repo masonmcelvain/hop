@@ -54,7 +54,7 @@ export default function LinkEditModal({
    onClose,
 }: LinkEditModalProps) {
    const [formValues, setFormValues] = React.useState<FormFields>(
-      getFormValuesForLink(link)
+      getFormValuesForLink(link),
    );
 
    const onKeyDown = React.useCallback<React.KeyboardEventHandler<HTMLElement>>(
@@ -64,7 +64,7 @@ export default function LinkEditModal({
             onClose();
          }
       },
-      [isOpen, onClose]
+      [isOpen, onClose],
    );
 
    const populateFormWithTab = React.useCallback(async () => {
@@ -96,7 +96,7 @@ export default function LinkEditModal({
          const nameError = name ? "" : "Please enter a name for the link";
          setFormValues({ ...formValues, name, nameError });
       },
-      [formValues, setFormValues]
+      [formValues, setFormValues],
    );
 
    const handleLinkUrlChange = React.useCallback<
@@ -108,7 +108,7 @@ export default function LinkEditModal({
          const urlError = url ? "" : "Please enter a URL for the link";
          setFormValues({ ...formValues, url, urlError });
       },
-      [formValues, setFormValues]
+      [formValues, setFormValues],
    );
 
    const handleImageUrlChange = React.useCallback<
@@ -132,7 +132,7 @@ export default function LinkEditModal({
             imageUrlError,
          });
       },
-      [formValues, setFormValues]
+      [formValues, setFormValues],
    );
 
    const addLink = useLinkStore((state) => state.addLink);
@@ -153,7 +153,7 @@ export default function LinkEditModal({
             : addLink(payload);
          onClose();
       },
-      [addLink, formValues, link, onClose, updateLink]
+      [addLink, formValues, link, onClose, updateLink],
    );
 
    return (

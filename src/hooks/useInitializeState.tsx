@@ -28,7 +28,7 @@ export function useInitializeState() {
 
          if (nextLinkId && linkKeys?.length) {
             const storedLinks = parseStoredLinks(
-               await browser.storage.local.get(linkKeys)
+               await browser.storage.local.get(linkKeys),
             );
             const links =
                (storedLinks && linkKeys.map((key) => storedLinks[key])) ?? [];
