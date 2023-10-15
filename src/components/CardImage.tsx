@@ -1,7 +1,6 @@
 import * as React from "react";
-import { Icon, Image } from "@chakra-ui/react";
+import { Image } from "react-feather";
 import { LinkData } from "@models/link-state";
-import { Image as FeatherImageIcon } from "react-feather";
 
 type CardImageProps = {
    linkData: LinkData;
@@ -9,8 +8,8 @@ type CardImageProps = {
 export default function CardImage({ linkData }: CardImageProps) {
    const { name, imageUrl } = linkData;
    return imageUrl ? (
-      <Image src={imageUrl} alt={name} w={8} />
+      <img src={imageUrl} alt={name} className="w-8" />
    ) : (
-      <Icon as={FeatherImageIcon} w={8} h={8} opacity="0.5" />
+      <Image className="h-8 w-8 opacity-50" />
    );
 }
