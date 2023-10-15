@@ -8,10 +8,10 @@ import App from "@components/App";
 const domNode = document.getElementById("root");
 if (!domNode) throw new Error("No root element found");
 createRoot(domNode).render(
-   <div>
+   <>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <ChakraProvider theme={theme}>
          <App />
       </ChakraProvider>
-   </div>,
+   </>,
 );

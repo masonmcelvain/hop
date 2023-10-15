@@ -7,6 +7,12 @@ import { z } from "zod";
 const TargetSchema = z.union([z.literal("chrome"), z.literal("firefox")]);
 type Target = z.infer<typeof TargetSchema>;
 const target = TargetSchema.parse(process.env.TARGET);
+const NodeEnvSchema = z.union([
+   z.literal("development"),
+   z.literal("production"),
+]);
+type NodeEnv = z.infer<typeof NodeEnvSchema>;
+const nodeEnv = NodeEnvSchema.parse(process.env.NODE_ENV);
 
 const cleanupPlugin = ({ target }: { target: Target }): esbuild.Plugin => ({
    name: "cleanup",
@@ -21,6 +27,25 @@ const copyAssetsPlugin = ({ target }: { target: Target }): esbuild.Plugin => ({
    setup(build) {
       build.onEnd(() => {
          execSync(`cp -r src/public/${target}/* dist/${target}`);
+      });
+   },
+});
+
+type TailwindPluginProps = {
+   target: Target;
+   nodeEnv: NodeEnv;
+};
+const tailwindPlugin = ({
+   target,
+   nodeEnv,
+}: TailwindPluginProps): esbuild.Plugin => ({
+   name: "tailwind",
+   setup(build) {
+      build.onStart(() => {
+         const minify = nodeEnv === "production" ? "--minify" : "";
+         execSync(
+            `tailwindcss -i src/globals.css -o dist/${target}/output.css ${minify}`,
+         );
       });
    },
 });
@@ -40,13 +65,14 @@ const baseOptions: esbuild.BuildOptions = {
    loader: {
       ".html": "copy",
    },
-   target: ["chrome58", "firefox57"],
-   outdir: `dist/${target}`,
    plugins: [
       cleanupPlugin({ target }),
       copyAssetsPlugin({ target }),
+      tailwindPlugin({ target, nodeEnv }),
       zipPlugin({ target }),
    ],
+   target: ["chrome58", "firefox57"],
+   outdir: `dist/${target}`,
 };
 
 async function build() {
