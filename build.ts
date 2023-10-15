@@ -5,31 +5,47 @@ import * as esbuild from "esbuild";
 import { z } from "zod";
 
 const TargetSchema = z.union([z.literal("chrome"), z.literal("firefox")]);
-type Target = z.infer<typeof TargetSchema>;
-const target = TargetSchema.parse(process.env.TARGET);
+const TARGET = TargetSchema.parse(process.env.TARGET);
+const NodeEnvSchema = z.union([
+   z.literal("development"),
+   z.literal("production"),
+]);
+const NODE_ENV = NodeEnvSchema.parse(process.env.NODE_ENV);
 
-const cleanupPlugin = ({ target }: { target: Target }): esbuild.Plugin => ({
+const cleanupPlugin = (): esbuild.Plugin => ({
    name: "cleanup",
    setup() {
-      execSync(`rm -rf dist/${target}`);
-      execSync(`rm -f dist/${target}.zip`);
+      execSync(`rm -rf dist/${TARGET}`);
+      execSync(`rm -f dist/${TARGET}.zip`);
    },
 });
 
-const copyAssetsPlugin = ({ target }: { target: Target }): esbuild.Plugin => ({
+const copyAssetsPlugin = (): esbuild.Plugin => ({
    name: "copy-assets",
    setup(build) {
       build.onEnd(() => {
-         execSync(`cp -r src/public/${target}/* dist/${target}`);
+         execSync(`cp -r src/public/${TARGET}/* dist/${TARGET}`);
       });
    },
 });
 
-const zipPlugin = ({ target }: { target: Target }): esbuild.Plugin => ({
+const tailwindPlugin = (): esbuild.Plugin => ({
+   name: "tailwind",
+   setup(build) {
+      build.onStart(() => {
+         const minify = NODE_ENV === "production" ? "--minify" : "";
+         execSync(
+            `tailwindcss -i src/globals.css -o dist/${TARGET}/output.css ${minify}`,
+         );
+      });
+   },
+});
+
+const zipPlugin = (): esbuild.Plugin => ({
    name: "zip",
    setup(build) {
       build.onEnd(() => {
-         execSync(`zip -r ../${target}.zip *`, { cwd: `dist/${target}` });
+         execSync(`zip -r ../${TARGET}.zip *`, { cwd: `dist/${TARGET}` });
       });
    },
 });
@@ -40,13 +56,14 @@ const baseOptions: esbuild.BuildOptions = {
    loader: {
       ".html": "copy",
    },
-   target: ["chrome58", "firefox57"],
-   outdir: `dist/${target}`,
    plugins: [
-      cleanupPlugin({ target }),
-      copyAssetsPlugin({ target }),
-      zipPlugin({ target }),
+      cleanupPlugin(),
+      copyAssetsPlugin(),
+      tailwindPlugin(),
+      zipPlugin(),
    ],
+   target: ["chrome58", "firefox57"],
+   outdir: `dist/${TARGET}`,
 };
 
 async function build() {
