@@ -1,4 +1,4 @@
-import { Button, Text, useBoolean, VStack } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { LinkData } from "@models/link-state";
 import * as React from "react";
 import { useDrag } from "react-dnd";
@@ -19,7 +19,6 @@ type CardProps = {
 export function Card({ linkData, isInEditMode, onClick }: CardProps) {
    const { id, name, url } = linkData;
    const item: CardDragItem = { id };
-   const [isMouseOver, setIsMouseOver] = useBoolean();
    const [{ isDragEventInProgress }, drag] = useDrag(
       () => ({
          type: DragItemTypes.CARD,
@@ -42,6 +41,7 @@ export function Card({ linkData, isInEditMode, onClick }: CardProps) {
 
    return (
       <Button
+         className="group"
          pos="absolute"
          top={0}
          as="a"
@@ -59,25 +59,17 @@ export function Card({ linkData, isInEditMode, onClick }: CardProps) {
          alignItems="center"
          justifyContent="flex-start"
          gridRowGap={2}
-         onMouseEnter={setIsMouseOver.on}
-         onMouseLeave={setIsMouseOver.off}
          disabled={isInEditMode}
          ref={drag}
          transform="translate(0, 0)" // Prevents React DnD background color bug
          {...conditionalButtonProps}
       >
-         <VStack w="full">
+         <div className="flex w-full flex-col items-center justify-center space-y-2">
             <CardImage linkData={linkData} />
-            <Text
-               align="center"
-               fontSize="sm"
-               maxW="full"
-               whiteSpace="normal"
-               isTruncated={!isMouseOver}
-            >
+            <p className="max-w-full truncate text-center text-sm group-hover:overflow-visible group-hover:whitespace-normal">
                {name}
-            </Text>
-         </VStack>
+            </p>
+         </div>
       </Button>
    );
 }
