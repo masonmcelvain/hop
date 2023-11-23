@@ -22,13 +22,14 @@ export default function Page() {
 
    const onKeyDown = React.useCallback(
       (event: KeyboardEvent) => {
+         if (isLinkEditModalOpen) return;
          if (event.key === "e") {
             toggleEditMode();
          } else if (event.key === "n") {
             onLinkEditModalOpen();
          }
       },
-      [onLinkEditModalOpen, toggleEditMode],
+      [isLinkEditModalOpen, onLinkEditModalOpen, toggleEditMode],
    );
    React.useEffect(() => {
       document.addEventListener("keydown", onKeyDown);
@@ -47,6 +48,7 @@ export default function Page() {
                      setLinkToEdit(links[cellIndex]);
                      onLinkEditModalOpen();
                   }}
+                  isLinkEditModalOpen={isLinkEditModalOpen}
                />
             </Center>
          </DndProvider>

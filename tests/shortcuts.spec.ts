@@ -64,3 +64,27 @@ test("can escape edit link modal", async ({ page }) => {
       page.getByRole("button", { name: "Create new link" }),
    ).toBeVisible();
 });
+
+test("can type keybindings in form", async ({
+   links,
+   pageWithOneLink: page,
+}) => {
+   const [_, { url, imageUrl }] = links;
+   await page.keyboard.down("n");
+   // Press keybindings n (new link), e (edit mode), 1 (first link)
+   await page.getByPlaceholder("Name").clear();
+   await page.getByPlaceholder("Name").pressSequentially("ne1");
+   await expect(page.getByPlaceholder("Name")).toHaveValue("ne1");
+   await page.getByPlaceholder("Link URL").fill(url);
+   await page.getByPlaceholder("Image URL").fill(imageUrl);
+   await page.getByRole("button", { name: "Create", exact: true }).click();
+   const link = page.getByRole("link", { name: "ne" });
+   await expect(link).toHaveAttribute("href", url);
+
+   await page.keyboard.down("e");
+   await page.keyboard.down("Digit2");
+   // Press keybindings n (new link), e (edit mode), 2 (second link)
+   await page.getByPlaceholder("Name").clear();
+   await page.getByPlaceholder("Name").pressSequentially("ne2");
+   await expect(page.getByPlaceholder("Name")).toHaveValue("ne2");
+});

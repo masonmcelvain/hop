@@ -9,9 +9,14 @@ const COL_COUNT = 3;
 type GridProps = {
    isInEditMode: boolean;
    openUpdateLinkModal: openUpdateLinkModalForCellType;
+   isLinkEditModalOpen: boolean;
 };
 
-export default function Grid({ isInEditMode, openUpdateLinkModal }: GridProps) {
+export default function Grid({
+   isInEditMode,
+   openUpdateLinkModal,
+   isLinkEditModalOpen,
+}: GridProps) {
    const linkKeys = useLinkStore((state) => state.linkKeys);
    const [isOverEmpty, setIsOverEmpty] = useBoolean();
 
@@ -35,6 +40,7 @@ export default function Grid({ isInEditMode, openUpdateLinkModal }: GridProps) {
                setIsOverEmpty={setIsOverEmpty}
                isInEditMode={isInEditMode}
                openUpdateLinkModal={openUpdateLinkModal}
+               isLinkEditModalOpen={isLinkEditModalOpen}
             />
          ))}
       </SimpleGrid>

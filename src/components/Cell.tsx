@@ -18,6 +18,7 @@ type CellProps = {
    setIsOverEmpty: ReturnType<typeof useBoolean>[1];
    isInEditMode: boolean;
    openUpdateLinkModal: openUpdateLinkModalForCellType;
+   isLinkEditModalOpen: boolean;
 };
 
 const SIDE_LENGTH = 90;
@@ -28,6 +29,7 @@ export default function Cell({
    setIsOverEmpty,
    isInEditMode,
    openUpdateLinkModal,
+   isLinkEditModalOpen,
 }: CellProps) {
    const links = useLinkStore((state) => state.links);
    const linkKeys = useLinkStore((state) => state.linkKeys);
@@ -57,7 +59,7 @@ export default function Cell({
    );
    const onKeyDown = React.useCallback(
       (event: KeyboardEvent) => {
-         if (isEmpty) return;
+         if (isEmpty || isLinkEditModalOpen) return;
          if (String(index + 1) === event.key) {
             event.preventDefault();
             if (isInEditMode) {
@@ -67,7 +69,14 @@ export default function Cell({
             }
          }
       },
-      [index, isEmpty, isInEditMode, onClick, openUpdateLinkModal],
+      [
+         index,
+         isEmpty,
+         isInEditMode,
+         isLinkEditModalOpen,
+         onClick,
+         openUpdateLinkModal,
+      ],
    );
    React.useEffect(() => {
       document.addEventListener("keydown", onKeyDown);
