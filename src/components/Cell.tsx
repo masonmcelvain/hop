@@ -45,7 +45,7 @@ export default function Cell({
 
    const onClick = React.useCallback(
       (event: React.MouseEvent | KeyboardEvent) => {
-         if (!link?.url) return;
+         if (isInEditMode || !link?.url) return;
          if (event.ctrlKey) {
             event.preventDefault();
             openInNewTab(link.url);
@@ -53,7 +53,7 @@ export default function Cell({
             navigateCurrentTab(link.url);
          }
       },
-      [link?.url],
+      [isInEditMode, link?.url],
    );
    const onKeyDown = React.useCallback(
       (event: KeyboardEvent) => {
