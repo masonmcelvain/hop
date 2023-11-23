@@ -1,4 +1,3 @@
-import { Button } from "@chakra-ui/react";
 import { LinkData } from "@models/link-state";
 import * as React from "react";
 import { useDrag } from "react-dnd";
@@ -31,45 +30,29 @@ export function Card({ linkData, isInEditMode, onClick }: CardProps) {
       [id],
    );
 
-   const conditionalButtonProps = isDragEventInProgress
-      ? {
-           _hover: {},
-           _active: {},
-           _focus: {},
-        }
-      : {};
-
+   const dragPseudo = isDragEventInProgress
+      ? ""
+      : "hover:bg-white hover:bg-opacity-10 focus-visible:outline-none focus-visible:ring focus-visible:ring-blue-500/50 active:bg-white active:bg-opacity-[.16] dark:hover:bg-[#EDF2F7] dark:active:bg-[#E2E8F0]";
+   const dragTruncate = isDragEventInProgress
+      ? ""
+      : "group-hover:overflow-visible group-hover:whitespace-normal";
    return (
-      <Button
-         className="group"
-         pos="absolute"
-         top={0}
-         as="a"
-         target="_self"
-         href={url.toString()}
-         onClick={onClick}
-         variant="ghost"
-         w="92%"
-         minH="92%"
-         h="max-content"
-         pt={4}
-         px={1}
-         display="flex"
-         flexDir="column"
-         alignItems="center"
-         justifyContent="flex-start"
-         gridRowGap={2}
-         disabled={isInEditMode}
+      <a
          ref={drag}
-         transform="translate(0, 0)" // Prevents React DnD background color bug
-         {...conditionalButtonProps}
+         className={`group absolute flex h-max min-h-[92%] w-11/12 translate-x-0 translate-y-0 cursor-pointer items-center justify-start rounded-md px-1 pt-4 transition duration-150 ${dragPseudo}`}
+         tabIndex={0}
+         onClick={onClick}
+         aria-disabled={isInEditMode}
+         href={url}
       >
          <div className="flex w-full flex-col items-center justify-center space-y-2">
             <CardImage linkData={linkData} />
-            <p className="max-w-full truncate text-center text-sm group-hover:overflow-visible group-hover:whitespace-normal">
+            <p
+               className={`max-w-full truncate text-center text-sm ${dragTruncate}`}
+            >
                {name}
             </p>
          </div>
-      </Button>
+      </a>
    );
 }
