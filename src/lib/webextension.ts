@@ -29,9 +29,11 @@ export function setNextStoredLinkId(id: number): void {
 }
 
 export async function navigateCurrentTab(url: string): Promise<void> {
-   await getCurrentTab().then((tab) => {
-      browser.tabs.update(tab.id, { url });
-   });
+   const tab = await getCurrentTab();
+   if (tab.url) {
+      await browser.history.addUrl({ url: tab.url });
+   }
+   await browser.tabs.update(tab.id, { url });
    window.close();
 }
 

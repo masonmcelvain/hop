@@ -12,7 +12,7 @@
       "48": "icon.svg",
       "96": "icon.svg"
    },
-   "permissions": ["storage", "tabs"],
+   "permissions": ["history", "storage", "tabs"],
    "commands": {
       "_execute_action": {
          "suggested_key": {
