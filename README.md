@@ -18,7 +18,6 @@ It's available for use on the [Chrome Web Store](https://chrome.google.com/webst
 [![Type Check](https://github.com/masonmcelvain/hop/actions/workflows/tsc.yml/badge.svg)](https://github.com/masonmcelvain/hop/actions/workflows/tsc.yml)
 [![Lint](https://github.com/masonmcelvain/hop/actions/workflows/lint.yml/badge.svg)](https://github.com/masonmcelvain/hop/actions/workflows/lint.yml)
 [![Style](https://github.com/masonmcelvain/hop/actions/workflows/style.yml/badge.svg)](https://github.com/masonmcelvain/hop/actions/workflows/style.yml)
-[![CodeQL](https://github.com/masonmcelvain/hop/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/masonmcelvain/hop/actions/workflows/codeql-analysis.yml)
 
 If you'd like to see a new feature or you've spotted a bug, please check to see if there are any [closed issues](https://github.com/masonmcelvain/hop/issues?q=is%3Aissue+is%3Aclosed) that might address your concern before opening a new issue on this repository.
 
@@ -30,7 +29,7 @@ If there's an issue you'd like to tackle, please fork this repository, make your
 
 -  Clone the repository and navigate to it's root directory with `git clone https://github.com/masonmcelvain/hop.git && cd hop`
 -  Install dependencies with `pnpm install`
-   -  You'll need version 19 of [Node.js](https://nodejs.org/en/download/) installed, and `pnpm` version 8.
+   -  You'll need [Node.js](https://nodejs.org/en/download/) installed and `pnpm` enabled, see `package.json` for the specific versions.
    -  `nvm use` for [Node Version Manager](https://github.com/nvm-sh/nvm) is supported.
 
 ### Running a dev server
