@@ -1,4 +1,4 @@
-import { IconButton, Square, useBoolean, VStack } from "@chakra-ui/react";
+import { IconButton, Square, VStack } from "@chakra-ui/react";
 import { useLinkStore } from "@hooks/useLinkStore";
 import {
    getStorageKeyForLink,
@@ -15,7 +15,7 @@ import { openUpdateLinkModalForCellType } from "./Page";
 type CellProps = {
    index: number;
    isOverEmpty: boolean;
-   setIsOverEmpty: ReturnType<typeof useBoolean>[1];
+   setIsOverEmpty: (a: boolean) => void;
    isInEditMode: boolean;
    openUpdateLinkModal: openUpdateLinkModalForCellType;
    isLinkEditModalOpen: boolean;
@@ -118,9 +118,9 @@ export default function Cell({
 
    React.useEffect(() => {
       if (isOver && !card) {
-         setIsOverEmpty.on();
+         setIsOverEmpty(true);
       } else if (!dragItem) {
-         setIsOverEmpty.off();
+         setIsOverEmpty(false);
       }
    }, [card, dragItem, isOver, setIsOverEmpty]);
 
