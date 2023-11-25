@@ -56,8 +56,8 @@ devDependencies:
     specifier: 18.2.15
     version: 18.2.15
   '@types/webextension-polyfill':
-    specifier: 0.10.6
-    version: 0.10.6
+    specifier: 0.10.7
+    version: 0.10.7
   '@typescript-eslint/eslint-plugin':
     specifier: 6.11.0
     version: 6.11.0(@typescript-eslint/parser@6.11.0)(eslint@8.54.0)(typescript@5.2.2)
@@ -2062,8 +2062,8 @@ packages:
     resolution: {integrity: sha512-G8hZ6XJiHnuhQKR7ZmysCeJWE08o8T0AXtk5darsCaTVsYZhhgUrq53jizaR2FvsoeCwJhlmwTjkXBY5Pn/ZHw==}
     dev: true
 
-  /@types/webextension-polyfill@0.10.6:
-    resolution: {integrity: sha512-tHMENOd86LDISoxw/8C3KFazU1T6X5+eMhI3AS0KU9pYVLYb4kuQ2tIdrpE9aBqd2y8Ix4cVwR/Jwm2fzABTow==}
+  /@types/webextension-polyfill@0.10.7:
+    resolution: {integrity: sha512-10ql7A0qzBmFB+F+qAke/nP1PIonS0TXZAOMVOxEUsm+lGSW6uwVcISFNa0I4Oyj0884TZVWGGMIWeXOVSNFHw==}
     dev: true
 
   /@types/yauzl@2.10.0:
