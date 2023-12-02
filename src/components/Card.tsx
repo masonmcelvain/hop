@@ -32,7 +32,7 @@ export function Card({ linkData, isInEditMode, onClick }: CardProps) {
 
    const dragPseudo = isDragEventInProgress
       ? ""
-      : "hover:bg-white hover:bg-opacity-10 focus-visible:outline-none focus-visible:ring focus-visible:ring-chakra-focus active:bg-white active:bg-opacity-[.16] dark:hover:bg-[#EDF2F7] dark:active:bg-[#E2E8F0]";
+      : "hover:bg-white/10 focus-visible:outline-none focus-visible:ring focus-visible:ring-chakra-focus active:bg-white/[.16] dark:hover:bg-[#EDF2F7]/10 dark:active:bg-[#E2E8F0]/[.16]";
    const dragTruncate = isDragEventInProgress
       ? ""
       : "group-hover:overflow-visible group-hover:whitespace-normal";
