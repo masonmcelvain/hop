@@ -143,7 +143,7 @@ export default function Cell({
             <div className="absolute left-0 top-0 z-10 flex flex-col items-center justify-center space-y-0.5">
                <button
                   aria-label="Edit this link"
-                  className="relative inline-flex h-6 min-w-[1.5rem] select-none appearance-none items-center justify-center whitespace-nowrap rounded-md bg-transparent align-middle text-xs font-semibold leading-tight outline outline-2 outline-offset-2 outline-transparent transition duration-200 hover:bg-white/10 focus-visible:outline-none focus-visible:ring focus-visible:ring-chakra-focus active:bg-white/20"
+                  className="relative inline-flex h-6 min-w-[1.5rem] select-none appearance-none items-center justify-center whitespace-nowrap rounded-md bg-transparent align-middle text-xs font-semibold leading-tight outline outline-2 outline-offset-2 outline-transparent transition duration-200 hover:bg-chakra-hover focus-visible:outline-none focus-visible:ring focus-visible:ring-chakra-focus active:bg-chakra-active dark:hover:bg-chakra-hover-dark dark:active:bg-chakra-active-dark"
                   onClick={() => openUpdateLinkModal(index)}
                >
                   <Edit2 size={16} />
