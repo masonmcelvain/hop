@@ -27,7 +27,7 @@
       "@chakra-ui/react": "2.8.2",
       "@emotion/react": "11.11.3",
       "@emotion/styled": "11.11.0",
-      "framer-motion": "10.16.16",
+      "framer-motion": "10.17.9",
       "react": "18.2.0",
       "react-dnd": "16.0.1",
       "react-dnd-html5-backend": "16.0.1",
