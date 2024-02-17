@@ -46,7 +46,7 @@
       "@typescript-eslint/eslint-plugin": "6.21.0",
       "@typescript-eslint/parser": "6.21.0",
       "concurrently": "8.2.2",
-      "dotenv": "16.4.2",
+      "dotenv": "16.4.4",
       "env-cmd": "10.1.0",
       "esbuild": "0.20.0",
       "eslint": "8.56.0",
