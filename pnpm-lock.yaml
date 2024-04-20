@@ -33,8 +33,8 @@ dependencies:
     specifier: 2.0.10
     version: 2.0.10(react@18.2.0)
   zod:
-    specifier: 3.22.4
-    version: 3.22.4
+    specifier: 3.22.5
+    version: 3.22.5
   zustand:
     specifier: 4.5.2
     version: 4.5.2(@types/react@18.2.79)(react@18.2.0)
@@ -7266,8 +7266,8 @@ packages:
       jszip: 3.10.1
     dev: true
 
-  /zod@3.22.4:
-    resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
+  /zod@3.22.5:
+    resolution: {integrity: sha512-HqnGsCdVZ2xc0qWPLdO25WnseXThh0kEYKIdV5F/hTHO75hNZFp8thxSeHhiPrHZKrFTo1SOgkAj9po5bexZlw==}
     dev: false
 
   /zustand@4.5.2(@types/react@18.2.79)(react@18.2.0):
