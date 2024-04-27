@@ -36,8 +36,8 @@ importers:
         specifier: 2.0.10
         version: 2.0.10(react@18.2.0)
       zod:
-        specifier: 3.23.0
-        version: 3.23.0
+        specifier: 3.23.4
+        version: 3.23.4
       zustand:
         specifier: 4.5.2
         version: 4.5.2(@types/react@18.2.79)(react@18.2.0)
@@ -4191,8 +4191,8 @@ packages:
   zip-dir@2.0.0:
     resolution: {integrity: sha512-uhlsJZWz26FLYXOD6WVuq+fIcZ3aBPGo/cFdiLlv3KNwpa52IF3ISV8fLhQLiqVu5No3VhlqlgthN6gehil1Dg==}
 
-  zod@3.23.0:
-    resolution: {integrity: sha512-OFLT+LTocvabn6q76BTwVB0hExEBS0IduTr3cqZyMqEDbOnYmcU+y0tUAYbND4uwclpBGi4I4UUBGzylWpjLGA==}
+  zod@3.23.4:
+    resolution: {integrity: sha512-/AtWOKbBgjzEYYQRNfoGKHObgfAZag6qUJX1VbHo2PRBgS+wfWagEY2mizjfyAPcGesrJOcx/wcl0L9WnVrHFw==}
 
   zustand@4.5.2:
     resolution: {integrity: sha512-2cN1tPkDVkwCy5ickKrI7vijSjPksFRfqS6237NzT0vqSsztTNnQdHw9mmN7uBdk3gceVXU0a+21jFzFzAc9+g==}
@@ -8830,7 +8830,7 @@ snapshots:
       async: 3.2.4
       jszip: 3.10.1
 
-  zod@3.23.0: {}
+  zod@3.23.4: {}
 
   zustand@4.5.2(@types/react@18.2.79)(react@18.2.0):
     dependencies:
