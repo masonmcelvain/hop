@@ -33,7 +33,7 @@
       "react-dnd-html5-backend": "16.0.1",
       "react-dom": "18.3.1",
       "react-feather": "2.0.10",
-      "zod": "3.23.6",
+      "zod": "3.23.8",
       "zustand": "4.5.2"
    },
    "devDependencies": {
