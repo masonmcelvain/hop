@@ -5,7 +5,7 @@
    "main": "src/public/index.tsx",
    "packageManager": "pnpm@9.6.0",
    "engines": {
-      "node": "20.15.1"
+      "node": "20.16.0"
    },
    "scripts": {
       "dev:chrome": "env-cmd -e dev-chrome ./build.ts",
@@ -39,7 +39,7 @@
    "devDependencies": {
       "@babel/core": "7.24.9",
       "@playwright/test": "1.45.3",
-      "@types/node": "20.14.11",
+      "@types/node": "20.14.12",
       "@types/react": "18.3.3",
       "@types/react-dom": "18.3.0",
       "@types/webextension-polyfill": "0.10.7",
