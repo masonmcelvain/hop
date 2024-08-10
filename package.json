@@ -56,7 +56,7 @@
       "husky": "9.1.4",
       "lint-staged": "15.2.8",
       "prettier": "3.3.3",
-      "prettier-plugin-tailwindcss": "0.6.5",
+      "prettier-plugin-tailwindcss": "0.6.6",
       "tailwindcss": "3.4.7",
       "ts-node": "10.9.2",
       "typescript": "5.5.4",
