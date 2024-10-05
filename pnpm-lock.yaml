@@ -2262,8 +2262,8 @@ packages:
   htmlparser2@8.0.1:
     resolution: {integrity: sha512-4lVbmc1diZC7GUJQtRQ5yBAeUCL1exyMwmForWkRLnwyzWBFxN633SALPMGYaWZvKe9j1pRZJpauvmxENSp/EA==}
 
-  http-cache-semantics@4.1.0:
-    resolution: {integrity: sha512-carPklcUh7ROWRK7Cv27RPtdhYhUsela/ue5/jKzjegVvXDqM2ILE9Q2BGn9JZJh1g87cp56su/FgQSzcWS8cQ==}
+  http-cache-semantics@4.1.1:
+    resolution: {integrity: sha512-er295DKPVsV82j5kw1Gjt+ADA/XYHsajl82cGNQG2eyoPkvgUhX+nDIyelzhIWbbsXP39EHcI6l5tYs2FYqYXQ==}
 
   http-signature@1.2.0:
     resolution: {integrity: sha512-CAbnr6Rz4CYQkLYUtSNXxQPUH2gK8f3iWexVlsnMeD+GjlsQ0Xsy1cOX+mN3dtxYomRy21CiOzU8Uhw6OwncEQ==}
@@ -5599,7 +5599,7 @@ snapshots:
     dependencies:
       '@types/http-cache-semantics': 4.0.1
       get-stream: 6.0.1
-      http-cache-semantics: 4.1.0
+      http-cache-semantics: 4.1.1
       keyv: 4.5.2
       mimic-response: 4.0.0
       normalize-url: 8.0.0
@@ -6629,7 +6629,7 @@ snapshots:
       domutils: 3.0.1
       entities: 4.4.0
 
-  http-cache-semantics@4.1.0: {}
+  http-cache-semantics@4.1.1: {}
 
   http-signature@1.2.0:
     dependencies:
