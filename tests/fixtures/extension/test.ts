@@ -10,7 +10,7 @@ export const test = base.extend<{
    pageWithOneLink: Page;
    pageWithLinks: Page;
 }>({
-   context: async ({}, use) => {
+   context: async ({}, consumeContext) => {
       const pathToExtension = path.join(__dirname, "../../../dist/chrome");
       const context = await chromium.launchPersistentContext("", {
          headless: false,
@@ -19,38 +19,38 @@ export const test = base.extend<{
             `--load-extension=${pathToExtension}`,
          ],
       });
-      await use(context);
+      await consumeContext(context);
       await context.close();
    },
-   extensionId: async ({ context }, use) => {
+   extensionId: async ({ context }, consumeContext) => {
       const page = await context.newPage();
       await page.goto("chrome://extensions/");
       await page.click("#detailsButton");
       const extensionId = page.url().split("?id=")[1];
       await page.close();
-      await use(extensionId);
+      await consumeContext(extensionId);
    },
-   page: async ({ context, extensionId }, use) => {
+   page: async ({ context, extensionId }, consumeContext) => {
       const [page] = context.pages();
       await page.goto(extensionUrl(extensionId));
-      await use(page);
+      await consumeContext(page);
    },
-   links: async ({}, use) => {
-      await use(links);
+   links: async ({}, consumeContext) => {
+      await consumeContext(links);
    },
-   pageWithOneLink: async ({ context, extensionId, links }, use) => {
+   pageWithOneLink: async ({ context, extensionId, links }, consumeContext) => {
       const [page] = context.pages();
       await page.goto(extensionUrl(extensionId));
       await addLink(page, links[0]);
-      await use(page);
+      await consumeContext(page);
    },
-   pageWithLinks: async ({ context, extensionId, links }, use) => {
+   pageWithLinks: async ({ context, extensionId, links }, consumeContext) => {
       const [page] = context.pages();
       await page.goto(extensionUrl(extensionId));
       for (const link of links) {
          await addLink(page, link);
       }
-      await use(page);
+      await consumeContext(page);
    },
 });
 export const expect = test.expect;
