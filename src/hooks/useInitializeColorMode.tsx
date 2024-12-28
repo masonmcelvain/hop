@@ -12,9 +12,11 @@ export function useInitializeColorMode() {
       const initializeColorMode = async () => {
          const data = await browser.storage.local.get(StorageKey.COLOR_MODE);
          const storedMode = parseColorMode(data[StorageKey.COLOR_MODE]);
-         storedMode
-            ? setColorMode(storedMode)
-            : setStoredColorMode(initialColorMode);
+         if (storedMode) {
+            setColorMode(storedMode);
+         } else {
+            setStoredColorMode(initialColorMode);
+         }
       };
       initializeColorMode();
    }, [initialColorMode, setColorMode]);
