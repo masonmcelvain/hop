@@ -13,12 +13,12 @@ const LinkKeysSchema = z.array(z.string());
 const StoredLinkDataListSchema = z.record(z.string(), LinkDataSchema);
 const NextLinkIdSchema = z.number();
 
-const LinkStateSchema = z.object({
+const _LinkStateSchema = z.object({
    linkKeys: LinkKeysSchema,
    links: z.array(LinkDataSchema),
    nextLinkId: NextLinkIdSchema,
 });
-export type LinkState = z.infer<typeof LinkStateSchema>;
+export type LinkState = z.infer<typeof _LinkStateSchema>;
 
 export function parseNextLinkId(input: unknown) {
    return safeParse(input, NextLinkIdSchema);

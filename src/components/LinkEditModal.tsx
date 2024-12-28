@@ -119,7 +119,7 @@ export default function LinkEditModal({
          const urlValue = event.target.value ? event.target.value : "";
          let imageUrlError = "";
          try {
-            urlValue && new URL(urlValue);
+            const _ = urlValue && new URL(urlValue);
          } catch (e) {
             if (!(e instanceof TypeError)) {
                throw e;
@@ -145,12 +145,14 @@ export default function LinkEditModal({
             url: formValues.url,
             imageUrl: formValues.imageUrl,
          };
-         link
-            ? updateLink({
-                 id: link.id,
-                 ...payload,
-              })
-            : addLink(payload);
+         if (link) {
+            updateLink({
+               id: link.id,
+               ...payload,
+            });
+         } else {
+            addLink(payload);
+         }
          onClose();
       },
       [addLink, formValues, link, onClose, updateLink],
