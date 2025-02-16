@@ -1,40 +1,20 @@
 name: Lint
 
-on:
-  - push
+on: push
 
 jobs:
   eslint:
-    timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 19
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          run_install: false
-
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        shell: bash
-        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - name: Setup pnpm cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: ${{ runner.os }}-pnpm-store-
-
-      - name: Install dependencies
+          node-version-file: ".nvmrc"
+      - name: Install PNPM
+        run: corepack enable && corepack prepare pnpm@latest --activate
+      - name: Install workspaces
         run: pnpm install
-
       - name: Run ESLint
         run: pnpm lint
