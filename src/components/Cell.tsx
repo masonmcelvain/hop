@@ -140,17 +140,17 @@ export default function Cell({
          data-testid={isEmpty ? "empty-cell" : "non-empty-cell"}
       >
          {card && isInEditMode ? (
-            <div className="absolute left-0 top-0 z-10 flex flex-col items-center justify-center space-y-0.5">
+            <div className="absolute top-0 left-0 z-10 flex flex-col items-center justify-center space-y-0.5">
                <button
                   aria-label="Edit this link"
-                  className="relative inline-flex h-6 min-w-[1.5rem] select-none appearance-none items-center justify-center whitespace-nowrap rounded-md bg-transparent align-middle text-xs font-semibold leading-tight outline outline-2 outline-offset-2 outline-transparent transition duration-200 hover:bg-chakra-hover focus-visible:outline-none focus-visible:ring focus-visible:ring-chakra-focus active:bg-chakra-active dark:hover:bg-chakra-hover-dark dark:active:bg-chakra-active-dark"
+                  className="hover:bg-chakra-hover focus-visible:ring-chakra-focus active:bg-chakra-active dark:hover:bg-chakra-hover-dark dark:active:bg-chakra-active-dark relative inline-flex h-6 min-w-[1.5rem] appearance-none items-center justify-center rounded-md bg-transparent align-middle text-xs leading-tight font-semibold whitespace-nowrap outline outline-2 outline-offset-2 outline-transparent transition duration-200 select-none focus-visible:ring-3 focus-visible:outline-hidden"
                   onClick={() => openUpdateLinkModal(index)}
                >
                   <Edit2 size={16} />
                </button>
                <button
                   aria-label="Delete this link"
-                  className="relative inline-flex h-6 min-w-[1.5rem] select-none appearance-none items-center justify-center whitespace-nowrap rounded-md bg-transparent align-middle text-xs font-semibold leading-tight text-red-300 outline outline-2 outline-offset-2 outline-transparent transition duration-200 hover:bg-red-300/10 focus-visible:outline-none focus-visible:ring focus-visible:ring-chakra-focus active:bg-red-300/20"
+                  className="focus-visible:ring-chakra-focus relative inline-flex h-6 min-w-[1.5rem] appearance-none items-center justify-center rounded-md bg-transparent align-middle text-xs leading-tight font-semibold whitespace-nowrap text-red-300 outline outline-2 outline-offset-2 outline-transparent transition duration-200 select-none hover:bg-red-300/10 focus-visible:ring-3 focus-visible:outline-hidden active:bg-red-300/20"
                   onClick={deleteChildCard}
                >
                   <X size={20} />
