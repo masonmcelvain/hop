@@ -35,7 +35,7 @@ const tailwindPlugin = (): esbuild.Plugin => ({
       build.onStart(() => {
          const minify = NODE_ENV === "production" ? "--minify" : "";
          execSync(
-            `tailwindcss -i src/globals.css -o dist/${TARGET}/output.css ${minify}`,
+            `npx @tailwindcss/cli -i src/globals.css -o dist/${TARGET}/output.css ${minify}`,
          );
       });
    },
