@@ -70,8 +70,8 @@ importers:
         specifier: 19.0.3
         version: 19.0.3(@types/react@19.0.9)
       '@types/webextension-polyfill':
-        specifier: 0.12.1
-        version: 0.12.1
+        specifier: 0.12.2
+        version: 0.12.2
       '@typescript-eslint/eslint-plugin':
         specifier: 8.24.0
         version: 8.24.0(@typescript-eslint/parser@8.24.0(eslint@9.20.1(jiti@2.4.2))(typescript@5.7.3))(eslint@9.20.1(jiti@2.4.2))(typescript@5.7.3)
@@ -831,8 +831,8 @@ packages:
   '@types/react@19.0.9':
     resolution: {integrity: sha512-FedNTYgmMwSZmD1Sru/W1gJKuiYCN/3SuBkmZkcxX+FpO5zL76B22A9YNfAKg4HQO3Neh/30AiynP6BELdU0qQ==}
 
-  '@types/webextension-polyfill@0.12.1':
-    resolution: {integrity: sha512-xPTFWwQ8BxPevPF2IKsf4hpZNss4LxaOLZXypQH4E63BDLmcwX/RMGdI4tB4VO4Nb6xDBH3F/p4gz4wvof1o9w==}
+  '@types/webextension-polyfill@0.12.2':
+    resolution: {integrity: sha512-rUIyZfbj1TcxlV0IWyy7MUHnW24nqUfQR0F+vPru/3t4noA9Pd4sdG4sljQgQHLd1vYgmkFLSvEc/furzQPbUw==}
 
   '@types/yauzl@2.10.3':
     resolution: {integrity: sha512-oJoftv0LSuaDZE3Le4DbKX+KS9G36NzOeSap90UIK0yMA/NhKJhqlSGtNDORNRaIbQfzjXDrQa0ytJ6mNRGz/Q==}
@@ -3973,7 +3973,7 @@ snapshots:
     dependencies:
       csstype: 3.1.2
 
-  '@types/webextension-polyfill@0.12.1': {}
+  '@types/webextension-polyfill@0.12.2': {}
 
   '@types/yauzl@2.10.3':
     dependencies:
