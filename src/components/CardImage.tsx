@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Image } from "react-feather";
+import { Image as PlaceholderImage } from "react-feather";
+import { Icon, Image } from "@chakra-ui/react";
 import { LinkData } from "@models/link-state";
 
 type CardImageProps = {
@@ -8,8 +9,8 @@ type CardImageProps = {
 export default function CardImage({ linkData }: CardImageProps) {
    const { name, imageUrl } = linkData;
    return imageUrl ? (
-      <img src={imageUrl} alt={name} className="w-8" />
+      <Image src={imageUrl} alt={name} w={8} />
    ) : (
-      <Image className="h-8 w-8 opacity-50" />
+      <Icon as={PlaceholderImage} w={8} h={8} opacity="0.5" />
    );
 }
