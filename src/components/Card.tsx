@@ -1,3 +1,4 @@
+import { Button, Text, useBoolean, VStack } from "@chakra-ui/react";
 import { LinkData } from "@models/link-state";
 import * as React from "react";
 import { useDrag } from "react-dnd";
@@ -18,6 +19,7 @@ type CardProps = {
 export function Card({ linkData, isInEditMode, onClick }: CardProps) {
    const { id, name, url } = linkData;
    const item: CardDragItem = { id };
+   const [isMouseOver, setIsMouseOver] = useBoolean();
    const [{ isDragEventInProgress }, drag] = useDrag(
       () => ({
          type: DragItemTypes.CARD,
@@ -30,29 +32,52 @@ export function Card({ linkData, isInEditMode, onClick }: CardProps) {
       [id],
    );
 
-   const dragPseudo = isDragEventInProgress
-      ? ""
-      : "hover:bg-chakra-hover focus-visible:outline-hidden focus-visible:ring-3 focus-visible:ring-chakra-focus active:bg-chakra-active dark:hover:bg-chakra-hover-dark dark:active:bg-chakra-active-dark";
-   const dragTruncate = isDragEventInProgress
-      ? ""
-      : "group-hover:overflow-visible group-hover:whitespace-normal";
+   const conditionalButtonProps = isDragEventInProgress
+      ? {
+           _hover: {},
+           _active: {},
+           _focus: {},
+        }
+      : {};
+
    return (
-      <a
-         ref={drag}
-         className={`group absolute flex h-max min-h-[92%] w-11/12 translate-x-0 translate-y-0 cursor-pointer items-center justify-start rounded-md px-1 pt-4 transition duration-150 ${dragPseudo}`}
-         tabIndex={0}
+      <Button
+         pos="absolute"
+         top={0}
+         as="a"
+         target="_self"
+         href={url.toString()}
          onClick={onClick}
-         aria-disabled={isInEditMode}
-         href={url}
+         variant="ghost"
+         w="92%"
+         minH="92%"
+         h="max-content"
+         pt={4}
+         px={1}
+         display="flex"
+         flexDir="column"
+         alignItems="center"
+         justifyContent="flex-start"
+         gridRowGap={2}
+         onMouseEnter={setIsMouseOver.on}
+         onMouseLeave={setIsMouseOver.off}
+         disabled={isInEditMode}
+         ref={drag}
+         transform="translate(0, 0)" // Prevents React DnD background color bug
+         {...conditionalButtonProps}
       >
-         <div className="flex w-full flex-col items-center justify-center space-y-2">
+         <VStack w="full">
             <CardImage linkData={linkData} />
-            <p
-               className={`max-w-full truncate text-center text-sm ${dragTruncate}`}
+            <Text
+               align="center"
+               fontSize="sm"
+               maxW="full"
+               whiteSpace="normal"
+               isTruncated={!isMouseOver}
             >
                {name}
-            </p>
-         </div>
-      </a>
+            </Text>
+         </VStack>
+      </Button>
    );
 }
