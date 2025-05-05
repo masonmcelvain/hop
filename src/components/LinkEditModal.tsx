@@ -1,27 +1,8 @@
-import {
-   Button,
-   FormControl,
-   FormHelperText,
-   FormLabel,
-   Input,
-   InputGroup,
-   InputRightElement,
-   Modal,
-   ModalBody,
-   ModalCloseButton,
-   ModalContent,
-   ModalFooter,
-   ModalHeader,
-   ModalOverlay,
-   Text,
-   Tooltip,
-   VStack,
-} from "@chakra-ui/react";
+import * as React from "react";
 import { LINK_NAME_MAX_LENGTH } from "@config/constants";
 import { useLinkStore } from "@hooks/useLinkStore";
 import { getCurrentTab } from "@lib/webextension";
 import { LinkData } from "@models/link-state";
-import * as React from "react";
 
 function getFormValuesForLink(link: LinkData | null): FormFields {
    return {
@@ -57,16 +38,6 @@ export default function LinkEditModal({
       getFormValuesForLink(link),
    );
 
-   const onKeyDown = React.useCallback<React.KeyboardEventHandler<HTMLElement>>(
-      (event) => {
-         if (isOpen && event.key === "Escape") {
-            event.preventDefault();
-            onClose();
-         }
-      },
-      [isOpen, onClose],
-   );
-
    const populateFormWithTab = React.useCallback(async () => {
       const tab = await getCurrentTab();
       setFormValues({
@@ -86,6 +57,19 @@ export default function LinkEditModal({
          populateFormWithTab();
       }
    }, [isOpen, link, populateFormWithTab]);
+   // Close modal on Escape key
+   React.useEffect(() => {
+      const handleKeyDown = (e: KeyboardEvent) => {
+         if (isOpen && e.key === "Escape") {
+            e.preventDefault();
+            onClose();
+         }
+      };
+      document.addEventListener("keydown", handleKeyDown);
+      return () => {
+         document.removeEventListener("keydown", handleKeyDown);
+      };
+   }, [isOpen, onClose]);
 
    const handleNameChange = React.useCallback<
       React.ChangeEventHandler<HTMLInputElement>
@@ -158,82 +142,130 @@ export default function LinkEditModal({
       [addLink, formValues, link, onClose, updateLink],
    );
 
+   if (!isOpen) {
+      return null;
+   }
+
    return (
-      <Modal isOpen={isOpen} onClose={onClose} size="full">
-         <ModalOverlay />
-         <form>
-            <ModalContent borderRadius="none" onKeyDown={onKeyDown}>
-               <ModalHeader>Update Link</ModalHeader>
-               <Tooltip label="Close (esc)" openDelay={750}>
-                  <ModalCloseButton />
-               </Tooltip>
-               <ModalBody>
-                  <VStack w="full" h="full" spacing={2}>
-                     <FormControl isRequired>
-                        <FormLabel>Name</FormLabel>
-                        <InputGroup>
-                           <Input
-                              autoFocus
-                              value={formValues.name}
-                              onChange={handleNameChange}
-                              placeholder="Name"
-                              maxLength={LINK_NAME_MAX_LENGTH}
-                              isInvalid={!!formValues.nameError}
-                           />
-                           <InputRightElement>
-                              <Text fontSize={12}>
-                                 {formValues.name.length +
-                                    `/${LINK_NAME_MAX_LENGTH}`}
-                              </Text>
-                           </InputRightElement>
-                        </InputGroup>
-                        <FormHelperText>{formValues.nameError}</FormHelperText>
-                     </FormControl>
-                     <FormControl isRequired>
-                        <FormLabel>Link URL</FormLabel>
-                        <Input
-                           value={formValues.url}
-                           onChange={handleLinkUrlChange}
-                           placeholder="Link URL"
-                           maxLength={2048}
-                           isInvalid={!!formValues.urlError}
-                        />
-                        <FormHelperText>{formValues.urlError}</FormHelperText>
-                     </FormControl>
-                     <FormControl>
-                        <FormLabel>Image URL</FormLabel>
-                        <Input
-                           value={formValues.imageUrl}
-                           onChange={handleImageUrlChange}
-                           placeholder="Image URL"
-                           isInvalid={!!formValues.imageUrlError}
-                           maxLength={2048}
-                        />
-                        <FormHelperText>
-                           {formValues.imageUrlError}
-                        </FormHelperText>
-                     </FormControl>
-                  </VStack>
-                  <ModalFooter>
-                     <Button
-                        type="submit"
-                        disabled={
-                           !formValues.name ||
-                           !formValues.url ||
-                           !!formValues.nameError ||
-                           !!formValues.urlError ||
-                           !!formValues.imageUrlError
-                        }
-                        onClick={handleSubmit}
-                        w="full"
-                        m={0}
-                     >
-                        {link ? "Update" : "Create"}
-                     </Button>
-                  </ModalFooter>
-               </ModalBody>
-            </ModalContent>
+      <div className="fixed inset-0 z-50">
+         <div
+            className="bg-opacity-60 absolute inset-0 bg-black"
+            onClick={onClose}
+         />
+         <form
+            className="relative z-50 flex h-full w-full flex-col bg-white p-6"
+            onSubmit={(e) => e.preventDefault()}
+         >
+            <header className="mb-4 flex items-center justify-between">
+               <h2 className="text-xl font-semibold text-gray-800">
+                  Update Link
+               </h2>
+               <button
+                  type="button"
+                  onClick={onClose}
+                  title="Close (esc)"
+                  className="p-1 text-gray-500 hover:text-gray-700"
+               >
+                  <span className="text-2xl">&times;</span>
+               </button>
+            </header>
+            <div className="flex-1 space-y-2 overflow-auto">
+               {/* Name field */}
+               <div className="space-y-1">
+                  <label className="block text-sm font-medium text-gray-700">
+                     Name
+                  </label>
+                  <div className="relative">
+                     <input
+                        autoFocus
+                        value={formValues.name}
+                        onChange={handleNameChange}
+                        placeholder="Name"
+                        maxLength={LINK_NAME_MAX_LENGTH}
+                        className={`block w-full border text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500 ${
+                           formValues.nameError
+                              ? "border-red-500"
+                              : "border-gray-300"
+                        } rounded-md pr-10`}
+                     />
+                     <span className="absolute inset-y-0 right-2 flex items-center text-xs text-gray-500">
+                        {`${formValues.name.length}/${LINK_NAME_MAX_LENGTH}`}
+                     </span>
+                  </div>
+                  {formValues.nameError ? (
+                     <p className="text-xs text-red-600">
+                        {formValues.nameError}
+                     </p>
+                  ) : (
+                     <p className="text-xs text-transparent">&nbsp;</p>
+                  )}
+               </div>
+               {/* URL field */}
+               <div className="space-y-1">
+                  <label className="block text-sm font-medium text-gray-700">
+                     Link URL
+                  </label>
+                  <input
+                     value={formValues.url}
+                     onChange={handleLinkUrlChange}
+                     placeholder="Link URL"
+                     maxLength={2048}
+                     className={`block w-full border text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500 ${
+                        formValues.urlError
+                           ? "border-red-500"
+                           : "border-gray-300"
+                     } rounded-md`}
+                  />
+                  {formValues.urlError ? (
+                     <p className="text-xs text-red-600">
+                        {formValues.urlError}
+                     </p>
+                  ) : (
+                     <p className="text-xs text-transparent">&nbsp;</p>
+                  )}
+               </div>
+               {/* Image URL field */}
+               <div className="space-y-1">
+                  <label className="block text-sm font-medium text-gray-700">
+                     Image URL
+                  </label>
+                  <input
+                     value={formValues.imageUrl}
+                     onChange={handleImageUrlChange}
+                     placeholder="Image URL"
+                     maxLength={2048}
+                     className={`block w-full border text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500 ${
+                        formValues.imageUrlError
+                           ? "border-red-500"
+                           : "border-gray-300"
+                     } rounded-md`}
+                  />
+                  {formValues.imageUrlError ? (
+                     <p className="text-xs text-red-600">
+                        {formValues.imageUrlError}
+                     </p>
+                  ) : (
+                     <p className="text-xs text-transparent">&nbsp;</p>
+                  )}
+               </div>
+            </div>
+            <div className="pt-4">
+               <button
+                  type="button"
+                  disabled={
+                     !formValues.name ||
+                     !formValues.url ||
+                     !!formValues.nameError ||
+                     !!formValues.urlError ||
+                     !!formValues.imageUrlError
+                  }
+                  onClick={handleSubmit}
+                  className="w-full rounded-md bg-blue-500 py-2 font-medium text-white hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-gray-300"
+               >
+                  {link ? "Update" : "Create"}
+               </button>
+            </div>
          </form>
-      </Modal>
+      </div>
    );
 }
