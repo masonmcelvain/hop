@@ -1,3 +1,4 @@
+import { SimpleGrid, useBoolean } from "@chakra-ui/react";
 import { useLinkStore } from "@hooks/useLinkStore";
 import * as React from "react";
 import Cell from "./Cell";
@@ -17,7 +18,7 @@ export default function Grid({
    isLinkEditModalOpen,
 }: GridProps) {
    const linkKeys = useLinkStore((state) => state.linkKeys);
-   const [isOverEmpty, setIsOverEmpty] = React.useState(false);
+   const [isOverEmpty, setIsOverEmpty] = useBoolean();
 
    const length = React.useMemo(() => {
       const linkCount = linkKeys.length;
@@ -30,7 +31,7 @@ export default function Grid({
    }, [linkKeys.length]);
 
    return (
-      <div className="grid grid-cols-3">
+      <SimpleGrid columns={COL_COUNT}>
          {Array.from({ length }).map((_, i) => (
             <Cell
                key={i}
@@ -42,6 +43,6 @@ export default function Grid({
                isLinkEditModalOpen={isLinkEditModalOpen}
             />
          ))}
-      </div>
+      </SimpleGrid>
    );
 }
