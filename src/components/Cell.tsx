@@ -1,3 +1,4 @@
+import { IconButton, Square, useBoolean, VStack } from "@chakra-ui/react";
 import { useLinkStore } from "@hooks/useLinkStore";
 import {
    getStorageKeyForLink,
@@ -14,11 +15,13 @@ import { openUpdateLinkModalForCellType } from "./Page";
 type CellProps = {
    index: number;
    isOverEmpty: boolean;
-   setIsOverEmpty: (a: boolean) => void;
+   setIsOverEmpty: ReturnType<typeof useBoolean>[1];
    isInEditMode: boolean;
    openUpdateLinkModal: openUpdateLinkModalForCellType;
    isLinkEditModalOpen: boolean;
 };
+
+const SIDE_LENGTH = 90;
 
 export default function Cell({
    index,
@@ -115,9 +118,9 @@ export default function Cell({
 
    React.useEffect(() => {
       if (isOver && !card) {
-         setIsOverEmpty(true);
+         setIsOverEmpty.on();
       } else if (!dragItem) {
-         setIsOverEmpty(false);
+         setIsOverEmpty.off();
       }
    }, [card, dragItem, isOver, setIsOverEmpty]);
 
@@ -134,30 +137,38 @@ export default function Cell({
    const shouldHideChildren = isOver || (isLastCellWithCard && isOverEmpty);
 
    return (
-      <div
+      <Square
          ref={drop}
-         className="relative flex h-[90px] w-[90px] items-center justify-center"
+         pos="relative"
+         size={SIDE_LENGTH}
          data-testid={isEmpty ? "empty-cell" : "non-empty-cell"}
       >
          {card && isInEditMode ? (
-            <div className="absolute top-0 left-0 z-10 flex flex-col items-center justify-center space-y-0.5">
-               <button
+            <VStack
+               pos="absolute"
+               top={0}
+               left={0}
+               zIndex="docked"
+               spacing="px"
+            >
+               <IconButton
+                  icon={<Edit2 size={16} />}
                   aria-label="Edit this link"
-                  className="hover:bg-chakra-hover focus-visible:ring-chakra-focus active:bg-chakra-active dark:hover:bg-chakra-hover-dark dark:active:bg-chakra-active-dark relative inline-flex h-6 min-w-[1.5rem] appearance-none items-center justify-center rounded-md bg-transparent align-middle text-xs leading-tight font-semibold whitespace-nowrap outline outline-2 outline-offset-2 outline-transparent transition duration-200 select-none focus-visible:ring-3 focus-visible:outline-hidden"
                   onClick={() => openUpdateLinkModal(index)}
-               >
-                  <Edit2 size={16} />
-               </button>
-               <button
+                  variant="ghost"
+                  size="xs"
+               />
+               <IconButton
+                  icon={<X size={20} />}
                   aria-label="Delete this link"
-                  className="focus-visible:ring-chakra-focus relative inline-flex h-6 min-w-[1.5rem] appearance-none items-center justify-center rounded-md bg-transparent align-middle text-xs leading-tight font-semibold whitespace-nowrap text-red-300 outline outline-2 outline-offset-2 outline-transparent transition duration-200 select-none hover:bg-red-300/10 focus-visible:ring-3 focus-visible:outline-hidden active:bg-red-300/20"
                   onClick={deleteChildCard}
-               >
-                  <X size={20} />
-               </button>
-            </div>
+                  colorScheme="red"
+                  variant="ghost"
+                  size="xs"
+               />
+            </VStack>
          ) : null}
          {shouldHideChildren ? null : card}
-      </div>
+      </Square>
    );
 }
