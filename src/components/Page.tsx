@@ -1,4 +1,4 @@
-import { Center, useBoolean, useDisclosure } from "@chakra-ui/react";
+import { Center, VStack, useBoolean, useDisclosure } from "@chakra-ui/react";
 import { useLinkStore } from "@hooks/useLinkStore";
 import { LinkData } from "@models/link-state";
 import * as React from "react";
@@ -39,7 +39,7 @@ export default function Page() {
    }, [onKeyDown]);
 
    return (
-      <div className="flex w-full flex-col items-center justify-center space-y-2 p-2">
+      <VStack w="full" p={2}>
          <DndProvider backend={HTML5Backend}>
             <Center w="full">
                <Grid
@@ -65,7 +65,7 @@ export default function Page() {
                onLinkEditModalClose();
             }}
          />
-      </div>
+      </VStack>
    );
 }
 
