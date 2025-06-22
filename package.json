@@ -48,7 +48,7 @@
       "@types/webextension-polyfill": "0.12.3",
       "@typescript-eslint/eslint-plugin": "8.34.1",
       "@typescript-eslint/parser": "8.34.1",
-      "concurrently": "9.1.2",
+      "concurrently": "9.2.0",
       "dotenv": "16.5.0",
       "env-cmd": "10.1.0",
       "esbuild": "0.25.5",
