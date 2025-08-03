@@ -3,7 +3,7 @@
    "version": "1.1.16",
    "description": "An icon-first bookmark manager",
    "main": "src/public/index.tsx",
-   "packageManager": "pnpm@10.13.1",
+   "packageManager": "pnpm@10.14.0",
    "engines": {
       "node": "22.18.0"
    },
