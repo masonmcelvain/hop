@@ -25,19 +25,13 @@ const config: PlaywrightTestConfig = {
       trace: "on-first-retry",
    },
 
-   /* Only Chrome extensions are supported by Playwright. */
+   /* Only chromium extensions are supported by Playwright. */
    /* https://github.com/microsoft/playwright/issues/7297 */
+   /* https://github.com/microsoft/playwright/issues/37017 */
    projects: [
       {
          name: "chromium",
          use: devices["Desktop Chrome"],
-      },
-      {
-         name: "Google Chrome",
-         use: {
-            ...devices["Desktop Chrome"],
-            channel: "chrome",
-         },
       },
    ],
 };
