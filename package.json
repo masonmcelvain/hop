@@ -34,7 +34,7 @@
       "react-dom": "19.1.1",
       "react-feather": "2.0.10",
       "zod": "4.1.11",
-      "zustand": "5.0.7"
+      "zustand": "5.0.8"
    },
    "devDependencies": {
       "@babel/core": "7.28.4",
