@@ -61,7 +61,7 @@
       "lint-staged": "16.2.3",
       "prettier": "3.6.2",
       "ts-node": "10.9.2",
-      "typescript": "5.9.2",
+      "typescript": "5.9.3",
       "web-ext": "8.10.0",
       "webextension-polyfill": "0.12.0"
    },
