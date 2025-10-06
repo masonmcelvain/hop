@@ -24,7 +24,7 @@ export default [
       compat.extends(
          "eslint:recommended",
          "plugin:react/recommended",
-         "plugin:react-hooks/recommended",
+         "plugin:react-hooks/recommended-legacy",
          "plugin:@typescript-eslint/recommended",
          "prettier",
       ),
