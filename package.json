@@ -50,7 +50,7 @@
       "@typescript-eslint/parser": "8.45.0",
       "concurrently": "9.2.1",
       "dotenv": "17.2.3",
-      "env-cmd": "10.1.0",
+      "env-cmd": "11.0.0",
       "esbuild": "0.25.10",
       "eslint": "9.37.0",
       "eslint-config-prettier": "10.1.8",
