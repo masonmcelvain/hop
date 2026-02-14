@@ -5,7 +5,7 @@
    "main": "src/public/index.tsx",
    "packageManager": "pnpm@10.29.2",
    "engines": {
-      "node": "24.13.0"
+      "node": "24.13.1"
    },
    "scripts": {
       "dev:chrome": "env-cmd -e dev-chrome ./build.ts",
@@ -42,7 +42,7 @@
       "@eslint/eslintrc": "3.3.3",
       "@eslint/js": "9.39.2",
       "@playwright/test": "1.58.2",
-      "@types/node": "24.10.12",
+      "@types/node": "24.10.13",
       "@types/react": "19.2.14",
       "@types/react-dom": "19.2.3",
       "@types/webextension-polyfill": "0.12.4",
