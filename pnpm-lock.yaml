@@ -79,8 +79,8 @@ importers:
         specifier: 9.2.1
         version: 9.2.1
       dotenv:
-        specifier: 17.4.0
-        version: 17.4.0
+        specifier: 17.4.1
+        version: 17.4.1
       env-cmd:
         specifier: 10.1.0
         version: 10.1.0
@@ -1201,8 +1201,8 @@ packages:
     resolution: {integrity: sha512-1gxPBJpI/pcjQhKgIU91II6Wkay+dLcN3M6rf2uwP8hRur3HtQXjVrdAK3sjC0piaEuxzMwjXChcETiJl47lAQ==}
     engines: {node: '>=18'}
 
-  dotenv@17.4.0:
-    resolution: {integrity: sha512-kCKF62fwtzwYm0IGBNjRUjtJgMfGapII+FslMHIjMR5KTnwEmBmWLDRSnc3XSNP8bNy34tekgQyDT0hr7pERRQ==}
+  dotenv@17.4.1:
+    resolution: {integrity: sha512-k8DaKGP6r1G30Lx8V4+pCsLzKr8vLmV2paqEj1Y55GdAgJuIqpRp5FfajGF8KtwMxCz9qJc6wUIJnm053d/WCw==}
     engines: {node: '>=12'}
 
   dunder-proto@1.0.1:
@@ -4004,7 +4004,7 @@ snapshots:
     dependencies:
       type-fest: 4.41.0
 
-  dotenv@17.4.0: {}
+  dotenv@17.4.1: {}
 
   dunder-proto@1.0.1:
     dependencies:
