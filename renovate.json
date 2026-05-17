@@ -9,5 +9,6 @@
    ],
    "rangeStrategy": "pin",
    "schedule": ["every weekend"],
-   "timezone": "America/Los_Angeles"
+   "timezone": "America/Los_Angeles",
+   "minimumReleaseAge": "7 days"
 }
