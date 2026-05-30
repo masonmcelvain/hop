@@ -5,7 +5,7 @@
    "main": "src/public/index.tsx",
    "packageManager": "pnpm@11.1.2",
    "engines": {
-      "node": "24.15.0"
+      "node": "24.16.0"
    },
    "scripts": {
       "dev:chrome": "env-cmd -e dev-chrome ./build.ts",
