@@ -1,5 +1,8 @@
 allowBuilds:
-   esbuild: false
-   spawn-sync: false
+  esbuild: false
+  spawn-sync: false
 strictPeerDependencies: false
 minimumReleaseAge: 10080
+minimumReleaseAgeExclude:
+  # Renovate security update: esbuild@0.28.1
+  - esbuild@0.28.1
