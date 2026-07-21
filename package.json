@@ -58,7 +58,7 @@
       "eslint-plugin-react-hooks": "6.1.1",
       "globals": "17.7.0",
       "husky": "9.1.7",
-      "lint-staged": "16.4.0",
+      "lint-staged": "17.0.8",
       "prettier": "3.9.5",
       "ts-node": "10.9.2",
       "typescript": "5.9.3",
